@@ -14,7 +14,7 @@
 
 | Elemento | Presencia | Editable CMS | Notas |
 | --- | --- | --- | --- |
-| Marco de ficha | Automático | No | El módulo va enmarcado en una tarjeta con borde/fondo (`--color-surface`) — distingue visualmente la ficha de datos de una lista de texto suelta (CAT-CON-018) |
+| Marco de ficha | Automático | No | El módulo va enmarcado en una tarjeta con borde/fondo (`--color-surface`) — le da presencia visual propia de ficha de datos |
 | Icono del título | Opcional | No (placeholder) | Icono pequeño junto al título, marcador neutro en el wireframe |
 | Título del contenedor | Opcional | Sí | H2 o H3 sobre la lista. Si se omite, la lista sube sin hueco vacío |
 | Texto de apoyo | Opcional | Sí | Una línea breve bajo el título, antes de la lista — p. ej. "Resumen de las condiciones principales" |
@@ -60,9 +60,12 @@
 - v1.0 · Creación
 - v1.1 · Se añade marco de ficha (borde + fondo), icono junto al título y texto de apoyo
   opcional bajo el título; etiqueta pasa a mayúsculas con tracking. Motivo: revisión visual —
-  el módulo se leía casi igual que CAT-CON-018 (Lista simple de texto) pese a tener un esquema
-  de campos distinto (par etiqueta/valor vs. ítem de texto suelto); este tratamiento lo distingue
-  a simple vista sin cambiar su estructura de datos.
+  el módulo se leía casi igual que CAT-CON-018 (Lista simple de texto, entonces en el kit) pese
+  a tener un esquema de campos distinto (par etiqueta/valor vs. ítem de texto suelto); este
+  tratamiento lo distingue a simple vista sin cambiar su estructura de datos.
+- CAT-CON-018 se retiró del kit poco después (ver `registry/CAT-CON.md`) — el caso de uso real
+  que se perseguía con ella (ítem + icono + texto descriptivo) resultó ser CAT-CON-009 "Bloque de
+  características", no una lista plana. Esta spec deja de referenciarla salvo en este Historial.
 
 ---
 

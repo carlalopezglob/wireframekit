@@ -20,6 +20,10 @@ Módulos de sección de contenido: bloques de texto, texto+imagen, componentes d
 | CAT-CON-015 | Visor de documento interactivo | Mostrar un documento paginado (PDF, catálogo, informe, presentación) con sus propios controles de lectura (zoom, paginación, marcador, pantalla completa) sin salir de la página. No usar para una imagen o vídeo sueltos (ver CAT-CON-013). |
 | CAT-CON-016 | Contenedor de pestañas heterogéneo | Organizar bajo pestañas contenido de naturaleza distinta en cada una (texto, grid de cards, mapa, incluso otro contenedor de pestañas). No usar cuando todas las pestañas comparten la misma forma de contenido — para eso, CAT-CON-007 Tabs de contenido. |
 | CAT-CON-017 | Lista de datos clave | Presentar un conjunto breve de pares etiqueta→valor como ficha técnica o resumen de datos (especificaciones, detalle de propiedad/ficha, condiciones). No usar para cifras grandes de impacto — para eso, CAT-CON-005 Stats. |
-| CAT-CON-018 | Lista simple de texto | Enumerar afirmaciones cortas (instalaciones, requisitos, características) sin imagen, icono ni enlace por ítem — cuando un grid de cards sería sobredimensionado para el contenido. |
 
 > El número 004 queda retirado: "Lista de características" se consolidó dentro de CAT-CON-009 "Bloque de características" (ver su Historial; spec antigua archivada en `_eliminar/`).
+>
+> El número 018 queda retirado: "Lista simple de texto" se descartó del kit — el caso real que
+> se quería cubrir (ítem + icono + texto descriptivo, p. ej. "Piscina" con un icono y unas líneas
+> sobre ella) ya lo cubre CAT-CON-009 "Bloque de características". No quedó un caso de uso propio
+> que justificara mantenerla aparte.
