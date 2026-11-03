@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAT-FRM-004 — Formulario multi-paso</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <style>
+    /* ── Wrapper & card ── */
+    .frm004__wrap { max-width: 640px; margin: 0 auto; }
+    .frm004__card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden; }
+
+    /* ── Step indicator ── */
+    .frm004__steps { display: flex; align-items: center; padding: var(--space-6) var(--space-8); border-bottom: 1px solid var(--color-border); background: var(--color-surface); gap: 0; }
+    .frm004__step-item { display: flex; flex-direction: column; align-items: center; flex: 1; gap: var(--space-1); }
+    .frm004__step-item:last-child { flex: 0 0 auto; }
+    .frm004__step-bubble { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; border: 2px solid var(--color-border); background: var(--color-bg); color: var(--color-text-muted); flex-shrink: 0; }
+    .frm004__step-bubble--active { border-color: var(--color-accent); color: var(--color-accent); }
+    .frm004__step-bubble--done { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
+    .frm004__step-label { font-size: 0.65rem; color: var(--color-text-muted); text-align: center; line-height: 1.2; white-space: nowrap; }
+    .frm004__step-label--active { color: var(--color-accent); font-weight: 600; }
+    .frm004__step-connector { flex: 1; height: 2px; background: var(--color-border); margin: 0 var(--space-2); margin-bottom: 14px; }
+    .frm004__step-connector--done { background: var(--color-accent); }
+
+    /* ── Panel & fields ── */
+    .frm004__panel { padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-6); }
+    .frm004__panel-header h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: var(--space-2); }
+    .frm004__panel-header p { color: var(--color-text-muted); font-size: 0.9rem; }
+    .frm004__fields { display: flex; flex-direction: column; gap: var(--space-4); }
+    .frm004__row { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+    @media (min-width: 480px) { .frm004__row { grid-template-columns: 1fr 1fr; } }
+    .frm004__field { display: flex; flex-direction: column; gap: var(--space-1); }
+    .frm004__field label { font-size: 0.875rem; font-weight: 500; }
+    .frm004__optional { font-weight: 400; color: var(--color-text-muted); font-size: 0.8rem; }
+    .frm004__field input,
+    .frm004__field select { width: 100%; padding: 0.6em 0.75em; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 1rem; font-family: var(--font-base); background: var(--color-bg); color: var(--color-text); box-sizing: border-box; }
+    .frm004__field input:focus,
+    .frm004__field select:focus { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+
+    /* ── Payment options ── */
+    .frm004__pay-options { display: flex; flex-direction: column; gap: var(--space-3); }
+    .frm004__pay-option { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; }
+    .frm004__pay-option input { flex-shrink: 0; }
+    .frm004__pay-option:has(input:checked) { border-color: var(--color-accent); background: var(--color-surface); }
+    .frm004__pay-label { font-weight: 500; }
+    .frm004__pay-desc { font-size: 0.8rem; color: var(--color-text-muted); }
+    .frm004__security-note { font-size: 0.8rem; color: var(--color-text-muted); }
+
+    /* ── Summary ── */
+    .frm004__summary { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+    .frm004__summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; }
+    .frm004__summary-row dt { color: var(--color-text-muted); }
+    .frm004__summary-row dd { font-weight: 500; margin: 0; }
+    .frm004__terms { font-size: 0.875rem; display: flex; align-items: center; gap: var(--space-2); }
+
+    /* ── Navigation bar ── */
+    .frm004__nav { display: flex; justify-content: space-between; align-items: center; padding: var(--space-6) var(--space-8); border-top: 1px solid var(--color-border); background: var(--color-surface); }
+    .frm004__progress-text { font-size: 0.8rem; color: var(--color-text-muted); }
+  </style>
+</head>
+<body>
+
+  <section class="section" id="frm004-section">
+    <div class="container">
+
+      <!-- Main module -->
+      <div class="frm004__wrap">
+        <div class="frm004__card">
+
+          <!-- Step indicator -->
+          <div class="frm004__steps">
+            <div class="frm004__step-item">
+              <div class="frm004__step-bubble" data-step="1">1</div>
+              <span class="frm004__step-label">Datos</span>
+            </div>
+            <div class="frm004__step-connector" data-connector="1"></div>
+            <div class="frm004__step-item">
+              <div class="frm004__step-bubble" data-step="2">2</div>
+              <span class="frm004__step-label">Dirección</span>
+            </div>
+            <div class="frm004__step-connector" data-connector="2"></div>
+            <div class="frm004__step-item">
+              <div class="frm004__step-bubble" data-step="3">3</div>
+              <span class="frm004__step-label">Pago</span>
+            </div>
+            <div class="frm004__step-connector" data-connector="3"></div>
+            <div class="frm004__step-item">
+              <div class="frm004__step-bubble" data-step="4">4</div>
+              <span class="frm004__step-label">Confirmar</span>
+            </div>
+          </div>
+
+          <!-- Panel 1: Datos personales -->
+          <div class="frm004__panel" id="frm004-panel-1">
+            <div class="frm004__panel-header">
+              <h3>Tus datos</h3>
+              <p>Necesitamos algunos datos básicos para continuar.</p>
+            </div>
+            <div class="frm004__fields">
+              <div class="frm004__row">
+                <div class="frm004__field">
+                  <label for="frm004-nombre">Nombre</label>
+                  <input id="frm004-nombre" type="text" placeholder="Ana">
+                </div>
+                <div class="frm004__field">
+                  <label for="frm004-apellido">Apellido</label>
+                  <input id="frm004-apellido" type="text" placeholder="García">
+                </div>
+              </div>
+              <div class="frm004__field">
+                <label for="frm004-email">Correo electrónico</label>
+                <input id="frm004-email" type="email" placeholder="ana@ejemplo.com">
+              </div>
+              <div class="frm004__field">
+                <label for="frm004-telefono">Teléfono <span class="frm004__optional">(opcional)</span></label>
+                <input id="frm004-telefono" type="tel" placeholder="+34 600 000 000">
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 2: Dirección -->
+          <div class="frm004__panel" id="frm004-panel-2" hidden>
+            <div class="frm004__panel-header">
+              <h3>Dirección de entrega</h3>
+              <p>¿Dónde enviamos tu pedido?</p>
+            </div>
+            <div class="frm004__fields">
+              <div class="frm004__field">
+                <label for="frm004-calle">Calle y número</label>
+                <input id="frm004-calle" type="text" placeholder="Calle Mayor 14">
+              </div>
+              <div class="frm004__row">
+                <div class="frm004__field">
+                  <label for="frm004-ciudad">Ciudad</label>
+                  <input id="frm004-ciudad" type="text" placeholder="Madrid">
+                </div>
+                <div class="frm004__field">
+                  <label for="frm004-provincia">Provincia</label>
+                  <input id="frm004-provincia" type="text" placeholder="Madrid">
+                </div>
+              </div>
+              <div class="frm004__row">
+                <div class="frm004__field">
+                  <label for="frm004-cp">Código postal</label>
+                  <input id="frm004-cp" type="text" placeholder="28001">
+                </div>
+                <div class="frm004__field">
+                  <label for="frm004-pais">País</label>
+                  <select id="frm004-pais">
+                    <option value="es">España</option>
+                    <option value="pt">Portugal</option>
+                    <option value="fr">Francia</option>
+                    <option value="otros">Otros</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Pago -->
+          <div class="frm004__panel" id="frm004-panel-3" hidden>
+            <div class="frm004__panel-header">
+              <h3>Método de pago</h3>
+              <p>Elige cómo prefieres pagar.</p>
+            </div>
+            <div class="frm004__fields">
+              <div class="frm004__pay-options">
+                <label class="frm004__pay-option">
+                  <input type="radio" name="pay-method" value="card" checked>
+                  <div>
+                    <div class="frm004__pay-label">💳 Tarjeta bancaria</div>
+                    <div class="frm004__pay-desc">Visa, Mastercard, American Express</div>
+                  </div>
+                </label>
+                <label class="frm004__pay-option">
+                  <input type="radio" name="pay-method" value="transfer">
+                  <div>
+                    <div class="frm004__pay-label">🏦 Transferencia</div>
+                    <div class="frm004__pay-desc">Recibirás los datos bancarios por email</div>
+                  </div>
+                </label>
+                <label class="frm004__pay-option">
+                  <input type="radio" name="pay-method" value="paypal">
+                  <div>
+                    <div class="frm004__pay-label">🅿 PayPal</div>
+                    <div class="frm004__pay-desc">Paga de forma rápida con tu cuenta PayPal</div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Card fields (shown only when tarjeta is selected) -->
+              <div id="frm004-card-fields">
+                <div class="frm004__fields">
+                  <div class="frm004__field">
+                    <label for="frm004-card-num">Número de tarjeta</label>
+                    <input id="frm004-card-num" type="text" placeholder="•••• •••• •••• ••••">
+                  </div>
+                  <div class="frm004__field">
+                    <label for="frm004-card-titular">Titular</label>
+                    <input id="frm004-card-titular" type="text" placeholder="ANA GARCIA">
+                  </div>
+                  <div class="frm004__row">
+                    <div class="frm004__field">
+                      <label for="frm004-card-cad">Caducidad</label>
+                      <input id="frm004-card-cad" type="text" placeholder="MM/AA">
+                    </div>
+                    <div class="frm004__field">
+                      <label for="frm004-card-cvv">CVV</label>
+                      <input id="frm004-card-cvv" type="text" placeholder="•••">
+                    </div>
+                  </div>
+                  <p class="frm004__security-note">🔒 Pago seguro — tus datos están cifrados.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 4: Confirmación -->
+          <div class="frm004__panel" id="frm004-panel-4" hidden>
+            <div class="frm004__panel-header">
+              <h3>Resumen del pedido</h3>
+              <p>Revisa los datos antes de confirmar.</p>
+            </div>
+            <div class="frm004__fields">
+              <dl class="frm004__summary">
+                <div class="frm004__summary-row">
+                  <dt>Nombre</dt>
+                  <dd>Ana García</dd>
+                </div>
+                <div class="frm004__summary-row">
+                  <dt>Email</dt>
+                  <dd>ana@ejemplo.com</dd>
+                </div>
+                <div class="frm004__summary-row">
+                  <dt>Dirección</dt>
+                  <dd>Calle Mayor 14, Madrid 28001</dd>
+                </div>
+                <div class="frm004__summary-row">
+                  <dt>Pago</dt>
+                  <dd>•••• •••• •••• 4242</dd>
+                </div>
+              </dl>
+              <label class="frm004__terms">
+                <input type="checkbox">
+                Acepto los términos y condiciones
+              </label>
+            </div>
+          </div>
+
+          <!-- Navigation bar -->
+          <div class="frm004__nav">
+            <button id="frm004-btn-back" class="btn btn--secondary" hidden>← Atrás</button>
+            <span class="frm004__progress-text" id="frm004-progress">Paso 1 de 4</span>
+            <button id="frm004-btn-next" class="btn btn--primary">Siguiente →</button>
+          </div>
+
+        </div><!-- /.frm004__card -->
+      </div><!-- /.frm004__wrap -->
+
+    </div><!-- /.container -->
+  </section>
+
+  <details class="kit-states">
+    <summary>Estados del módulo</summary>
+    <div class="kit-states__body">
+
+      <div class="kit-states__group">
+        <span class="kit-states__group-label">Paso activo</span>
+        <label><input type="radio" name="step" value="1" checked> Paso 1 — Datos</label>
+        <label><input type="radio" name="step" value="2"> Paso 2 — Dirección</label>
+        <label><input type="radio" name="step" value="3"> Paso 3 — Pago</label>
+        <label><input type="radio" name="step" value="4"> Paso 4 — Confirmar</label>
+      </div>
+
+      <div class="kit-states__group">
+        <span class="kit-states__group-label">Fondo</span>
+        <label><input type="radio" name="bg" value="bg" checked> Blanco</label>
+        <label><input type="radio" name="bg" value="surface"> Gris</label>
+      </div>
+
+    </div>
+  </details>
+
+  <details class="kit-notes" data-spec-src="../../registry/CAT-FRM/CAT-FRM-004-formulario-multi-paso.md">
+    <summary class="kit-notes__toggle">Notas para UI — CAT-FRM-004</summary>
+    <div class="kit-notes__body"><p>Cargando…</p></div>
+  </details>
+
+  <script src="../../shared/wireframe.js" defer></script>
+  <script src="../../shared/kit-notes.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* ── Helpers ── */
+      function byId(id) { return document.getElementById(id); }
+
+      /* ── Step state ── */
+      var currentStep = 1;
+      var totalSteps = 4;
+
+      /* ── Navigate to a step ── */
+      function goToStep(n) {
+        if (n < 1 || n > totalSteps) return;
+        for (var i = 1; i <= totalSteps; i++) {
+          byId('frm004-panel-' + i).hidden = (i !== n);
+        }
+        currentStep = n;
+        updateUI();
+      }
+
+      /* ── Update stepper + nav ── */
+      function updateUI() {
+        // Bubbles
+        document.querySelectorAll('.frm004__step-bubble').forEach(function (b) {
+          var s = parseInt(b.getAttribute('data-step'));
+          b.classList.toggle('frm004__step-bubble--done', s < currentStep);
+          b.classList.toggle('frm004__step-bubble--active', s === currentStep);
+          if (s < currentStep) b.textContent = '✓';
+          else b.textContent = s;
+        });
+
+        // Labels
+        document.querySelectorAll('.frm004__step-label').forEach(function (l, i) {
+          l.classList.toggle('frm004__step-label--active', i === currentStep - 1);
+        });
+
+        // Connectors
+        document.querySelectorAll('.frm004__step-connector').forEach(function (c) {
+          var n = parseInt(c.getAttribute('data-connector'));
+          c.classList.toggle('frm004__step-connector--done', n < currentStep);
+        });
+
+        // Nav buttons
+        byId('frm004-btn-back').hidden = (currentStep === 1);
+        var nextBtn = byId('frm004-btn-next');
+        nextBtn.textContent = (currentStep === totalSteps) ? 'Confirmar y pagar' : 'Siguiente →';
+        nextBtn.hidden = false;
+
+        // Progress text
+        byId('frm004-progress').textContent = 'Paso ' + currentStep + ' de ' + totalSteps;
+      }
+
+      /* ── Nav button listeners ── */
+      byId('frm004-btn-next').addEventListener('click', function () { goToStep(currentStep + 1); });
+      byId('frm004-btn-back').addEventListener('click', function () { goToStep(currentStep - 1); });
+
+      /* ── Payment method toggle ── */
+      document.querySelectorAll('input[name="pay-method"]').forEach(function (r) {
+        r.addEventListener('change', function () {
+          byId('frm004-card-fields').hidden = (r.value !== 'card');
+        });
+      });
+
+      /* ── Kit-states helpers ── */
+      function onRadioGroup(name, cb) {
+        document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+          r.addEventListener('change', function () {
+            if (r.checked) cb(r.value);
+          });
+        });
+      }
+
+      onRadioGroup('step', function (v) { goToStep(parseInt(v)); });
+      onRadioGroup('bg', function (v) {
+        byId('frm004-section').style.background =
+          v === 'surface' ? 'var(--color-surface)' : 'var(--color-bg)';
+      });
+
+      /* ── Init ── */
+      goToStep(1);
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-004 · Lista de características</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  .con004__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  /* Marcador — icono o imagen */
+  .con004__marker--icon {
+    width: 48px;
+    height: 48px;
+    background: var(--color-placeholder);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+  .con004__marker--img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-placeholder);
+    border-radius: var(--radius-md);
+  }
+  .con004__item h3 {
+    margin: 0;
+  }
+  .con004__item p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con004-section" aria-labelledby="con004-title">
+  <div class="container">
+
+    <div class="section-head" id="con004-header">
+      <p class="overtitle">Características</p>
+      <h2 id="con004-title">Todo lo que necesitas en un solo lugar</h2>
+      <p>Una descripción breve y clara del conjunto de características presentadas a continuación.</p>
+    </div>
+
+    <div class="grid grid--3" id="con004-grid">
+
+      <div class="con004__item">
+        <div class="con004__icon-el" aria-hidden="true">
+          <div class="con004__marker--icon"></div>
+          <div class="con004__marker--img" hidden></div>
+        </div>
+        <h3>Característica uno</h3>
+        <p class="con004__desc">Descripción breve de este beneficio o funcionalidad clave del producto o servicio.</p>
+      </div>
+
+      <div class="con004__item">
+        <div class="con004__icon-el" aria-hidden="true">
+          <div class="con004__marker--icon"></div>
+          <div class="con004__marker--img" hidden></div>
+        </div>
+        <h3>Característica dos</h3>
+        <p class="con004__desc">Descripción breve de este beneficio o funcionalidad clave del producto o servicio.</p>
+      </div>
+
+      <div class="con004__item">
+        <div class="con004__icon-el" aria-hidden="true">
+          <div class="con004__marker--icon"></div>
+          <div class="con004__marker--img" hidden></div>
+        </div>
+        <h3>Característica tres</h3>
+        <p class="con004__desc">Descripción breve de este beneficio o funcionalidad clave del producto o servicio.</p>
+      </div>
+
+      <div class="con004__item">
+        <div class="con004__icon-el" aria-hidden="true">
+          <div class="con004__marker--icon"></div>
+          <div class="con004__marker--img" hidden></div>
+        </div>
+        <h3>Característica cuatro</h3>
+        <p class="con004__desc">Descripción breve de este beneficio o funcionalidad clave del producto o servicio.</p>
+      </div>
+
+      <div class="con004__item con004__extra">
+        <div class="con004__icon-el" aria-hidden="true">
+          <div class="con004__marker--icon"></div>
+          <div class="con004__marker--img" hidden></div>
+        </div>
+        <h3>Característica cinco</h3>
+        <p class="con004__desc">Descripción breve de este beneficio o funcionalidad clave del producto o servicio.</p>
+      </div>
+
+      <div class="con004__item con004__extra">
+        <div class="con004__icon-el" aria-hidden="true">
+          <div class="con004__marker--icon"></div>
+          <div class="con004__marker--img" hidden></div>
+        </div>
+        <h3>Característica seis</h3>
+        <p class="con004__desc">Descripción breve de este beneficio o funcionalidad clave del producto o servicio.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-header" checked> Encabezado de sección</label>
+      <label><input type="checkbox" id="toggle-descs" checked> Descripciones</label>
+      <label>
+        <input type="checkbox" id="toggle-icons" checked> Marcador
+        <select id="sel-marker-type" class="kit-swap">
+          <option value="icon">Icono</option>
+          <option value="img">Imagen</option>
+        </select>
+      </label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Columnas (desktop)</span>
+      <label><input type="radio" name="cols" value="3" checked> 3 columnas</label>
+      <label><input type="radio" name="cols" value="2"> 2 columnas</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cantidad de ítems</span>
+      <label><input type="radio" name="count" value="6" checked> 6 ítems</label>
+      <label><input type="radio" name="count" value="4"> 4 ítems</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-004 Lista de caracteristicas.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-004</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'sin-card': 'Los ítems NO usan .card — no tienen borde ni sombra. Son icon + título + texto apilados.',
+    'icono': 'Placeholder 48×48px con border-radius:--radius-md. Reemplazar por SVG o componente de icono.',
+    'grid': 'Usa las clases .grid.grid--3 o .grid.grid--2 del sistema. No definir columnas manualmente.'
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-header', function (v) {
+      var el = byId('con004-header');
+      if (v) el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+    });
+    onCheck('toggle-descs', function (v) {
+      document.querySelectorAll('.con004__desc').forEach(function (el) {
+        if (v) el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+      });
+    });
+    onCheck('toggle-icons', function (v) {
+      document.querySelectorAll('.con004__icon-el').forEach(function (el) {
+        if (v) el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+      });
+    });
+    function applyMarkerType(v) {
+      document.querySelectorAll('.con004__marker--icon').forEach(function (el) {
+        if (v === 'icon') el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+      });
+      document.querySelectorAll('.con004__marker--img').forEach(function (el) {
+        if (v === 'img') el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+      });
+    }
+    var selMarker = document.getElementById('sel-marker-type');
+    if (selMarker) selMarker.addEventListener('change', function () { applyMarkerType(selMarker.value); });
+    onRadioGroup('cols', function (v) {
+      var grid = byId('con004-grid');
+      grid.classList.remove('grid--2', 'grid--3');
+      grid.classList.add('grid--' + v);
+    });
+    onRadioGroup('count', function (v) {
+      document.querySelectorAll('.con004__extra').forEach(function (el) {
+        if (v === '4') el.setAttribute('hidden', ''); else el.removeAttribute('hidden');
+      });
+    });
+    onRadioGroup('bg', function (v) { byId('con004-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

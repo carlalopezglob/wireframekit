@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-017 · Lista de datos clave</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  .con017__wrap { max-width: 640px; }
+
+  .con017__header { margin: 0 0 var(--space-6); }
+  .con017__header h2 { margin: 0; }
+
+  .con017__list { margin: 0; }
+  .con017__list--2col { max-width: none; }
+  @media (min-width: 768px) {
+    .con017__list--2col {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      column-gap: var(--space-12); row-gap: 0;
+    }
+  }
+
+  .con017__item {
+    display: flex; flex-direction: column; gap: var(--space-1);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
+    min-width: 0;
+  }
+  .con017__list > .con017__item:last-child { border-bottom: none; }
+  /* En 2 columnas, cada columna gestiona su propio último borde via nth-last-of-type no es trivial
+     sin JS — se acepta que el último ítem de cada columna conserve el borde si la lista es impar;
+     es un detalle de wireframe, no de producción. */
+
+  @media (min-width: 768px) {
+    .con017__item { flex-direction: row; align-items: baseline; justify-content: space-between; gap: var(--space-4); }
+  }
+
+  .con017__label {
+    margin: 0;
+    font-size: 0.875rem; color: var(--color-text-muted); font-weight: 600;
+    min-width: 0;
+  }
+  .con017__value {
+    margin: 0;
+    font-size: 0.95rem; color: var(--color-text); font-weight: 500;
+    min-width: 0; text-align: left;
+  }
+  @media (min-width: 768px) {
+    .con017__value { text-align: right; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con017-section" aria-labelledby="con017-title">
+  <div class="container">
+    <div class="con017__wrap">
+
+      <div class="con017__header" id="con017-header">
+        <h2 id="con017-title" data-max="Título largo para el contenedor de la ficha de datos">Ficha técnica</h2>
+      </div>
+
+      <dl class="con017__list" id="con017-list">
+
+        <div class="con017__item">
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta uno</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor uno</dd>
+        </div>
+        <div class="con017__item">
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta dos</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor dos</dd>
+        </div>
+        <div class="con017__item">
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta tres</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor tres</dd>
+        </div>
+        <div class="con017__item">
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta cuatro</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor cuatro</dd>
+        </div>
+        <div class="con017__item con017__item-5" hidden>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta cinco</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor cinco</dd>
+        </div>
+        <div class="con017__item con017__item-6" hidden>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta seis</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor seis</dd>
+        </div>
+        <div class="con017__item con017__item-7" hidden>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta siete</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor siete</dd>
+        </div>
+        <div class="con017__item con017__item-8" hidden>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta ocho</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor ocho</dd>
+        </div>
+
+      </dl>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Título</span>
+      <label><input type="checkbox" id="toggle-header17" checked> Visible</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Columnas</span>
+      <label><input type="radio" name="cols17" value="1" checked> 1 columna</label>
+      <label><input type="radio" name="cols17" value="2"> 2 columnas</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Número de ítems</span>
+      <label><input type="radio" name="itemcount17" value="4" checked> 4 ítems</label>
+      <label><input type="radio" name="itemcount17" value="8" data-max-state> 8 ítems</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg17" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg17" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-017-lista-de-datos-clave.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-017</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Diferencia con CAT-CON-005 (Stats)': 'Ahí la cifra es grande y es la protagonista visual (3-4 métricas de impacto). Aquí el valor es texto corto libre sin tratamiento tipográfico destacado — es una ficha de datos, no un bloque de métricas.',
+    'Estructura':      '<dl> con un <div> por ítem envolviendo <dt> (etiqueta) y <dd> (valor) — semántica de lista de definiciones.',
+    'Ítems':           '3 a 12 en este wireframe. Etiqueta máx. 30 car., valor máx. 60 car.',
+    '2 columnas':      'A partir de tablet. Útil con listas de 8+ ítems para no alargar demasiado la página en vertical.',
+    'Mobile':          'Etiqueta arriba, valor debajo (stack). A partir de tablet, misma fila con space-between.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-header17', function (v) { byId('con017-header').hidden = !v; });
+
+    onRadioGroup('cols17', function (v) {
+      byId('con017-list').classList.toggle('con017__list--2col', v === '2');
+    });
+
+    onRadioGroup('itemcount17', function (v) {
+      var show8 = v === '8';
+      ['5','6','7','8'].forEach(function (n) {
+        var el = document.querySelector('.con017__item-' + n);
+        if (el) el.hidden = !show8;
+      });
+    });
+
+    onRadioGroup('bg17', function (v) { byId('con017-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

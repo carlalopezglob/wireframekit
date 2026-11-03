@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-010 · Banner CTA</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* Inner layout */
+.con010__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-8);
+}
+
+/* Texto: apilado con espacio entre tag / título / sub */
+.con010__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Split variant — tablet+ */
+@media (min-width: 768px) {
+  .con010__inner--split {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: var(--space-12);
+  }
+  .con010__inner--split .con010__text { flex: 1; }
+  .con010__inner--split .con010__ctas {
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    min-width: 160px;
+  }
+}
+
+.con010__tag {
+  display: inline-block;
+  align-self: center; /* centrado en modo centered, ignorado en split */
+  font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.25em 0.8em;
+}
+.con010__inner--split .con010__tag { align-self: flex-start; }
+
+.con010__title {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.con010__sub {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.con010__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+/* Background variants */
+.con010--surface  { background: var(--color-surface); }
+.con010--accent   { background: var(--color-accent); color: var(--color-bg); }
+.con010--accent .con010__title { color: var(--color-bg); }
+.con010--accent .con010__sub   { color: rgba(255,255,255,0.7); }
+.con010--accent .con010__tag   {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+  color: var(--color-bg);
+}
+/* Border top variant */
+.con010--bordered { border-top: 1px solid var(--color-border); }
+</style>
+</head>
+<body>
+<section class="section" id="con010-section" aria-labelledby="con010-title">
+  <div class="container">
+    <div class="con010__inner" id="con010-inner">
+      <div class="con010__text" id="con010-text">
+        <span class="con010__tag" id="con010-tag" data-max="Oferta limitada — texto más largo">Oferta limitada</span>
+        <h2 class="con010__title" id="con010-title"
+            data-max="Un título de llamada a la acción largo que anima al usuario a hacer clic ahora mismo">
+          ¿Listo para dar el siguiente paso?
+        </h2>
+        <p class="con010__sub" id="con010-sub"
+           data-max="Subtítulo que refuerza el valor y reduce la fricción antes del clic. Máximo dos líneas.">
+          Empieza gratis hoy. Sin tarjeta de crédito. Cancela cuando quieras.
+        </p>
+      </div>
+      <div class="con010__ctas">
+        <a href="#" class="btn btn--lg" id="con010-cta1" data-slot="cta-prim"
+           data-max="Llamada a la acción principal larga">Empieza gratis</a>
+        <a href="#" class="btn btn--outline btn--lg" id="con010-cta2" data-slot="cta-sec"
+           data-max="Enlace a contacto o demo completo">Hablar con ventas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-tag" checked> Etiqueta</label>
+      <label><input type="checkbox" id="toggle-sub" checked> Subtítulo</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta1" checked> CTA principal</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-prim']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta2" checked> CTA secundario</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-sec']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--outline">Outline</option>
+          <option value="">Primario</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Disposición</span>
+      <label><input type="radio" name="layout" value="center" checked> Centrado</label>
+      <label><input type="radio" name="layout" value="split"> Horizontal</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="white" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="surface"> Superficie</label>
+      <label><input type="radio" name="bg" value="accent"> Oscuro</label>
+      <label><input type="radio" name="bg" value="bordered"> Borde superior</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-010-banner-cta.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-010</summary>
+  <div class="kit-notes__body"><p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Título':         'Máx. 80 car. (~2 líneas desktop). H2 semántico.',
+    'Subtítulo':      'Máx. 120 car. (~2 líneas desktop). Opcional.',
+    'Etiqueta':       'Máx. 30 car. Pill tag opcional. Útil para urgencia u oferta.',
+    'CTA principal':  'Máx. 30 car. Siempre visible. Estilo configurable.',
+    'CTA secundario': 'Máx. 30 car. Solo si hay un segundo destino claro.',
+    'Centrado':       'Layout por defecto. Texto centrado, CTAs en fila.',
+    'Horizontal':     'Texto izquierda, CTAs derecha en columna. ≥768px.',
+    'Fondo oscuro':   'Usa var(--color-accent). Ajusta colores de texto automáticamente.',
+  };
+
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onRadioGroup(name, cb) { document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) { r.addEventListener('change', function () { if (r.checked) cb(r.value); }); }); }
+
+  // Visibilidad
+  onCheck('toggle-tag',  function (v) { byId('con010-tag').hidden  = !v; });
+  onCheck('toggle-sub',  function (v) { byId('con010-sub').hidden  = !v; });
+  onCheck('toggle-cta1', function (v) { byId('con010-cta1').hidden = !v; });
+  onCheck('toggle-cta2', function (v) { byId('con010-cta2').hidden = !v; });
+
+  // Disposición
+  onRadioGroup('layout', function (v) {
+    byId('con010-inner').classList.toggle('con010__inner--split', v === 'split');
+  });
+
+  // Fondo
+  var bgClasses = ['con010--surface', 'con010--accent', 'con010--bordered'];
+  var bgMap = { surface: 'con010--surface', accent: 'con010--accent', bordered: 'con010--bordered' };
+  onRadioGroup('bg', function (v) {
+    var section = byId('con010-section');
+    bgClasses.forEach(function (cls) { section.classList.remove(cls); });
+    if (bgMap[v]) section.classList.add(bgMap[v]);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+/* =============================================
+   WIREFRAME BASE STYLES
+   Importar desde todas las páginas y módulos.
+   Desde pages/<sección>/: ../../shared/styles.css
+   Desde modules/<cat>/: ../../shared/styles.css
+   ============================================= */
+
+/* --- Variables (rellenar con valores del proyecto en Layout global.md) --- */
+:root {
+  --color-bg:         #ffffff;
+  --color-surface:    #f5f5f5;
+  --color-border:     #d0d0d0;
+  --color-text:       #1a1a1a;
+  --color-text-muted: #6b6b6b;
+  --color-placeholder:#c0c0c0;
+  --color-accent:     #333333;
+
+  --font-base:    system-ui, -apple-system, sans-serif;
+  --font-heading: system-ui, -apple-system, sans-serif;
+  --font-size-base: 16px;
+
+  --grid-max:  1200px;
+  --grid-gap:  1.5rem;
+
+  --section-padding-mobile:  3rem;
+  --section-padding-tablet:  4rem;
+  --section-padding-desktop: 6rem;
+
+  /* Radios — escalonados por tamaño de elemento */
+  --radius-sm: 6px;   /* inputs, tags, botones pequeños */
+  --radius-md: 12px;  /* cards, paneles, botones estándar */
+  --radius-lg: 20px;  /* imágenes grandes, heroes, superficies destacadas */
+
+  /* Escala de espaciado — base 8px */
+  --space-1:  0.25rem;  /* 4px */
+  --space-2:  0.5rem;   /* 8px */
+  --space-3:  0.75rem;  /* 12px */
+  --space-4:  1rem;     /* 16px */
+  --space-6:  1.5rem;   /* 24px */
+  --space-8:  2rem;     /* 32px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-24: 6rem;     /* 96px */
+
+  /* Tamaños táctiles mínimos (44–48px) */
+  --control-height-sm: 40px;
+  --control-height-md: 48px;
+
+  /* Sombras — para elementos elevados / clickables
+     Usar en cards interactivas, modales, drawers. No usar en módulos estáticos. */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.04);
+}
+
+/* --- Reset mínimo --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* [hidden] necesita !important porque selectores de clase (.overtitle, .card…)
+   tienen más especificidad y de lo contrario ganan sobre el atributo */
+[hidden] { display: none !important; }
+body { font-family: var(--font-base); font-size: var(--font-size-base); color: var(--color-text); background: var(--color-bg); line-height: 1.6; }
+img  { display: block; max-width: 100%; }
+a    { color: inherit; }
+
+/* --- Foco accesible — nunca eliminar, solo personalizar en UI real --- */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* --- Contenedor --- */
+.container { width: 100%; max-width: var(--grid-max); margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 768px)  { .container { padding: 0 1.5rem; } }
+@media (min-width: 1200px) { .container { padding: 0 2rem; } }
+
+/* --- Grid genérico --- */
+.grid { display: grid; gap: var(--grid-gap); }
+.grid--2 { grid-template-columns: 1fr; }
+.grid--3 { grid-template-columns: 1fr; }
+.grid--4 { grid-template-columns: 1fr; }
+@media (min-width: 768px) {
+  .grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1200px) {
+  .grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .grid--4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* --- Placeholder de imagen --- */
+.img-placeholder {
+  background: var(--color-placeholder);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted); font-size: 0.8rem; font-family: monospace;
+  min-height: 200px;
+}
+
+/* --- Tipografía wireframe --- */
+h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; font-family: var(--font-heading); }
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+h4 { font-size: 1rem; }
+/* Cuerpos de texto alineados a la izquierda siempre — nunca centrar párrafos */
+p  { max-width: 65ch; text-align: left; }
+
+/* --- Botones wireframe --- */
+/* Altura táctil mínima (--control-height-md) — no relativa al texto */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: var(--control-height-md); padding: 0 var(--space-6);
+  border: 2px solid var(--color-accent); border-radius: var(--radius-md);
+  font-size: 0.95rem; font-weight: 600; cursor: pointer; text-decoration: none;
+  background: var(--color-accent); color: #fff;
+  transition: opacity 0.15s ease;
+}
+.btn:hover  { opacity: 0.85; }
+.btn--outline { background: transparent; color: var(--color-accent); }
+.btn--link    { border: none; background: none; color: var(--color-accent); text-decoration: underline; padding: 0; min-height: auto; }
+.btn--sm      { min-height: var(--control-height-sm); padding: 0 var(--space-4); font-size: 0.875rem; border-radius: var(--radius-sm); }
+
+/* --- Sección genérica --- */
+.section    { padding: var(--section-padding-mobile) 0; background: var(--color-bg); }
+@media (min-width: 768px)  { .section { padding: var(--section-padding-tablet) 0; } }
+@media (min-width: 1200px) { .section { padding: var(--section-padding-desktop) 0; } }
+
+/* Sección alterna — fondo gris claro para ritmo visual entre secciones */
+.section--alt { background: var(--color-surface); }
+
+.section--sm { padding: 1.5rem 0; }
+.section-head { margin-bottom: var(--space-8); }
+.section-head h2 + p { margin-top: var(--space-3); color: var(--color-text-muted); }
+
+/* --- Superficie (card, panel) --- */
+.surface { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-6); }
+.surface--border { background: var(--color-bg); border: 1px solid var(--color-border); }
+
+/* Card interactiva — borde + sombra al hover */
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card--clickable:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.card__body { padding: var(--space-6); }
+.card__img { width: 100%; }
+
+/* --- Tags / Chips --- */
+.tag {
+  display: inline-block; padding: 0.2em 0.7em;
+  border: 1px solid var(--color-border); border-radius: 99px;
+  font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* --- Separador --- */
+.divider { border: none; border-top: 1px solid var(--color-border); margin: var(--space-8) 0; }
+
+/* --- Overtitle / eyebrow --- */
+.overtitle {
+  display: block;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+/* --- Barra de navegación wireframe --- */
+.nav-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0; border-bottom: 1px solid var(--color-border);
+}
+.nav-bar__logo { font-weight: 700; font-size: 1.1rem; }
+.nav-bar__links { display: flex; gap: 1.5rem; list-style: none; }
+@media (max-width: 767px) { .nav-bar__links { display: none; } }
+
+/* --- Footer wireframe --- */
+.footer-bar { padding: 2rem 0; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.875rem; }
+
+/* --- Texto expandible --- */
+.text-expand__body[hidden] { display: none; }
+@media (min-width: 1200px) { .text-expand__body[hidden] { display: block !important; } .text-expand__toggle { display: none; } }
+
+/* --- Tab panel --- */
+.tabs {
+  display: flex; gap: 0; border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-6);
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; padding: var(--space-3) var(--space-6);
+  cursor: pointer; font-size: 1rem; color: var(--color-text-muted);
+  font-family: var(--font-base); font-weight: 500;
+  flex-shrink: 0; white-space: nowrap;
+}
+.tab-btn.is-active { border-bottom-color: var(--color-accent); font-weight: 700; color: var(--color-text); }
+.tab-panel[hidden] { display: none; }
+
+/* --- Campos de formulario wireframe --- */
+.field {
+  display: block; width: 100%;
+  min-height: var(--control-height-md); padding: 0 var(--space-4);
+  border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  font-size: 1rem; font-family: var(--font-base); color: var(--color-text);
+  background: var(--color-bg);
+}
+.field::placeholder { color: var(--color-text-muted); }
+.field:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0;
+  border-color: var(--color-accent);
+}
+textarea.field { min-height: 120px; padding: var(--space-3) var(--space-4); resize: vertical; }
+.field-label { display: block; margin-bottom: var(--space-2); font-size: 0.875rem; font-weight: 600; }
+.field-error { display: block; margin-top: var(--space-1); font-size: 0.8rem; color: #b00; }
+.field--error { border-color: #b00; }
+
+/* =============================================
+   HERRAMIENTAS DEL KIT — solo para módulos standalone
+   No se copian a proyectos de cliente.
+   ============================================= */
+
+/* --- Panel de estados interactivo (kit-states) ---
+   Permite alternar elementos opcionales en el navegador.
+   Se coloca justo antes de kit-notes en cada módulo. */
+.kit-states {
+  margin-top: var(--space-8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  font-family: var(--font-base);
+}
+.kit-states > summary {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--color-text-muted); cursor: pointer; list-style: none;
+}
+.kit-states > summary::-webkit-details-marker { display: none; }
+.kit-states > summary::before { content: "⚙"; }
+.kit-states__body {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  display: flex; flex-wrap: wrap; gap: var(--space-6);
+}
+.kit-states__group { display: flex; flex-direction: column; gap: var(--space-2); }
+.kit-states__group-label {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--color-text-muted); font-weight: 700; margin-bottom: var(--space-1);
+}
+.kit-states label {
+  display: flex; align-items: center; gap: var(--space-2);
+  font-size: 0.85rem; cursor: pointer; user-select: none;
+}
+.kit-states__note {
+  font-size: 0.78rem; color: var(--color-text-muted);
+  font-family: monospace; line-height: 1.4;
+  padding-left: var(--space-1);
+}
+/* ── Fila de propiedad estilo Figma ──────────────────────────
+   Uso:
+     <div class="kit-states__prop">
+       <span class="kit-states__prop-label">Tamaño</span>
+       <select class="kit-swap" data-swap-target="..." data-swap-from="...">
+         <option value="">Base</option>
+         <option value="cls-modifier">Variante</option>
+       </select>
+     </div>
+   El value de cada option = clase modificadora a aplicar.
+   "" = variante base (sin modificador extra).
+──────────────────────────────────────────────────────────── */
+.kit-states__prop {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+.kit-states__prop-label {
+  font-size: 0.8rem; color: var(--color-text-muted);
+  white-space: nowrap; flex-shrink: 0;
+}
+.kit-swap,
+.kit-slot-type {
+  font-size: 0.8rem; font-family: var(--font-base);
+  padding: 0.25em 0.5em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  min-width: 110px;
+}
+.kit-swap:hover, .kit-slot-type:hover { border-color: var(--color-accent); }
+.kit-swap:focus, .kit-slot-type:focus { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+/* Fila con checkbox/label + select inline */
+.kit-states__prop-inline {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: var(--space-3);
+}
+.kit-states__prop-inline label { flex: 1; margin: 0; }
+
+/* Sección dentro del panel — agrupa grupos en una fila con label y separador */
+.kit-states__section {
+  width: 100%;
+  display: flex; flex-wrap: wrap; gap: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+.kit-states__section:first-child {
+  border-top: none; padding-top: 0;
+}
+.kit-states__section-label {
+  width: 100%;
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--color-accent);
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+/* --- Panel de notas para UI (kit-notes) --- */
+.kit-notes {
+  margin-top: var(--space-4);
+  border-top: 3px solid var(--color-accent);
+  background: #fafafa;
+  font-family: var(--font-base);
+}
+.kit-notes__toggle {
+  display: flex; align-items: center; gap: var(--space-2);
+  width: 100%; cursor: pointer; list-style: none;
+  padding: var(--space-4) var(--space-6);
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--color-text);
+}
+.kit-notes__toggle::-webkit-details-marker { display: none; }
+.kit-notes__toggle::before {
+  content: "▸"; display: inline-block; transition: transform 0.15s ease;
+}
+.kit-notes[open] .kit-notes__toggle::before { transform: rotate(90deg); }
+.kit-notes__body { padding: 0 var(--space-6) var(--space-8); font-size: 0.9rem; }
+.kit-notes__body h4 {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--color-text-muted); margin: var(--space-6) 0 var(--space-2);
+}
+.kit-notes__body h4:first-child { margin-top: 0; }
+.kit-notes__body ul { margin: 0; padding-left: 1.1em; }
+.kit-notes__body li { margin-bottom: var(--space-2); }
+.kit-notes__body table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.kit-notes__body th,
+.kit-notes__body td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); }
+
+/* ─── Variantes de botón adicionales ──────────────────────────── */
+.btn--ghost  { background: transparent; border-color: transparent; color: var(--color-text); }
+.btn--ghost:hover { background: var(--color-surface-alt, #f5f5f5); opacity: 1; }
+.btn--danger { background: #c0392b; border-color: #c0392b; color: #fff; }
+.btn--lg     { min-height: 56px; padding: 0 var(--space-8); font-size: 1.05rem; border-radius: var(--radius-lg); }
+.btn--loading { position: relative; color: transparent !important; pointer-events: none; }
+.btn--loading::after {
+  content: ''; position: absolute;
+  width: 1em; height: 1em;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+.btn--outline.btn--loading::after,
+.btn--ghost.btn--loading::after {
+  border-color: rgba(0,0,0,0.12);
+  border-top-color: var(--color-accent);
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* ─── Variantes semánticas de tag / badge ─────────────────────── */
+.tag--success { border-color: #27ae60; color: #1e8449; background: #eafaf1; }
+.tag--warning { border-color: #e67e22; color: #d35400; background: #fef5e7; }
+.tag--error   { border-color: #c0392b; color: #922b21; background: #fdf2f2; }
+.tag--info    { border-color: #2980b9; color: #1a5276; background: #eaf4fc; }
+.tag--accent  { border-color: var(--color-accent); color: var(--color-accent); }
+.tag--solid   { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }

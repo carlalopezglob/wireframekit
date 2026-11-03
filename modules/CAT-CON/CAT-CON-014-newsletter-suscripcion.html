@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAT-CON-014 — Newsletter Suscripción</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <style>
+    /* ── Layout variants ─────────────────────────────────────────── */
+    .con014__variant { width: 100%; }
+
+    /* ── Layout 1: Centrado ──────────────────────────────────────── */
+    .con014__centrado-inner {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* ── Layout 2: Split ─────────────────────────────────────────── */
+    .con014__split-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .con014__split-inner { grid-template-columns: 1fr 1fr; }
+    }
+
+    .con014__split-text h2 { margin-bottom: var(--space-3); }
+    .con014__split-text p  { color: var(--color-text-muted); }
+
+    .con014__split-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .con014__split-form .con014__input  { width: 100%; box-sizing: border-box; }
+    .con014__split-form .btn            { width: 100%; }
+
+    /* ── Layout 3: Tarjeta elevada ───────────────────────────────── */
+    .con014__card-inner {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-12) var(--space-8);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* ── Shared form elements ────────────────────────────────────── */
+    .con014__subtitle { color: var(--color-text-muted); }
+
+    .con014__input-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    @media (min-width: 640px) {
+      .con014__input-group { flex-direction: row; }
+    }
+
+    .con014__input {
+      flex: 1;
+      padding: 0.6em 0.9em;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-family: var(--font-base);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .con014__input:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 1px;
+    }
+
+    .con014__legal {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .con014__success { font-size: 0.95rem; }
+
+    .con014__proof {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-6);
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    /* ── Dark mode overrides ─────────────────────────────────────── */
+    .con014--dark .con014__input {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .con014--dark .con014__input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+    .con014--dark .con014__legal,
+    .con014--dark .con014__proof  { color: rgba(255, 255, 255, 0.5); }
+
+    .con014--dark .con014__subtitle { color: rgba(255, 255, 255, 0.7); }
+
+    .con014--dark .con014__split-text p { color: rgba(255, 255, 255, 0.7); }
+
+    .con014--dark .con014__card-inner {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MODULE
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="con014-section">
+  <div class="container">
+
+    <!-- ── Layout 1: Centrado (default) ───────────────────────────── -->
+    <div class="con014__variant" id="con014-centrado">
+      <div class="con014__centrado-inner">
+        <p class="overtitle" id="con014-overtitle">Newsletter</p>
+        <h2 class="heading-2">Mantente al día</h2>
+        <p class="con014__subtitle" id="con014-subtitle">
+          Recibe las últimas novedades, artículos y recursos directamente en tu bandeja de entrada.
+        </p>
+        <form class="con014__form" id="con014-form-c" novalidate>
+          <div class="con014__input-group">
+            <input
+              type="email"
+              class="con014__input"
+              placeholder="tu@email.com"
+              aria-label="Correo electrónico"
+            >
+            <button type="submit" class="btn" data-slot="cta-sub">Suscribirme</button>
+          </div>
+          <p class="con014__legal" id="con014-legal">Sin spam. Cancela cuando quieras.</p>
+        </form>
+        <div class="con014__success" id="con014-success-c" hidden>
+          <p>✓ ¡Gracias! Te has suscrito correctamente.</p>
+        </div>
+        <div class="con014__proof" id="con014-proof">
+          <span>📬 +12.000 suscriptores</span>
+          <span>📆 Envíos semanales</span>
+          <span>🚫 Sin spam</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Layout 2: Horizontal split ────────────────────────────── -->
+    <div class="con014__variant" id="con014-split" hidden>
+      <div class="con014__split-inner">
+
+        <div class="con014__split-text">
+          <p class="overtitle">Newsletter</p>
+          <h2 class="heading-2">Mantente al día</h2>
+          <p class="con014__subtitle">Recibe las últimas novedades, artículos y recursos directamente en tu bandeja de entrada. Sin spam, solo contenido de valor.</p>
+        </div>
+
+        <div class="con014__split-form">
+          <form id="con014-form-s" novalidate>
+            <input
+              type="email"
+              class="con014__input"
+              placeholder="tu@email.com"
+              aria-label="Correo electrónico"
+              style="margin-bottom: var(--space-3); width: 100%; box-sizing: border-box;"
+            >
+            <button type="submit" class="btn" data-slot="cta-sub" style="width: 100%;">Suscribirme</button>
+          </form>
+          <p class="con014__legal">Sin spam. Cancela cuando quieras.</p>
+          <div class="con014__success" id="con014-success-s" hidden>
+            <p>✓ ¡Gracias! Te has suscrito correctamente.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Layout 3: Tarjeta elevada ─────────────────────────────── -->
+    <div class="con014__variant" id="con014-card" hidden>
+      <div class="con014__card-inner">
+        <p class="overtitle">Newsletter</p>
+        <h2 class="heading-2">Mantente al día</h2>
+        <p class="con014__subtitle">
+          Recibe las últimas novedades, artículos y recursos directamente en tu bandeja de entrada.
+        </p>
+        <form class="con014__form" id="con014-form-k" novalidate>
+          <div class="con014__input-group">
+            <input
+              type="email"
+              class="con014__input"
+              placeholder="tu@email.com"
+              aria-label="Correo electrónico"
+            >
+            <button type="submit" class="btn" data-slot="cta-sub">Suscribirme</button>
+          </div>
+          <p class="con014__legal">Sin spam. Cancela cuando quieras.</p>
+        </form>
+        <div class="con014__success" id="con014-success-k" hidden>
+          <p>✓ ¡Gracias! Te has suscrito correctamente.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Variante</span>
+      <label><input type="radio" name="layout" value="centrado" checked> Centrado</label>
+      <label><input type="radio" name="layout" value="split"> Horizontal</label>
+      <label><input type="radio" name="layout" value="card"> Tarjeta</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="con014-toggle-overtitle" checked> Sobretítulo</label>
+      <label><input type="checkbox" id="con014-toggle-subtitle" checked> Subtítulo</label>
+      <label><input type="checkbox" id="con014-toggle-legal" checked> Texto legal</label>
+      <label><input type="checkbox" id="con014-toggle-proof" checked> Prueba social</label>
+      <div class="kit-states__prop-inline">
+        <label>CTA</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-sub']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="white" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="surface"> Gris</label>
+      <label><input type="radio" name="bg" value="dark"> Oscuro</label>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     KIT-NOTES
+═══════════════════════════════════════════════════════════════ -->
+<details
+  class="kit-notes"
+  data-spec-src="../../registry/CAT-CON/CAT-CON-014-newsletter-suscripcion.md"
+>
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-014</summary>
+  <div class="kit-notes__body">
+    <p>Cargando…</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Variante centrada':  'Default. Input + botón en fila (≥ 640px). Máx. 560px de ancho.',
+    'Variante horizontal':'Split 50/50 a partir de 768px. Texto a la izquierda, form a la derecha.',
+    'Variante tarjeta':   'Card elevada, centrada, máx. 600px. Útil sobre fondos con color.',
+    'Sobretítulo':        'Opcional. Máx. 30 car.',
+    'Subtítulo':          'Máx. 120 car. Refuerza la propuesta de valor del newsletter.',
+    'Texto legal':        'Breve (máx. 60 car.). "Sin spam. Cancela cuando quieras." o similar.',
+    'Prueba social':      'Solo variante centrada. 2–3 datos numéricos (suscriptores, frecuencia…).',
+    'CTA':                'Primario por defecto. Texto máx. 20 car. El tipo se controla con el selector.',
+    'Estado éxito':       'El form se oculta tras enviar y aparece el mensaje de confirmación.',
+    'Fondo oscuro':       'Cambia colores de input y texto con clase .con014--dark.',
+  };
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── Helpers ────────────────────────────────────────────────── */
+  function byId(id) { return document.getElementById(id); }
+
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[type="radio"][name="' + name + '"]')
+      .forEach(function (radio) {
+        radio.addEventListener('change', function () {
+          if (this.checked) cb(this.value);
+        });
+      });
+  }
+
+  function onCheck(id, cb) {
+    var el = byId(id);
+    if (!el) return;
+    el.addEventListener('change', function () { cb(this.checked); });
+  }
+
+  /* ── Layout switcher ────────────────────────────────────────── */
+  var layouts = ['centrado', 'split', 'card'];
+
+  onRadioGroup('layout', function (v) {
+    layouts.forEach(function (l) {
+      byId('con014-' + l).hidden = (l !== v);
+    });
+  });
+
+  /* ── Form submit → show success ─────────────────────────────── */
+  function bindForm(formId, successId) {
+    var form = byId(formId);
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      form.hidden = true;
+      var success = byId(successId);
+      if (success) success.hidden = false;
+    });
+  }
+
+  bindForm('con014-form-c', 'con014-success-c');
+  bindForm('con014-form-s', 'con014-success-s');
+  bindForm('con014-form-k', 'con014-success-k');
+
+  /* ── Elements toggles ───────────────────────────────────────── */
+  onCheck('con014-toggle-overtitle', function (v) {
+    document.querySelectorAll('.overtitle').forEach(function (el) {
+      el.hidden = !v;
+    });
+  });
+
+  onCheck('con014-toggle-subtitle', function (v) {
+    document.querySelectorAll('.con014__subtitle').forEach(function (el) {
+      el.hidden = !v;
+    });
+  });
+
+  onCheck('con014-toggle-legal', function (v) {
+    document.querySelectorAll('.con014__legal').forEach(function (el) {
+      el.hidden = !v;
+    });
+  });
+
+  onCheck('con014-toggle-proof', function (v) {
+    var proof = byId('con014-proof');
+    if (proof) proof.hidden = !v;
+  });
+
+  /* ── Background switcher ────────────────────────────────────── */
+  onRadioGroup('bg', function (v) {
+    var sec = byId('con014-section');
+    if (v === 'dark') {
+      sec.style.background = 'var(--color-text)';
+      sec.style.color      = 'var(--color-bg)';
+      sec.classList.add('con014--dark');
+    } else {
+      sec.style.background = v === 'surface' ? 'var(--color-surface)' : 'var(--color-bg)';
+      sec.style.color      = '';
+      sec.classList.remove('con014--dark');
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>

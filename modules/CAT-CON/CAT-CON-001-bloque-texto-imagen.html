@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-001 · Bloque texto + imagen</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Layout ── */
+  .con001__grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .con001__grid { grid-template-columns: 1fr 1fr; gap: var(--space-12); }
+  }
+  @media (min-width: 1200px) {
+    .con001__grid { grid-template-columns: 55fr 45fr; gap: var(--space-16); }
+  }
+
+  /* Orden invertido — imagen primero en todos los breakpoints */
+  .con001__grid--reversed .con001__media { order: -1; }
+
+  /* ── Columna de texto ── */
+  .con001__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .con001__title { margin: 0; }
+
+  /* Slot de contenido — ocupa el espacio entre título y CTAs.
+     Los bloques se apilan con gap propio. */
+  .con001__slot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Contenido tipo párrafo */
+  .slot-text { color: var(--color-text-muted); margin: 0; }
+
+  /* Contenido tipo lista */
+  .slot-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: var(--space-2);
+  }
+  .slot-list li {
+    display: flex; align-items: flex-start; gap: var(--space-3);
+    font-size: 0.95rem;
+  }
+  .slot-list li::before {
+    content: '';
+    flex-shrink: 0; width: 6px; height: 6px;
+    margin-top: 0.48em;
+    border-radius: 50%; background: var(--color-accent);
+  }
+
+  /* Contenido tipo mini-stats */
+  .slot-stats {
+    display: flex; gap: var(--space-6);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .slot-stats__item { display: flex; flex-direction: column; gap: var(--space-1); }
+  .slot-stats__number {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 800; line-height: 1; color: var(--color-text);
+    font-family: var(--font-heading);
+  }
+  .slot-stats__label { font-size: 0.8rem; color: var(--color-text-muted); }
+
+  /* CTAs agrupados */
+  .con001__ctas {
+    display: flex; flex-wrap: wrap;
+    gap: var(--space-3); align-items: center;
+  }
+
+  /* ── Columna de media ── */
+  .con001__media { width: 100%; }
+
+  /* Imagen placeholder */
+  .media-img {
+    width: 100%; aspect-ratio: 4 / 3; min-height: unset;
+    border-radius: var(--radius-lg);
+  }
+  @media (max-width: 767px) { .media-img { aspect-ratio: 16 / 9; } }
+
+  /* Vídeo placeholder */
+  .media-video {
+    width: 100%; aspect-ratio: 16 / 9; min-height: unset;
+    background: #2a2a2a;
+    border-radius: var(--radius-lg);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .media-video__play {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .media-video__play::after {
+    content: '';
+    display: block;
+    margin-left: 4px;
+    border-style: solid;
+    border-width: 9px 0 9px 16px;
+    border-color: transparent transparent transparent rgba(255,255,255,0.9);
+  }
+  .media-video__label {
+    position: absolute; bottom: var(--space-4); left: var(--space-4);
+    font-size: 0.7rem; font-family: monospace; color: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con001-section" aria-labelledby="con001-title">
+  <div class="container">
+    <div class="con001__grid" id="con001-grid">
+
+      <!-- Columna de texto -->
+      <div class="con001__text">
+        <span class="overtitle" id="con001-overtitle"
+              data-max="Categoría — eyebrow de la sección, largo">Categoría o sección</span>
+
+        <h2 class="con001__title" id="con001-title"
+            data-max="Título largo que explica el valor de esta sección con dos líneas visibles">
+          Título que explica el valor de esta sección, hasta dos líneas
+        </h2>
+
+        <!-- Slots — hasta 3 bloques independientes, tipo configurable -->
+        <div class="con001__slots">
+
+          <!-- Slot 1 (visible por defecto) -->
+          <div id="con001-slot-1" data-slot="con001-s1">
+            <p data-slot-type="text" class="slot-text"
+               data-max="Párrafo extenso que desarrolla el mensaje del título con contexto adicional. Alineado a la izquierda para máxima legibilidad en cualquier dispositivo.">
+              Párrafo de apoyo que desarrolla el mensaje del título. Máximo 3 líneas en desktop.
+            </p>
+            <ul data-slot-type="list" class="slot-list" hidden>
+              <li data-max="Primer punto con texto extenso que llega justo al límite">Primer punto destacado del contenido</li>
+              <li data-max="Segundo punto de valor con más detalle para el usuario final">Segundo punto de valor o beneficio</li>
+              <li data-max="Tercer punto adicional — entre dos y cuatro ítems en total">Tercer punto — entre 2 y 4 ítems</li>
+            </ul>
+            <div data-slot-type="stats" class="slot-stats" hidden aria-label="Cifras clave">
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+9.999">+200</span>
+                <span class="slot-stats__label" data-max="Etiqueta de dato más larga">Etiqueta de dato</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="99,9%">98%</span>
+                <span class="slot-stats__label" data-max="Segunda etiqueta">Etiqueta de dato</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+200K">14k</span>
+                <span class="slot-stats__label" data-max="Tercera etiqueta">Etiqueta de dato</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slot 2 (oculto por defecto) -->
+          <div id="con001-slot-2" data-slot="con001-s2" hidden>
+            <p data-slot-type="text" class="slot-text"
+               data-max="Segundo bloque de contenido extenso — puede ser un párrafo diferente, una lista o cifras clave.">
+              Segundo bloque de contenido.
+            </p>
+            <ul data-slot-type="list" class="slot-list" hidden>
+              <li data-max="Primer punto con texto extenso que llega justo al límite">Primer punto destacado</li>
+              <li data-max="Segundo punto de valor con más detalle">Segundo punto de valor</li>
+              <li data-max="Tercer punto adicional">Tercer punto</li>
+            </ul>
+            <div data-slot-type="stats" class="slot-stats" hidden aria-label="Cifras clave">
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+9.999">+500</span>
+                <span class="slot-stats__label" data-max="Etiqueta de dato más larga">Etiqueta de dato</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="99,9%">76%</span>
+                <span class="slot-stats__label" data-max="Segunda etiqueta">Etiqueta de dato</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+200K">32k</span>
+                <span class="slot-stats__label" data-max="Tercera etiqueta">Etiqueta de dato</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slot 3 (oculto por defecto) -->
+          <div id="con001-slot-3" data-slot="con001-s3" hidden>
+            <p data-slot-type="text" class="slot-text"
+               data-max="Tercer bloque de contenido extenso — útil para añadir una segunda capa de información o cifras de refuerzo.">
+              Tercer bloque de contenido.
+            </p>
+            <ul data-slot-type="list" class="slot-list" hidden>
+              <li data-max="Primer punto con texto extenso que llega justo al límite">Primer punto destacado</li>
+              <li data-max="Segundo punto de valor con más detalle">Segundo punto de valor</li>
+              <li data-max="Tercer punto adicional">Tercer punto</li>
+            </ul>
+            <div data-slot-type="stats" class="slot-stats" hidden aria-label="Cifras clave">
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+9.999">12K</span>
+                <span class="slot-stats__label" data-max="Etiqueta de dato más larga">Etiqueta de dato</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="99,9%">91%</span>
+                <span class="slot-stats__label" data-max="Segunda etiqueta">Etiqueta de dato</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+200K">+50K</span>
+                <span class="slot-stats__label" data-max="Tercera etiqueta">Etiqueta de dato</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CTAs -->
+        <div class="con001__ctas">
+          <a href="#" class="btn" id="con001-cta-primary" data-slot="cta-prim"
+             data-max="Llamada a la acción principal">Call to action</a>
+          <a href="#" class="btn btn--link" id="con001-cta-secondary" data-slot="cta-sec"
+             data-max="Enlace secundario con texto largo →">Enlace secundario →</a>
+        </div>
+      </div>
+
+      <!-- Columna de media -->
+      <div class="con001__media" id="con001-media" aria-hidden="true">
+        <!-- Imagen (por defecto) -->
+        <div class="img-placeholder media-img" id="media-img"></div>
+        <!-- Vídeo -->
+        <div class="media-video" id="media-video" hidden>
+          <div class="media-video__play" role="img" aria-label="Reproducir vídeo"></div>
+          <span class="media-video__label">vídeo embed — 16:9</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-overtitle" checked> Overtitle</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta-prim" checked> CTA principal</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-prim']"
+                data-swap-from="btn--outline btn--ghost btn--link btn--danger">
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Link</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta-sec" checked> CTA secundario</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-sec']"
+                data-swap-from="btn--outline btn--ghost btn--link btn--danger">
+          <option value="btn--link">Link</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="">Primario</option>
+        </select>
+      </div>
+      <label><input type="checkbox" id="toggle-media" checked> Media</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Contenido</span>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-slot-1" checked> Slot 1</label>
+        <select class="kit-slot-type" data-slot-target="con001-s1">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-slot-2"> Slot 2</label>
+        <select class="kit-slot-type" data-slot-target="con001-s2">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-slot-3"> Slot 3</label>
+        <select class="kit-slot-type" data-slot-target="con001-s3">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tipo de media</span>
+      <label><input type="radio" name="media-type" value="img"   checked> Imagen (4:3)</label>
+      <label><input type="radio" name="media-type" value="video">         Vídeo (16:9)</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Orden</span>
+      <label><input type="radio" name="order" value="default" checked> Texto · Imagen</label>
+      <label><input type="radio" name="order" value="reversed">        Imagen · Texto</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5">         Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-001-bloque-texto-imagen.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-001</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Overtitle':           'Máx. 40 car. Opcional — si se omite, el título sube sin espacio.',
+    'Título (H2)':         'Máx. 80 car. (~2 líneas desktop). H2 semántico obligatorio.',
+    'Párrafo':             'Máx. 200 car. (~3 líneas a ancho completo). Solo un slot activo a la vez.',
+    'Lista':               '2–4 ítems. Máx. 60 car. por ítem. Alternativa al párrafo.',
+    'Mini-stats':          '2–4 cifras. Número máx. 6 car. Etiqueta máx. 30 car. Alternativa al párrafo.',
+    'CTA principal':       'Máx. 30 car.',
+    'CTA secundario':      'Máx. 40 car. Solo si hay un destino alternativo claro.',
+    'Imagen':              'Proporción 4:3 desktop, 16:9 mobile. Sin media el texto ocupa todo el ancho.',
+    'Vídeo':               'Siempre 16:9. Botón play abre modal; en wireframe muestra placeholder.',
+    'Mobile (<768px)':     'Columna única. Por defecto texto arriba, imagen abajo. Configurable en kit-states.',
+    'Tablet (768–1199px)': 'Grid 2 columnas iguales (1fr 1fr). Gap 3rem.',
+    'Desktop (≥1200px)':   'Grid 55/45. Gap 4rem.',
+    'Accesibilidad':       'section aria-labelledby al H2. Media aria-hidden en wireframe; imagen real necesita alt.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // ── Helpers ──────────────────────────────────────────────────────
+    function byId(id) { return document.getElementById(id); }
+
+    function onCheck(id, callback) {
+      var cb = byId(id);
+      if (cb) cb.addEventListener('change', function () { callback(cb.checked); });
+    }
+
+    function onRadioGroup(name, callback) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) callback(r.value); });
+      });
+    }
+
+    // ── Elementos opcionales ─────────────────────────────────────────
+    onCheck('toggle-overtitle', function (v) { byId('con001-overtitle').hidden = !v; });
+    onCheck('toggle-cta-prim',  function (v) { byId('con001-cta-primary').hidden = !v; });
+    onCheck('toggle-cta-sec',   function (v) { byId('con001-cta-secondary').hidden = !v; });
+    onCheck('toggle-media',     function (v) { byId('con001-media').hidden = !v; });
+
+    // ── Slots de contenido ───────────────────────────────────────────
+    onCheck('toggle-slot-1', function (v) { byId('con001-slot-1').hidden = !v; });
+    onCheck('toggle-slot-2', function (v) { byId('con001-slot-2').hidden = !v; });
+    onCheck('toggle-slot-3', function (v) { byId('con001-slot-3').hidden = !v; });
+
+    // ── Tipo de media ────────────────────────────────────────────────
+    onRadioGroup('media-type', function (value) {
+      byId('media-img').hidden   = value !== 'img';
+      byId('media-video').hidden = value !== 'video';
+    });
+
+    // ── Orden (desktop: izq/der · mobile: arriba/abajo) ─────────────
+    onRadioGroup('order', function (value) {
+      byId('con001-grid').classList.toggle('con001__grid--reversed', value === 'reversed');
+    });
+
+    // ── Fondo ────────────────────────────────────────────────────────
+    onRadioGroup('bg', function (value) {
+      byId('con001-section').style.background = value;
+    });
+
+  });
+</script>
+
+</body>
+</html>

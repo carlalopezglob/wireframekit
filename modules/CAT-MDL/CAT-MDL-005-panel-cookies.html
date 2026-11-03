@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-MDL-005 · Panel de cookies</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* mdl005__ BEM CSS */
+
+/* ── Franja ─────────────────────────────────────────────────── */
+.mdl005__bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 950;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
+  padding: var(--space-4);
+}
+.mdl005__bar--top {
+  top: 0;
+  bottom: auto;
+  border-top: none;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+.mdl005__bar-inner {
+  max-width: var(--grid-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.mdl005__text {
+  margin: 0;
+  max-width: none;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  min-width: 0;
+}
+.mdl005__link {
+  color: var(--color-text);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.mdl005__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.mdl005__actions .btn { width: 100%; }
+
+@media (min-width: 768px) {
+  .mdl005__bar-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+  .mdl005__text { flex: 1 1 0%; }
+  .mdl005__actions {
+    flex-direction: row;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .mdl005__actions .btn { width: auto; }
+}
+
+/* ── Panel de preferencias (modal secundario) ──────────────── */
+.mdl005__prefs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+}
+.mdl005__prefs-panel {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.mdl005__prefs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.mdl005__prefs-header h2 { margin: 0; font-size: 1.15rem; }
+.mdl005__prefs-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+  padding: var(--space-2);
+  flex-shrink: 0;
+}
+.mdl005__prefs-close:hover { color: var(--color-text); }
+.mdl005__prefs-body {
+  padding: var(--space-2) var(--space-6);
+  flex: 1;
+}
+.mdl005__category {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.mdl005__category:last-child { border-bottom: none; }
+.mdl005__category-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.mdl005__category-label { font-size: 0.95rem; font-weight: 600; color: var(--color-text); }
+.mdl005__category-sub { font-size: 0.8rem; color: var(--color-text-muted); }
+.mdl005__category-toggle { flex-shrink: 0; margin-top: 2px; }
+.mdl005__prefs-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.mdl005__prefs-footer .btn { width: 100%; }
+@media (min-width: 480px) {
+  .mdl005__prefs-footer { flex-direction: row-reverse; }
+  .mdl005__prefs-footer .btn { width: auto; }
+}
+
+/* ── Toggle (self-contained — ver CAT-COM-006 para la spec completa) ── */
+.toggle { display: inline-flex; align-items: center; gap: var(--space-3); cursor: pointer; user-select: none; }
+.toggle__track {
+  position: relative; flex-shrink: 0;
+  width: 44px; height: 24px;
+  background: var(--color-border);
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.toggle__track::after {
+  content: '';
+  position: absolute; left: 3px; top: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.toggle input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.toggle input[type="checkbox"]:checked + .toggle__track { background: var(--color-accent); }
+.toggle input[type="checkbox"]:checked + .toggle__track::after { transform: translateX(20px); }
+.toggle input[type="checkbox"]:disabled + .toggle__track { opacity: 0.45; }
+.toggle--disabled { cursor: not-allowed; }
+
+/* ── Demo de página (contexto) ─────────────────────────────── */
+.mdl005__page-note { color: var(--color-text-muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="mdl005-page">
+  <div class="container">
+    <h2>Contenido de la página</h2>
+    <p class="mdl005__page-note">El panel de cookies aparece fijo en la parte inferior de la ventana al cargar la página y permanece visible hasta que la persona acepta, rechaza o guarda sus preferencias.</p>
+  </div>
+</section>
+
+<div class="mdl005__bar" id="mdl005-bar" role="region" aria-live="polite" aria-label="Aviso de cookies">
+  <div class="mdl005__bar-inner">
+    <p class="mdl005__text">
+      Usamos cookies propias y de terceros para el funcionamiento del sitio, analizar el tráfico y mostrar contenido personalizado. Puedes aceptar, rechazar o configurar tus preferencias. Más información en nuestra <a href="#" class="mdl005__link">política de cookies</a>.
+    </p>
+    <div class="mdl005__actions">
+      <button class="btn btn--outline" id="mdl005-reject">Rechazar</button>
+      <button class="btn btn--ghost" id="mdl005-customize">Personalizar</button>
+      <button class="btn" id="mdl005-accept">Aceptar todas</button>
+    </div>
+  </div>
+</div>
+
+<!-- Panel de preferencias (capa secundaria) -->
+<div class="mdl005__prefs-overlay" id="mdl005-prefs-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="mdl005-prefs-title">
+  <div class="mdl005__prefs-panel">
+    <div class="mdl005__prefs-header">
+      <h2 id="mdl005-prefs-title">Preferencias de cookies</h2>
+      <button class="mdl005__prefs-close" aria-label="Cerrar preferencias">&#x2715;</button>
+    </div>
+    <div class="mdl005__prefs-body">
+
+      <div class="mdl005__category">
+        <div class="mdl005__category-text">
+          <span class="mdl005__category-label">Necesarias</span>
+          <span class="mdl005__category-sub">Imprescindibles para el funcionamiento del sitio. No se pueden desactivar.</span>
+        </div>
+        <label class="toggle toggle--disabled mdl005__category-toggle">
+          <input type="checkbox" checked disabled aria-label="Cookies necesarias — siempre activas">
+          <span class="toggle__track"></span>
+        </label>
+      </div>
+
+      <div class="mdl005__category">
+        <div class="mdl005__category-text">
+          <span class="mdl005__category-label">Analíticas</span>
+          <span class="mdl005__category-sub">Ayudan a entender cómo se usa el sitio para mejorarlo.</span>
+        </div>
+        <label class="toggle mdl005__category-toggle">
+          <input type="checkbox" id="mdl005-cat-analytics">
+          <span class="toggle__track"></span>
+        </label>
+      </div>
+
+      <div class="mdl005__category">
+        <div class="mdl005__category-text">
+          <span class="mdl005__category-label">Marketing</span>
+          <span class="mdl005__category-sub">Permiten mostrar publicidad relevante dentro y fuera del sitio.</span>
+        </div>
+        <label class="toggle mdl005__category-toggle">
+          <input type="checkbox" id="mdl005-cat-marketing">
+          <span class="toggle__track"></span>
+        </label>
+      </div>
+
+    </div>
+    <div class="mdl005__prefs-footer">
+      <button class="btn" id="mdl005-prefs-save">Guardar preferencias</button>
+      <button class="btn btn--outline" id="mdl005-prefs-reject-all">Rechazar todas</button>
+    </div>
+  </div>
+</div>
+<!-- fin módulo -->
+
+
+<!-- kit-states panel -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Franja</span>
+      <label><input type="radio" name="mdl005-bar-visible" value="show" checked> Visible</label>
+      <label><input type="radio" name="mdl005-bar-visible" value="hide"> Oculta (tras decisión)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Posición</span>
+      <label><input type="radio" name="mdl005-pos" value="bottom" checked> Inferior</label>
+      <label><input type="radio" name="mdl005-pos" value="top"> Superior</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Panel de preferencias</span>
+      <label><input type="radio" name="mdl005-prefs-state" value="closed" checked> Cerrado</label>
+      <label><input type="radio" name="mdl005-prefs-state" value="open"> Abierto</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-MDL/CAT-MDL-005-panel-cookies.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-MDL-005</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    categoria: {
+      label: 'Por qué CAT-MDL y no CAT-NAV',
+      notes: [
+        'El panel de cookies es una capa flotante que se superpone a la página y exige un cierre explícito (aceptar, rechazar o guardar preferencias) — encaja con la definición de CAT-MDL, no es navegación estructural.',
+        'El panel de preferencias reutiliza el patrón overlay + panel centrado de CAT-MDL-001 (Modal básico) en vez de inventar uno nuevo.'
+      ]
+    },
+    acciones: {
+      label: 'Peso visual de los 3 botones',
+      notes: [
+        'Rechazar, Personalizar y Aceptar todas deben tener el mismo peso visual — es un requisito habitual en implementaciones de consentimiento estilo GDPR, no solo una preferencia de diseño.',
+        'En este wireframe: Rechazar usa btn--outline, Personalizar usa btn--ghost, Aceptar todas usa btn por defecto — los tres comparten tamaño y no hay ninguno oculto o minimizado como enlace.'
+      ]
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var bar = byId('mdl005-bar');
+    var prefsOverlay = byId('mdl005-prefs-overlay');
+
+    function showBar() {
+      bar.hidden = false;
+      document.querySelector('input[name="mdl005-bar-visible"][value="show"]').checked = true;
+    }
+    function hideBar() {
+      bar.hidden = true;
+      document.querySelector('input[name="mdl005-bar-visible"][value="hide"]').checked = true;
+    }
+    function openPrefs() {
+      prefsOverlay.hidden = false;
+      document.querySelector('input[name="mdl005-prefs-state"][value="open"]').checked = true;
+    }
+    function closePrefs() {
+      prefsOverlay.hidden = true;
+      document.querySelector('input[name="mdl005-prefs-state"][value="closed"]').checked = true;
+    }
+
+    /* Acciones de la franja */
+    byId('mdl005-accept').addEventListener('click', function () {
+      byId('mdl005-cat-analytics').checked = true;
+      byId('mdl005-cat-marketing').checked = true;
+      closePrefs();
+      hideBar();
+    });
+    byId('mdl005-reject').addEventListener('click', function () {
+      byId('mdl005-cat-analytics').checked = false;
+      byId('mdl005-cat-marketing').checked = false;
+      closePrefs();
+      hideBar();
+    });
+    byId('mdl005-customize').addEventListener('click', openPrefs);
+
+    /* Panel de preferencias */
+    byId('mdl005-prefs-close').addEventListener('click', closePrefs);
+    prefsOverlay.addEventListener('click', function (e) { if (e.target === this) closePrefs(); });
+    byId('mdl005-prefs-save').addEventListener('click', function () {
+      closePrefs();
+      hideBar();
+    });
+    byId('mdl005-prefs-reject-all').addEventListener('click', function () {
+      byId('mdl005-cat-analytics').checked = false;
+      byId('mdl005-cat-marketing').checked = false;
+      closePrefs();
+      hideBar();
+    });
+
+    /* kit-states */
+    onRadioGroup('mdl005-bar-visible', function (v) { if (v === 'show') showBar(); else hideBar(); });
+    onRadioGroup('mdl005-pos', function (v) { bar.classList.toggle('mdl005__bar--top', v === 'top'); });
+    onRadioGroup('mdl005-prefs-state', function (v) { if (v === 'open') openPrefs(); else closePrefs(); });
+  });
+</script>
+</body>
+</html>

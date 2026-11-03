@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-011 · Muro de logos</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>/* local */
+
+/* Top row — cabecera + nav flechas (usado en modo carrusel) */
+.con011__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+/* Section header */
+.con011__header {
+  text-align: center;
+  flex: 1;
+}
+.con011__label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.con011__title {
+  margin: var(--space-2) 0 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+/* Flechas de navegación */
+.con011__nav {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.con011__arrow {
+  width: 40px; height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-bg);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--color-text);
+  transition: box-shadow 0.15s, background 0.15s;
+}
+.con011__arrow:hover:not(:disabled) {
+  box-shadow: var(--shadow-sm);
+  background: var(--color-surface);
+}
+.con011__arrow:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Logo grid */
+.con011__grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6) var(--space-8);
+}
+
+/* Modo carrusel — fila scrollable */
+.con011__grid--carousel {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  justify-content: flex-start;
+  padding-bottom: var(--space-2);
+}
+.con011__grid--carousel::-webkit-scrollbar { display: none; }
+.con011__grid--carousel .con011__logo {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* En modo carrusel la cabecera se alinea a la izquierda */
+.con011--carousel .con011__header { text-align: left; }
+
+/* Individual logo placeholder */
+.con011__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+/* Size variants for visual variety */
+.con011__logo--wide { min-width: 120px; }
+.con011__logo--narrow { min-width: 60px; }
+
+/* Greyscale / opacity effect option */
+.con011__grid--muted .con011__logo {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+/* Dividers variant */
+.con011--divided .con011__logo {
+  background: none;
+  border: none;
+  border-right: 1px solid var(--color-border);
+  border-radius: 0;
+  padding-right: var(--space-8);
+}
+.con011--divided .con011__logo:last-child {
+  border-right: none;
+}
+</style>
+</head>
+<body>
+<section class="section" id="con011-section">
+  <div class="container">
+
+    <div class="con011__top">
+      <!-- Cabecera opcional -->
+      <div class="con011__header" id="con011-header">
+        <p class="con011__label" data-max="Texto sobre los clientes o partners más largo">Con la confianza de</p>
+      </div>
+
+      <!-- Flechas (solo en modo carrusel) -->
+      <nav class="con011__nav" id="con011-nav" aria-label="Navegación de logos" hidden>
+        <button class="con011__arrow" id="con011-prev" aria-label="Anterior" disabled>←</button>
+        <button class="con011__arrow" id="con011-next" aria-label="Siguiente">→</button>
+      </nav>
+    </div>
+
+    <!-- Logos -->
+    <div class="con011__grid" id="con011-grid">
+      <div class="con011__logo con011__logo--wide">Logo A</div>
+      <div class="con011__logo">Logo B</div>
+      <div class="con011__logo con011__logo--wide">Logo Co.</div>
+      <div class="con011__logo con011__logo--narrow">Brand X</div>
+      <div class="con011__logo">Corp</div>
+      <!-- Logos adicionales (ocultos por defecto; todos visibles en modo carrusel) -->
+      <div class="con011__logo con011__logo--wide" id="con011-logo6" hidden>Partner D</div>
+      <div class="con011__logo" id="con011-logo7" hidden>Empresa E</div>
+      <div class="con011__logo con011__logo--narrow" id="con011-logo8" hidden>Group F</div>
+      <div class="con011__logo con011__logo--wide" id="con011-logo9" hidden>Studio G</div>
+      <div class="con011__logo" id="con011-logo10" hidden>Tech H</div>
+      <div class="con011__logo con011__logo--narrow" id="con011-logo11" hidden>Corp I</div>
+      <div class="con011__logo con011__logo--wide" id="con011-logo12" hidden>Digital J</div>
+    </div>
+
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Disposición</p>
+      <label><input type="radio" name="layout" value="grid" checked> Cuadrícula</label>
+      <label><input type="radio" name="layout" value="carousel"> Carrusel</label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Elementos</p>
+      <label><input type="checkbox" id="toggle-header" checked> Cabecera</label>
+      <label id="ctrl-extra"><input type="checkbox" id="toggle-extra"> Logos adicionales (6–8)</label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Estilo</p>
+      <label><input type="radio" name="style" value="normal" checked> Normal</label>
+      <label><input type="radio" name="style" value="muted"> Atenuado</label>
+      <label><input type="radio" name="style" value="divided"> Dividido</label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Fondo</p>
+      <label><input type="radio" name="bg" value="white" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="grey"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-011-muro-de-logos.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-011</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onRadioGroup(name, cb) { document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) { r.addEventListener('change', function () { if (r.checked) cb(r.value); }); }); }
+
+  var grid     = byId('con011-grid');
+  var nav      = byId('con011-nav');
+  var prevBtn  = byId('con011-prev');
+  var nextBtn  = byId('con011-next');
+  var extraCtrl = byId('ctrl-extra');
+  var extraCheck = byId('toggle-extra');
+
+  // IDs: logos 6-8 son los "extras" del toggle; 9-12 solo se muestran en carrusel
+  var extraIds    = ['con011-logo6','con011-logo7','con011-logo8'];
+  var carouselIds = ['con011-logo9','con011-logo10','con011-logo11','con011-logo12'];
+  var isCarousel  = false;
+
+  function getLogoWidth() {
+    var logo = grid.querySelector('.con011__logo');
+    if (!logo) return 120;
+    return logo.offsetWidth + parseInt(getComputedStyle(grid).gap || 32, 10);
+  }
+
+  function updateArrows() {
+    var atStart = grid.scrollLeft <= 4;
+    var atEnd   = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 4;
+    prevBtn.disabled = atStart;
+    nextBtn.disabled = atEnd;
+  }
+
+  prevBtn.addEventListener('click', function () {
+    grid.scrollBy({ left: -getLogoWidth() * 3, behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', function () {
+    grid.scrollBy({ left: getLogoWidth() * 3, behavior: 'smooth' });
+  });
+  grid.addEventListener('scroll', updateArrows, { passive: true });
+
+  // Disposición
+  onRadioGroup('layout', function (v) {
+    isCarousel = (v === 'carousel');
+    grid.classList.toggle('con011__grid--carousel', isCarousel);
+    byId('con011-section').classList.toggle('con011--carousel', isCarousel);
+    nav.hidden = !isCarousel;
+    extraCtrl.hidden = isCarousel; // en carrusel el toggle "extra" no aplica
+
+    // En carrusel mostrar todos; al salir respetar el toggle extra
+    extraIds.concat(carouselIds).forEach(function (id) {
+      var el = byId(id); if (!el) return;
+      if (isCarousel) {
+        el.hidden = false;
+      } else {
+        // logos 9-12 siempre ocultos en grid; 6-8 según el toggle
+        var isExtra = extraIds.indexOf(id) !== -1;
+        el.hidden = isExtra ? !extraCheck.checked : true;
+      }
+    });
+
+    if (isCarousel) {
+      grid.scrollLeft = 0;
+      updateArrows();
+    }
+  });
+
+  // Toggle cabecera
+  onCheck('toggle-header', function (v) {
+    byId('con011-header').hidden = !v;
+  });
+
+  // Toggle logos adicionales (solo en modo cuadrícula)
+  onCheck('toggle-extra', function (v) {
+    if (isCarousel) return;
+    extraIds.forEach(function (id) { byId(id).hidden = !v; });
+  });
+
+  // Estilo
+  onRadioGroup('style', function (v) {
+    grid.classList.remove('con011__grid--muted', 'con011--divided');
+    if (v === 'muted')   grid.classList.add('con011__grid--muted');
+    if (v === 'divided') grid.classList.add('con011--divided');
+  });
+
+  // Fondo
+  onRadioGroup('bg', function (v) {
+    var section = byId('con011-section');
+    if (v === 'white') section.style.background = '#ffffff';
+    if (v === 'grey')  section.style.background = 'var(--color-surface)';
+  });
+});
+</script>
+</body>
+</html>

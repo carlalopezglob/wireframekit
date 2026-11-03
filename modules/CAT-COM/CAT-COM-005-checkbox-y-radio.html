@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-005 · Checkbox y Radio</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── Custom Checkbox ── */
+.cb {
+  display: inline-flex; align-items: flex-start; gap: var(--space-3);
+  cursor: pointer; font-size: 0.95rem; color: var(--color-text); line-height: 1.4;
+  user-select: none;
+}
+.cb input[type="checkbox"] {
+  appearance: none; flex-shrink: 0;
+  width: 18px; height: 18px; margin-top: 2px;
+  border: 2px solid var(--color-border);
+  border-radius: 4px; background: var(--color-bg);
+  cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  position: relative;
+}
+.cb input[type="checkbox"]:hover { border-color: var(--color-accent); }
+.cb input[type="checkbox"]:checked {
+  background: var(--color-accent); border-color: var(--color-accent);
+}
+.cb input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute; left: 4px; top: 1px;
+  width: 6px; height: 10px;
+  border: 2px solid #fff; border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+.cb input[type="checkbox"]:disabled {
+  opacity: 0.4; cursor: not-allowed; background: var(--color-surface);
+}
+.cb input[type="checkbox"]:indeterminate {
+  background: var(--color-accent); border-color: var(--color-accent);
+}
+.cb input[type="checkbox"]:indeterminate::after {
+  content: '';
+  position: absolute; left: 3px; top: 6px;
+  width: 8px; height: 2px;
+  background: #fff; border: none; transform: none;
+}
+.cb--disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.cb__sub { font-size: 0.8rem; color: var(--color-text-muted); display: block; }
+
+/* ── Custom Radio ── */
+.rb {
+  display: inline-flex; align-items: flex-start; gap: var(--space-3);
+  cursor: pointer; font-size: 0.95rem; color: var(--color-text); line-height: 1.4;
+  user-select: none;
+}
+.rb input[type="radio"] {
+  appearance: none; flex-shrink: 0;
+  width: 18px; height: 18px; margin-top: 2px;
+  border: 2px solid var(--color-border);
+  border-radius: 50%; background: var(--color-bg);
+  cursor: pointer; transition: border-color 0.15s;
+  position: relative;
+}
+.rb input[type="radio"]:hover { border-color: var(--color-accent); }
+.rb input[type="radio"]:checked { border-color: var(--color-accent); border-width: 5px; background: var(--color-accent); box-shadow: inset 0 0 0 3px var(--color-bg); }
+.rb input[type="radio"]:disabled { opacity: 0.4; cursor: not-allowed; }
+.rb--disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+/* ── Layout ── */
+.com005__cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); }
+@media (max-width: 640px) { .com005__cols { grid-template-columns: 1fr; } }
+.com005__section-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0 0 var(--space-4); padding-bottom: var(--space-2); border-bottom: 1px solid var(--color-border); }
+.com005__group { display: flex; flex-direction: column; gap: var(--space-3); }
+.com005__block { display: flex; flex-direction: column; gap: var(--space-6); }
+</style>
+</head>
+<body>
+
+<section class="section" id="com005-section">
+  <div class="container">
+
+    <div class="com005__cols">
+
+      <!-- LEFT: Checkbox -->
+      <div>
+        <p class="com005__section-title">Checkbox</p>
+        <div class="com005__block">
+
+          <!-- Estados -->
+          <div>
+            <p class="com005__section-title">Estados</p>
+            <div class="com005__group">
+
+              <label class="cb">
+                <input type="checkbox" id="cb-unchecked">
+                <span>Sin marcar</span>
+              </label>
+
+              <label class="cb">
+                <input type="checkbox" id="cb-checked" checked>
+                <span>Marcado</span>
+              </label>
+
+              <label class="cb">
+                <input type="checkbox" id="cb-indeterminate">
+                <span>Indeterminado</span>
+              </label>
+
+              <label class="cb cb--disabled">
+                <input type="checkbox" id="cb-disabled" disabled>
+                <span>Deshabilitado sin marcar</span>
+              </label>
+
+              <label class="cb cb--disabled">
+                <input type="checkbox" id="cb-disabled-checked" disabled checked>
+                <span>Deshabilitado marcado</span>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Con descripción -->
+          <div>
+            <p class="com005__section-title">Con descripción</p>
+            <div class="com005__group">
+
+              <label class="cb">
+                <input type="checkbox" id="cb-notif">
+                <span>
+                  Recibir notificaciones
+                  <span class="cb__sub">Te avisaremos de novedades importantes</span>
+                </span>
+              </label>
+
+              <label class="cb">
+                <input type="checkbox" id="cb-terms">
+                <span>
+                  Aceptar términos
+                  <span class="cb__sub">He leído y acepto los términos de uso</span>
+                </span>
+              </label>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: Radio -->
+      <div>
+        <p class="com005__section-title">Radio</p>
+        <div class="com005__block">
+
+          <!-- Grupo de opciones -->
+          <div>
+            <p class="com005__section-title">Grupo de opciones</p>
+            <div class="com005__group">
+
+              <label class="rb">
+                <input type="radio" name="demo-radio" id="rb-a" value="a" checked>
+                <span>Opción A</span>
+              </label>
+
+              <label class="rb">
+                <input type="radio" name="demo-radio" id="rb-b" value="b">
+                <span>Opción B</span>
+              </label>
+
+              <label class="rb">
+                <input type="radio" name="demo-radio" id="rb-c" value="c">
+                <span>Opción C</span>
+              </label>
+
+              <label class="rb rb--disabled">
+                <input type="radio" name="demo-radio" id="rb-disabled" value="d" disabled>
+                <span>Deshabilitada</span>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Con descripción -->
+          <div>
+            <p class="com005__section-title">Con descripción</p>
+            <div class="com005__group">
+
+              <label class="rb">
+                <input type="radio" name="plan-radio" id="rb-basic" value="basic">
+                <span>
+                  Básico
+                  <span class="cb__sub">Gratis para siempre</span>
+                </span>
+              </label>
+
+              <label class="rb">
+                <input type="radio" name="plan-radio" id="rb-pro" value="pro" checked>
+                <span>
+                  Pro
+                  <span class="cb__sub">9 € / mes</span>
+                </span>
+              </label>
+
+              <label class="rb">
+                <input type="radio" name="plan-radio" id="rb-enterprise" value="enterprise">
+                <span>
+                  Enterprise
+                  <span class="cb__sub">Contactar ventas</span>
+                </span>
+              </label>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <p class="kit-states__label">Fondo</p>
+      <div class="kit-states__options">
+        <label class="kit-states__radio">
+          <input type="radio" name="bg" value="var(--color-bg)" checked>
+          Blanco
+        </label>
+        <label class="kit-states__radio">
+          <input type="radio" name="bg" value="var(--color-surface)">
+          Gris (alt)
+        </label>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-005-checkbox-y-radio.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-005</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+    });
+  }
+
+  /* Background switcher */
+  onRadioGroup('bg', function (v) { byId('com005-section').style.background = v; });
+
+  /* Set indeterminate state */
+  var indetermCb = byId('cb-indeterminate');
+  if (indetermCb) indetermCb.indeterminate = true;
+});
+</script>
+
+</body>
+</html>

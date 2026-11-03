@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-010 · Chip / Filtro</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── Layout ── */
+.com010__block {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.com010__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+.com010__section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Base chip ── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.3em 0.75em;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-family: var(--font-base);
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1.4;
+}
+.chip:hover {
+  border-color: var(--color-accent);
+}
+.chip--selected {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+.chip--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+/* Hover simulado para la tabla de estados */
+.chip--hover {
+  border-color: var(--color-accent);
+}
+
+/* ── Chip con botón de cierre ── */
+.chip__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  margin: 0 -0.15em 0 0.1em;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.75rem;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s, background 0.15s;
+  font-family: var(--font-base);
+}
+.chip__dismiss:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.12);
+}
+.chip--selected .chip__dismiss:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ── Tamaños ── */
+.chip--sm {
+  font-size: 0.75rem;
+  padding: 0.2em 0.6em;
+  gap: var(--space-1);
+}
+.chip--lg {
+  font-size: 1rem;
+  padding: 0.45em 1em;
+  gap: var(--space-2);
+}
+
+/* ── Icono dentro del chip ── */
+.chip__icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Filtros activos ── */
+.com010__active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+.com010__active-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.com010__clear-all {
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-base);
+  margin-left: var(--space-1);
+}
+.com010__clear-all:hover {
+  opacity: 0.75;
+}
+
+/* ── Fondo gris (estado del módulo) ── */
+.com010--bg-grey {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+
+/* Separador de grupo de secciones */
+.com010__subsection {
+  display: flex;
+  flex-direction: column;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COMPONENTE — CAT-COM-010 Chip / Filtro
+     ══════════════════════════════════════════════ -->
+<section class="section" id="com010-section" aria-labelledby="com010-title">
+  <div class="container">
+
+    <div class="section-head">
+      <p class="overtitle">CAT-COM-010</p>
+      <h2 id="com010-title">Chip / Filtro</h2>
+      <p style="color:var(--color-text-muted)">Etiquetas interactivas para filtrado, selección de categorías y resumen de filtros activos. Soporte para selección múltiple, selección única y chips con descarte.</p>
+    </div>
+
+    <div class="com010__block" id="com010-main-block">
+
+      <!-- 1. Estados -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">1 · Estados</p>
+        <div class="com010__row">
+          <button class="chip" type="button">Default</button>
+          <button class="chip chip--hover" type="button">Hover</button>
+          <button class="chip chip--selected" type="button">Seleccionado</button>
+          <button class="chip chip--disabled" type="button" disabled>Deshabilitado</button>
+        </div>
+      </div>
+
+      <!-- 2. Con botón de cerrar (dismiss) -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">2 · Con botón de cerrar</p>
+        <div class="com010__row" id="com010-dismiss-row">
+          <button class="chip" type="button" data-dismiss-chip>
+            Talla S
+            <button class="chip__dismiss" type="button" aria-label="Eliminar Talla S">×</button>
+          </button>
+          <button class="chip" type="button" data-dismiss-chip>
+            Color: Azul
+            <button class="chip__dismiss" type="button" aria-label="Eliminar Color: Azul">×</button>
+          </button>
+          <button class="chip chip--selected" type="button" data-dismiss-chip>
+            Género: Mujer
+            <button class="chip__dismiss" type="button" aria-label="Eliminar Género: Mujer">×</button>
+          </button>
+          <button class="chip chip--selected" type="button" data-dismiss-chip>
+            En stock
+            <button class="chip__dismiss" type="button" aria-label="Eliminar En stock">×</button>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Grupo de filtros — selección múltiple -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">3 · Grupo de filtros — selección múltiple</p>
+        <div class="com010__row" id="com010-multi-group" role="group" aria-label="Categorías de producto">
+          <button class="chip chip--selected" type="button" data-multi>Todos</button>
+          <button class="chip" type="button" data-multi>Ropa</button>
+          <button class="chip" type="button" data-multi>Accesorios</button>
+          <button class="chip" type="button" data-multi>Calzado</button>
+          <button class="chip" type="button" data-multi>Ofertas</button>
+          <button class="chip" type="button" data-multi>Nuevo</button>
+        </div>
+      </div>
+
+      <!-- 4. Grupo de filtros — selección única -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">4 · Grupo de filtros — selección única</p>
+        <div class="com010__row" id="com010-single-group" role="group" aria-label="Ordenar resultados">
+          <span style="font-size:0.8rem;color:var(--color-text-muted);font-weight:600;">Ordenar por:</span>
+          <button class="chip chip--selected" type="button" data-single="orden">Relevancia</button>
+          <button class="chip" type="button" data-single="orden">Precio ↑</button>
+          <button class="chip" type="button" data-single="orden">Precio ↓</button>
+          <button class="chip" type="button" data-single="orden">Más vendido</button>
+        </div>
+      </div>
+
+      <!-- 5. Con icono -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">5 · Con icono</p>
+        <div class="com010__row">
+          <!-- Círculo → Electrónica -->
+          <button class="chip" type="button">
+            <span class="chip__icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            Electrónica
+          </button>
+          <!-- Estrella → Destacados -->
+          <button class="chip chip--selected" type="button">
+            <span class="chip__icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1l1.4 2.8 3.1.45-2.25 2.19.53 3.1L6 8.1 3.22 9.54l.53-3.1L1.5 4.25l3.1-.45z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Destacados
+          </button>
+          <!-- Etiqueta → Oferta -->
+          <button class="chip" type="button">
+            <span class="chip__icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.5 1.5h4.5l4.5 4.5-4.5 4.5-4.5-4.5V1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                <circle cx="3.5" cy="3.5" r="0.75" fill="currentColor"/>
+              </svg>
+            </span>
+            Oferta
+          </button>
+          <!-- Ropa (camisa) → Moda -->
+          <button class="chip" type="button">
+            <span class="chip__icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 1.5 2 3.5l1.5 1 .5 6h4l.5-6 1.5-1L7.5 1.5Q6 3 4.5 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Moda
+          </button>
+          <!-- Corazón → Favoritos -->
+          <button class="chip" type="button">
+            <span class="chip__icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 10S1.5 7 1.5 4a2.5 2.5 0 014.5-1.5A2.5 2.5 0 0110.5 4C10.5 7 6 10 6 10z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Favoritos
+          </button>
+        </div>
+      </div>
+
+      <!-- 6. Tamaños -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">6 · Tamaños</p>
+        <div class="com010__row" style="align-items:center;">
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-1)">
+            <button class="chip chip--sm" type="button">Pequeño</button>
+            <span style="font-size:0.65rem;font-family:monospace;color:var(--color-text-muted);">.chip--sm · 0.75rem</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-1)">
+            <button class="chip" type="button">Normal</button>
+            <span style="font-size:0.65rem;font-family:monospace;color:var(--color-text-muted);">.chip · 0.875rem (default)</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-1)">
+            <button class="chip chip--lg" type="button">Grande</button>
+            <span style="font-size:0.65rem;font-family:monospace;color:var(--color-text-muted);">.chip--lg · 1rem</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Input de filtros activos -->
+      <div class="com010__subsection">
+        <p class="com010__section-title">7 · Filtros activos</p>
+        <div class="com010__active-filters" id="com010-active-filters">
+          <span class="com010__active-label">Filtros aplicados:</span>
+          <button class="chip chip--selected chip--sm" type="button" data-active-chip>
+            Talla: M
+            <button class="chip__dismiss" type="button" aria-label="Eliminar filtro Talla: M">×</button>
+          </button>
+          <button class="chip chip--selected chip--sm" type="button" data-active-chip>
+            Color: Negro
+            <button class="chip__dismiss" type="button" aria-label="Eliminar filtro Color: Negro">×</button>
+          </button>
+          <button class="chip chip--selected chip--sm" type="button" data-active-chip>
+            Precio: &lt; 50 €
+            <button class="chip__dismiss" type="button" aria-label="Eliminar filtro Precio menor de 50 euros">×</button>
+          </button>
+          <button class="chip chip--selected chip--sm" type="button" data-active-chip>
+            En stock
+            <button class="chip__dismiss" type="button" aria-label="Eliminar filtro En stock">×</button>
+          </button>
+          <button class="com010__clear-all" type="button" id="com010-clear-all">Limpiar todo</button>
+        </div>
+      </div>
+
+    </div><!-- /com010__block -->
+  </div>
+</section>
+<!-- fin componente -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="com010-bg" value="blanco" checked> Blanco</label>
+      <label><input type="radio" name="com010-bg" value="gris"> Gris</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-010-chip-filtro.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-010</summary>
+  <div class="kit-notes__body">
+    <p>Cargando…</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    '.chip (base)':             'Fondo transparente, borde sutil. Tamaño mínimo de toque: 32 px de altura.',
+    '.chip--selected':          'Fondo de acento, texto del color de fondo. Indica filtro activo o categoría seleccionada.',
+    '.chip--disabled':          'opacity: 0.4 + pointer-events: none. Mostrar siempre el motivo con tooltip o texto auxiliar.',
+    '.chip__dismiss (×)':       'Botón interno. Requiere aria-label descriptivo. Clic elimina el chip del DOM o lo oculta.',
+    'Selección múltiple':       'Varios chips pueden estar activos simultáneamente. Ideal para filtros de categoría.',
+    'Selección única':          'Solo un chip activo a la vez (comportamiento radio). Ideal para orden y vistas.',
+    'Con icono':                'El icono va antes del texto. Máx. 16 × 16 px. No usar icono sin texto en grupos de filtro.',
+    'Tamaño sm':                '0.75 rem, padding 0.2em. Para filtros activos (row compacta) o tablas.',
+    'Tamaño md (default)':      '0.875 rem, padding 0.3em. Uso general.',
+    'Tamaño lg':                '1 rem, padding 0.45em. CTAs destacados o filtros en hero.',
+    'Filtros activos':          'Siempre acompañar de "Limpiar todo". El número de filtros activos no debería superar 6–7.',
+    'Accesibilidad':            'role="group" + aria-label en el contenedor. Chips como <button>. Dismiss con aria-label descriptivo.',
+    'Nunca':                    'Mezclar selección única y múltiple en el mismo grupo. Chips sin acción. Dismiss sin aria-label.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+
+    function byId(id) { return document.getElementById(id); }
+
+    /* ── 2. Dismiss chips (sección de estados) ── */
+    var dismissRow = byId('com010-dismiss-row');
+    if (dismissRow) {
+      dismissRow.addEventListener('click', function (e) {
+        var btn = e.target.closest('.chip__dismiss');
+        if (!btn) return;
+        var chip = btn.closest('[data-dismiss-chip]');
+        if (chip) chip.hidden = true;
+      });
+    }
+
+    /* ── 3. Selección múltiple ── */
+    var multiGroup = byId('com010-multi-group');
+    if (multiGroup) {
+      multiGroup.addEventListener('click', function (e) {
+        var chip = e.target.closest('[data-multi]');
+        if (!chip) return;
+        chip.classList.toggle('chip--selected');
+      });
+    }
+
+    /* ── 4. Selección única ── */
+    var singleGroup = byId('com010-single-group');
+    if (singleGroup) {
+      singleGroup.addEventListener('click', function (e) {
+        var chip = e.target.closest('[data-single]');
+        if (!chip) return;
+        var group = chip.dataset.single;
+        singleGroup.querySelectorAll('[data-single="' + group + '"]').forEach(function (c) {
+          c.classList.remove('chip--selected');
+        });
+        chip.classList.add('chip--selected');
+      });
+    }
+
+    /* ── 7. Filtros activos — dismiss individual ── */
+    var activeFilters = byId('com010-active-filters');
+    if (activeFilters) {
+      activeFilters.addEventListener('click', function (e) {
+        var btn = e.target.closest('.chip__dismiss');
+        if (!btn) return;
+        var chip = btn.closest('[data-active-chip]');
+        if (chip) chip.hidden = true;
+      });
+    }
+
+    /* ── 7. Limpiar todo ── */
+    var clearAll = byId('com010-clear-all');
+    if (clearAll) {
+      clearAll.addEventListener('click', function () {
+        if (!activeFilters) return;
+        activeFilters.querySelectorAll('[data-active-chip]').forEach(function (chip) {
+          chip.hidden = true;
+        });
+      });
+    }
+
+    /* ── Kit-states: fondo ── */
+    var mainBlock = byId('com010-main-block');
+    document.querySelectorAll('input[name="com010-bg"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        if (!mainBlock) return;
+        if (radio.value === 'gris') {
+          mainBlock.classList.add('com010--bg-grey');
+        } else {
+          mainBlock.classList.remove('com010--bg-grey');
+        }
+      });
+    });
+
+  });
+</script>
+</body>
+</html>

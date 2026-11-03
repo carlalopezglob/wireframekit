@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CRD-004 · Cards de pricing</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* CRD-004 — Cards de pricing */
+  .crd004__grid {
+    display: flex;
+    gap: var(--space-6);
+    align-items: stretch;
+  }
+
+  @media (max-width: 767px) {
+    .crd004__grid { flex-direction: column; }
+  }
+
+  .crd004__card {
+    flex: 1;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+  }
+
+  .crd004__card--highlighted {
+    border: 2px solid var(--color-accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .crd004__head {
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .crd004__badge-wrap {
+    margin-bottom: var(--space-3);
+    min-height: 0;   /* no reserva espacio cuando está oculto */
+  }
+
+  .crd004__plan-name {
+    margin: 0 0 var(--space-4);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .crd004__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .crd004__price-amount {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .crd004__price-period {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .crd004__description {
+    margin: var(--space-4) 0 0;
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .crd004__body {
+    padding: var(--space-6);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .crd004__features {
+    list-style: none;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+  }
+
+  .crd004__features li {
+    font-size: 0.9375rem;
+    padding-left: var(--space-6);
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .crd004__features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  /* CTA: ancho completo manteniendo el flex del btn para centrado correcto */
+  .crd004__cta {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+
+<section class="section" id="crd004-section" aria-labelledby="crd004-heading">
+  <div class="container">
+
+    <div class="section-head" id="crd004-header">
+      <p class="overtitle">Precios</p>
+      <h2 id="crd004-heading">Elige la opción que mejor se adapta a ti</h2>
+      <p>Sin permanencia. Cambia o cancela cuando quieras.</p>
+    </div>
+
+    <div class="crd004__grid" id="crd004-grid">
+
+      <!-- Card 1 — Tier A -->
+      <div class="card crd004__card" id="crd004-card-basic" role="article" aria-label="Tier A">
+        <div class="crd004__head">
+          <div class="crd004__badge-wrap" id="crd004-badge-basic" hidden>
+            <span class="tag">Recomendado</span>
+          </div>
+          <p class="crd004__plan-name">Tier A</p>
+          <div class="crd004__price-row crd004__price-el">
+            <span class="crd004__price-amount" data-monthly="0 €" data-annual="0 €">0 €</span>
+            <span class="crd004__price-period">/ mes</span>
+          </div>
+          <p class="crd004__description crd004__desc-el">
+            Ideal para empezar. Acceso a las funciones esenciales sin coste.
+          </p>
+        </div>
+        <div class="crd004__body">
+          <ul class="crd004__features crd004__feat-el">
+            <li>Hasta 3 proyectos activos</li>
+            <li>1 GB de almacenamiento</li>
+            <li>Exportación en PNG y PDF</li>
+            <li>Soporte por correo electrónico</li>
+          </ul>
+          <a href="#" class="btn btn--outline crd004__cta" data-slot="cta-plan">Empezar gratis</a>
+        </div>
+      </div>
+
+      <!-- Card 2 — Tier B (destacada por defecto) -->
+      <div class="card crd004__card crd004__card--highlighted" id="crd004-card-pro" role="article" aria-label="Tier B">
+        <div class="crd004__head">
+          <div class="crd004__badge-wrap" id="crd004-badge-pro">
+            <span class="tag">Recomendado</span>
+          </div>
+          <p class="crd004__plan-name">Tier B</p>
+          <div class="crd004__price-row crd004__price-el">
+            <span class="crd004__price-amount" data-monthly="29 €" data-annual="23 €">29 €</span>
+            <span class="crd004__price-period">/ mes</span>
+          </div>
+          <p class="crd004__description crd004__desc-el">
+            Para equipos que necesitan más herramientas y mayor capacidad.
+          </p>
+        </div>
+        <div class="crd004__body">
+          <ul class="crd004__features crd004__feat-el">
+            <li>Proyectos ilimitados</li>
+            <li>20 GB de almacenamiento</li>
+            <li>Exportación en todos los formatos</li>
+            <li>Colaboración en tiempo real (hasta 5 usuarios)</li>
+            <li>Soporte prioritario por chat</li>
+            <li>Acceso a plantillas premium</li>
+          </ul>
+          <a href="#" class="btn crd004__cta" data-slot="cta-plan">Comenzar periodo de prueba</a>
+        </div>
+      </div>
+
+      <!-- Card 3 — Tier C -->
+      <div class="card crd004__card" id="crd004-card-enterprise" role="article" aria-label="Tier C">
+        <div class="crd004__head">
+          <div class="crd004__badge-wrap" id="crd004-badge-enterprise" hidden>
+            <span class="tag">Recomendado</span>
+          </div>
+          <p class="crd004__plan-name">Tier C</p>
+          <div class="crd004__price-row crd004__price-el">
+            <span class="crd004__price-amount" data-monthly="99 €" data-annual="79 €">99 €</span>
+            <span class="crd004__price-period">/ mes</span>
+          </div>
+          <p class="crd004__description crd004__desc-el">
+            Solución avanzada para organizaciones con requisitos de seguridad y administración.
+          </p>
+        </div>
+        <div class="crd004__body">
+          <ul class="crd004__features crd004__feat-el">
+            <li>Todo lo del plan Pro</li>
+            <li>Almacenamiento ilimitado</li>
+            <li>Usuarios ilimitados</li>
+            <li>SSO / SAML e integración con directorio</li>
+            <li>Panel de administración centralizado</li>
+            <li>SLA con tiempo de respuesta garantizado</li>
+            <li>Onboarding dedicado</li>
+          </ul>
+          <a href="#" class="btn btn--outline crd004__cta" data-slot="cta-plan">Contactar ventas</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Card destacada</span>
+      <label><input type="radio" name="highlight" value="basic"> Tier A (izq.)</label>
+      <label><input type="radio" name="highlight" value="pro" checked> Tier B (central)</label>
+      <label><input type="radio" name="highlight" value="enterprise"> Tier C (dcha.)</label>
+      <label><input type="radio" name="highlight" value="none"> Ninguna</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Badge por card</span>
+      <label><input type="checkbox" id="badge-basic"> Badge en Tier A</label>
+      <label><input type="checkbox" id="badge-pro" checked> Badge en Tier B</label>
+      <label><input type="checkbox" id="badge-enterprise"> Badge en Tier C</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Contenido</span>
+      <label><input type="checkbox" id="toggle-desc" checked> Descripción del plan</label>
+      <label><input type="checkbox" id="toggle-feat" checked> Lista de características</label>
+      <label><input type="checkbox" id="toggle-price" checked> Precio</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Periodo</span>
+      <label><input type="radio" name="period" value="monthly" checked> Mensual</label>
+      <label><input type="radio" name="period" value="annual"> Anual (−20%)</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Número de planes</span>
+      <label><input type="radio" name="plancount" value="3" checked> 3 planes</label>
+      <label><input type="radio" name="plancount" value="2"> 2 planes (sin Básico)</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">CTA</span>
+      <div class="kit-states__prop-inline">
+        <label>Variante</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-plan']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--outline">Outline</option>
+          <option value="">Primario</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CRD/CAT-CRD-004-cards-de-pricing.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CRD-004</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Card destacada':     'Controla qué card recibe el borde de 2px (color accent). Independiente del badge — una card puede estar destacada sin badge, o tener badge sin estar destacada.',
+    'Badge por card':     'Cada card tiene su propio badge independiente. Pueden activarse 0, 1, 2 o las 3 a la vez. El contenedor siempre está en el DOM; hidden evita el hueco cuando está oculto.',
+    'CTA centrado':       'justify-content:center sobre el display:inline-flex del btn garantiza centrado correcto. No usar display:block porque rompe el modelo flex del componente btn.',
+    'Precio anual':       'El descuento anual se refleja en los data-monthly / data-annual de cada .crd004__price-amount. El JS intercambia el texto al cambiar el periodo.',
+    'Alineación CTA':     'flex:1 en .crd004__features + flex-direction:column en .crd004__body empuja el CTA al pie de cada card, alineando los tres botones independientemente del largo de la lista.',
+    'Número de planes':   '2 planes oculta el Básico. Útil para mostrar variantes de producto con menos niveles.',
+    'Mobile':             'Las cards se apilan. Considerar reordenar el DOM para que el plan recomendado aparezca primero en mobile.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var cards = {
+      basic:      byId('crd004-card-basic'),
+      pro:        byId('crd004-card-pro'),
+      enterprise: byId('crd004-card-enterprise'),
+    };
+    var badges = {
+      basic:      byId('crd004-badge-basic'),
+      pro:        byId('crd004-badge-pro'),
+      enterprise: byId('crd004-badge-enterprise'),
+    };
+
+    var currentHighlight = 'pro';
+
+    function applyHighlight() {
+      Object.keys(cards).forEach(function (k) {
+        cards[k].classList.toggle('crd004__card--highlighted', k === currentHighlight);
+      });
+    }
+
+    onRadioGroup('highlight', function (v) {
+      currentHighlight = v;
+      applyHighlight();
+    });
+
+    /* ── Badge independiente por card ── */
+    [
+      { id: 'badge-basic',      key: 'basic' },
+      { id: 'badge-pro',        key: 'pro' },
+      { id: 'badge-enterprise', key: 'enterprise' },
+    ].forEach(function (item) {
+      var el = byId(item.id);
+      if (!el) return;
+      /* estado inicial: sincronizar con el HTML */
+      badges[item.key].hidden = !el.checked;
+      el.addEventListener('change', function () {
+        badges[item.key].hidden = !el.checked;
+      });
+    });
+
+    /* ── Contenido ── */
+    onCheck('toggle-desc', function (v) {
+      document.querySelectorAll('.crd004__desc-el').forEach(function (el) { el.hidden = !v; });
+    });
+    onCheck('toggle-feat', function (v) {
+      document.querySelectorAll('.crd004__feat-el').forEach(function (el) { el.hidden = !v; });
+    });
+    onCheck('toggle-price', function (v) {
+      document.querySelectorAll('.crd004__price-el').forEach(function (el) { el.hidden = !v; });
+    });
+
+    /* ── Periodo mensual / anual ── */
+    onRadioGroup('period', function (v) {
+      var isAnnual = (v === 'annual');
+      document.querySelectorAll('.crd004__price-amount').forEach(function (el) {
+        el.textContent = isAnnual ? el.dataset.annual : el.dataset.monthly;
+      });
+      document.querySelectorAll('.crd004__price-period').forEach(function (el) {
+        el.textContent = isAnnual ? '/ mes · facturado anual' : '/ mes';
+      });
+    });
+
+    /* ── Número de planes ── */
+    onRadioGroup('plancount', function (v) {
+      cards.basic.hidden = (v === '2');
+    });
+
+    /* ── Fondo ── */
+    onRadioGroup('bg', function (v) { byId('crd004-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

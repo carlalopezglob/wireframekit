@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-012 · Widget flotante</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── Botón flotante ─────────────────────────────────────────── */
+.com012__btn {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: 900;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.com012__btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.com012__btn--left { right: auto; left: var(--space-6); }
+@media (max-width: 767px) {
+  .com012__btn { width: 52px; height: 52px; bottom: var(--space-4); right: var(--space-4); }
+  .com012__btn--left { right: auto; left: var(--space-4); }
+}
+
+.com012__icon { width: 24px; height: 24px; display: block; }
+.com012__icon svg { width: 100%; height: 100%; display: block; }
+
+/* ── Badge ──────────────────────────────────────────────────── */
+.com012__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #c0392b;
+  border: 2px solid var(--color-bg);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.com012__badge--dot {
+  min-width: 12px;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+}
+.com012__badge[hidden] { display: none !important; }
+
+/* ── Menú de opciones ───────────────────────────────────────── */
+.com012__menu {
+  position: fixed;
+  bottom: calc(var(--space-6) + 56px + var(--space-3));
+  right: var(--space-6);
+  z-index: 899;
+  width: 260px;
+  max-width: calc(100vw - var(--space-8));
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  animation: com012In 0.15s ease;
+}
+.com012__menu--left { right: auto; left: var(--space-6); }
+.com012__menu[hidden] { display: none !important; }
+@keyframes com012In { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 767px) {
+  .com012__menu { bottom: calc(var(--space-4) + 52px + var(--space-3)); right: var(--space-4); }
+  .com012__menu--left { right: auto; left: var(--space-4); }
+}
+
+.com012__option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: none;
+  font-family: var(--font-base);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+.com012__option:hover { background: var(--color-surface); }
+.com012__option-icon {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  color: var(--color-text-muted);
+}
+.com012__option-icon svg { width: 100%; height: 100%; display: block; }
+.com012__option-label { min-width: 0; }
+
+/* ── Demo page context ──────────────────────────────────────── */
+.com012__page-note { color: var(--color-text-muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="com012-page">
+  <div class="container">
+    <h2>Contenido de la página</h2>
+    <p class="com012__page-note">El widget flotante permanece fijo en la esquina inferior de la ventana durante todo el scroll. Al activarlo despliega un pequeño menú con los canales de contacto disponibles.</p>
+  </div>
+</section>
+
+<button class="com012__btn" id="com012-btn" aria-haspopup="true" aria-expanded="false" aria-label="Abrir opciones de contacto">
+  <span class="com012__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 5h16v11H9l-4 4V5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8 10h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </span>
+  <span class="com012__badge" id="com012-badge">2
+    <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">2 mensajes nuevos</span>
+  </span>
+</button>
+
+<div class="com012__menu" id="com012-menu" hidden role="menu" aria-label="Opciones de contacto">
+  <button class="com012__option" role="menuitem" id="com012-opt-chat">
+    <span class="com012__option-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 5h16v11H9l-4 4V5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="com012__option-label">Chat en vivo</span>
+  </button>
+  <button class="com012__option" role="menuitem" id="com012-opt-form">
+    <span class="com012__option-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="com012__option-label">Enviar un mensaje</span>
+  </button>
+  <button class="com012__option" role="menuitem" id="com012-opt-phone">
+    <span class="com012__option-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 4h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2C10 20 4 14 4 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="com012__option-label">Llamar por teléfono</span>
+  </button>
+</div>
+<!-- fin módulo -->
+
+
+<!-- kit-states panel -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Al activar</span>
+      <label><input type="radio" name="com012-mode" value="menu" checked> Despliega menú de opciones</label>
+      <label><input type="radio" name="com012-mode" value="direct"> Acción directa (sin menú)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Posición</span>
+      <label><input type="radio" name="com012-pos" value="right" checked> Esquina inferior derecha</label>
+      <label><input type="radio" name="com012-pos" value="left"> Esquina inferior izquierda</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Badge</span>
+      <label><input type="radio" name="com012-badge" value="number" checked> Número</label>
+      <label><input type="radio" name="com012-badge" value="dot"> Punto</label>
+      <label><input type="radio" name="com012-badge" value="none"> Sin badge</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-012-widget-flotante.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-012</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    categoria: {
+      label: 'Por qué CAT-COM y no CAT-MDL',
+      notes: [
+        'El botón flotante en sí nunca requiere un cierre explícito — permanece siempre visible y activo durante toda la navegación, a diferencia de un modal/drawer/dropdown.',
+        'El menú de opciones que despliega sí se cierra explícitamente (clic fuera, Escape), pero es secundario: el propósito del módulo es el disparador persistente, no la capa que abre.',
+        'Se evaluó CAT-MDL por ese menú desplegable, pero se mantuvo en CAT-COM porque el comportamiento que define al módulo es la permanencia, no el dismissal.'
+      ]
+    },
+    alcance: {
+      label: 'Qué NO construye este módulo',
+      notes: [
+        'El contenido de cada canal (una ventana de chat completa, un formulario corto) no es parte de este módulo — usar el módulo correspondiente del kit para ese contenido.',
+        'Este módulo es solo el botón persistente y, como mucho, el menú compacto de opciones que aparece al pulsarlo.'
+      ]
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var btn = byId('com012-btn');
+    var menu = byId('com012-menu');
+    var mode = 'menu';
+
+    function openMenu() {
+      menu.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+      menu.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (mode === 'direct') return; // acción directa: no hay menú que alternar
+      if (menu.hidden) openMenu(); else closeMenu();
+    });
+
+    document.addEventListener('click', function () { if (!menu.hidden) closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    menu.addEventListener('click', function (e) { e.stopPropagation(); });
+
+    document.querySelectorAll('.com012__option').forEach(function (opt) {
+      opt.addEventListener('click', closeMenu);
+    });
+
+    /* kit-states */
+    onRadioGroup('com012-mode', function (v) {
+      mode = v;
+      btn.setAttribute('aria-haspopup', v === 'menu' ? 'true' : 'false');
+      if (v === 'direct') closeMenu();
+    });
+
+    onRadioGroup('com012-pos', function (v) {
+      var left = v === 'left';
+      btn.classList.toggle('com012__btn--left', left);
+      menu.classList.toggle('com012__menu--left', left);
+    });
+
+    onRadioGroup('com012-badge', function (v) {
+      var badge = byId('com012-badge');
+      if (v === 'none') { badge.hidden = true; return; }
+      badge.hidden = false;
+      badge.classList.toggle('com012__badge--dot', v === 'dot');
+      badge.childNodes[0].textContent = v === 'dot' ? '' : '2';
+    });
+  });
+</script>
+</body>
+</html>

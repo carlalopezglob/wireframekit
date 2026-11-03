@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-007 · Tabs de contenido</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Tab scroller ── */
+  .con007__scroller {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .con007__scroller::-webkit-scrollbar { display: none; }
+
+  /* ── Panels ── */
+  .con007__panels { margin-top: var(--space-5); }
+
+  /* Panel base: texto sobre imagen */
+  .con007__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .con007__panel h3 { margin: 0; }
+  .con007__panel p  { margin: 0; color: var(--color-text-muted); max-width: 640px; }
+
+  /* Panel variante "lado a lado" */
+  .con007__panels--side .con007__panel {
+    display: grid;
+    gap: var(--space-8);
+    align-items: start;
+  }
+  @media (min-width: 768px) {
+    .con007__panels--side .con007__panel { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1200px) {
+    .con007__panels--side .con007__panel { grid-template-columns: 55fr 45fr; gap: var(--space-12); }
+  }
+
+  /* Imagen placeholder */
+  .con007__img .img-placeholder {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+  }
+  .con007__panels--side .con007__img .img-placeholder { aspect-ratio: 4 / 3; }
+  @media (max-width: 767px) {
+    .con007__img .img-placeholder { aspect-ratio: 16 / 9; }
+  }
+
+  /* Orden: imagen antes del texto */
+  .con007__panels--side .con007__img-el { order: 1; }
+  .con007__panels--side.con007__panels--img-first .con007__img-el { order: -1; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con007-section" aria-labelledby="con007-title">
+  <div class="container">
+
+    <div class="section-head" id="con007-header">
+      <p class="overtitle">Características</p>
+      <h2 id="con007-title">Todo lo que necesitas en un solo lugar</h2>
+    </div>
+
+    <!-- Tabs — wireframe.js gestiona el switching via data-tab -->
+    <div class="con007__scroller">
+      <div class="tabs" role="tablist" aria-label="Secciones de contenido">
+        <button class="tab-btn is-active" role="tab" data-tab="t1" aria-selected="true"  tabindex="0"  data-max="Nombre de pestaña largo">Pestaña uno</button>
+        <button class="tab-btn"           role="tab" data-tab="t2" aria-selected="false" tabindex="-1" data-max="Segunda pestaña larga">Pestaña dos</button>
+        <button class="tab-btn"           role="tab" data-tab="t3" aria-selected="false" tabindex="-1" data-max="Tercera pestaña larga">Pestaña tres</button>
+        <button class="tab-btn con007__tab4" role="tab" data-tab="t4" aria-selected="false" tabindex="-1" hidden data-max="Cuarta pestaña larga">Pestaña cuatro</button>
+      </div>
+    </div>
+
+    <!-- Paneles -->
+    <div class="con007__panels con007__panels--side" id="con007-panels">
+
+      <div class="tab-panel con007__panel" data-tab="t1" role="tabpanel">
+        <div class="con007__text">
+          <h3 data-max="Título de contenido de esta pestaña con texto más extenso para ver el límite">Título del contenido de la primera pestaña</h3>
+          <p data-max="Descripción más extensa del contenido de esta sección con texto adicional que llega al límite máximo permitido para el párrafo de cada panel de contenido.">Descripción del contenido de esta sección. Puede incluir texto explicativo, beneficios o cualquier información relevante para este apartado específico.</p>
+        </div>
+        <div class="con007__img con007__img-el">
+          <div class="img-placeholder" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel con007__panel" data-tab="t2" role="tabpanel" hidden>
+        <div class="con007__text">
+          <h3 data-max="Título de contenido de esta pestaña con texto más extenso para ver el límite">Título del contenido de la segunda pestaña</h3>
+          <p data-max="Descripción más extensa del contenido de esta sección con texto adicional que llega al límite máximo permitido para el párrafo de cada panel de contenido.">Descripción del contenido de esta sección. Puede incluir texto explicativo, beneficios o cualquier información relevante para este apartado específico.</p>
+        </div>
+        <div class="con007__img con007__img-el">
+          <div class="img-placeholder" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel con007__panel" data-tab="t3" role="tabpanel" hidden>
+        <div class="con007__text">
+          <h3 data-max="Título de contenido de esta pestaña con texto más extenso para ver el límite">Título del contenido de la tercera pestaña</h3>
+          <p data-max="Descripción más extensa del contenido de esta sección con texto adicional que llega al límite máximo permitido para el párrafo de cada panel de contenido.">Descripción del contenido de esta sección. Puede incluir texto explicativo, beneficios o cualquier información relevante para este apartado específico.</p>
+        </div>
+        <div class="con007__img con007__img-el">
+          <div class="img-placeholder" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel con007__panel con007__panel4" data-tab="t4" role="tabpanel" hidden>
+        <div class="con007__text">
+          <h3 data-max="Título de contenido de esta pestaña con texto más extenso para ver el límite">Título del contenido de la cuarta pestaña</h3>
+          <p data-max="Descripción más extensa del contenido de esta sección con texto adicional que llega al límite máximo permitido para el párrafo de cada panel de contenido.">Descripción del contenido de esta sección. Puede incluir texto explicativo, beneficios o cualquier información relevante para este apartado específico.</p>
+        </div>
+        <div class="con007__img con007__img-el">
+          <div class="img-placeholder" aria-hidden="true"></div>
+        </div>
+      </div>
+
+    </div><!-- /panels -->
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Encabezado de sección</span>
+      <label><input type="checkbox" id="toggle-header7" checked> Visible</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cantidad de tabs</span>
+      <label><input type="radio" name="tabcount" value="3" checked> 3 tabs</label>
+      <label><input type="radio" name="tabcount" value="4" data-max-state> 4 tabs</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Imagen</span>
+      <label><input type="radio" name="imgmode" value="side" checked> Lado a lado</label>
+      <label><input type="radio" name="imgmode" value="below"> Debajo del texto</label>
+      <label><input type="radio" name="imgmode" value="none"> Sin imagen</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Orden</span>
+      <label><input type="radio" name="mobile-order7" value="text-first" checked> Texto · Imagen</label>
+      <label><input type="radio" name="mobile-order7" value="img-first"> Imagen · Texto</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg7" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg7" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-007-tabs-de-contenido.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-007</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Pestaña (label)':   'Máx. 25 car. Nombres cortos — los largos fuerzan scroll horizontal en mobile.',
+    'Título del panel':  'Máx. 80 car. (~2 líneas desktop). H3 semántico.',
+    'Párrafo del panel': 'Máx. 200 car. (~3 líneas desktop). max-width: 640px para legibilidad.',
+    'Cantidad de tabs':  '3 o 4 tabs. Con 2 tabs preferir un layout de dos columnas sin tabs.',
+    'Imagen':            '4:3 en modo "lado a lado". Si está debajo del texto: full-width. En mobile siempre 16:9.',
+    'Modo lateral':      'Grid 2 columnas ≥768px. En mobile colapsa a columna única.',
+    'Orden mobile':      'Por defecto: texto arriba, imagen debajo (<768px). Configurable con "Imagen arriba".',
+    'Switching':         'Gestionado por wireframe.js vía data-tab. No redefinir la lógica en el módulo.',
+    'Scroll tabs':       'Wrapper con overflow-x:auto y scrollbar oculto — desplazamiento horizontal en mobile.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Encabezado
+    onCheck('toggle-header7', function (v) { byId('con007-header').hidden = !v; });
+
+    // 4ª pestaña — mostrar/ocultar botón y panel
+    onRadioGroup('tabcount', function (v) {
+      var tab4   = document.querySelector('.con007__tab4');
+      var panel4 = document.querySelector('.con007__panel4');
+      var show4  = v === '4';
+      tab4.hidden   = !show4;
+      // Si la 4ª estaba activa y la ocultamos, volver a la 1ª
+      if (!show4 && tab4.classList.contains('is-active')) {
+        document.querySelector('.tab-btn[data-tab="t1"]').click();
+      }
+    });
+
+    // Modo de imagen — clase CSS en el contenedor de paneles
+    onRadioGroup('imgmode', function (v) {
+      var panelsEl = byId('con007-panels');
+      panelsEl.classList.toggle('con007__panels--side', v === 'side');
+      document.querySelectorAll('.con007__img-el').forEach(function (el) {
+        el.hidden = v === 'none';
+      });
+    });
+
+    // Orden
+    onRadioGroup('mobile-order7', function (v) {
+      byId('con007-panels').classList.toggle('con007__panels--img-first', v === 'img-first');
+    });
+
+    // Fondo
+    onRadioGroup('bg7', function (v) { byId('con007-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

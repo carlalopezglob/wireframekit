@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-009 · Tooltip</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+
+/* ─────────────────────────────────────────
+   Tooltip core
+───────────────────────────────────────── */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip__bubble {
+  position: absolute;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  padding: 0.35em 0.65em;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 100;
+}
+
+.tooltip:hover .tooltip__bubble,
+.tooltip:focus-within .tooltip__bubble {
+  opacity: 1;
+}
+
+/* Arrow shared reset */
+.tooltip__bubble::after {
+  content: '';
+  position: absolute;
+  border: 5px solid transparent;
+}
+
+/* ─── Position: top (default) ─── */
+.tooltip--top .tooltip__bubble {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip--top .tooltip__bubble::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--color-text);
+}
+
+/* ─── Position: bottom ─── */
+.tooltip--bottom .tooltip__bubble {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip--bottom .tooltip__bubble::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: var(--color-text);
+}
+
+/* ─── Position: left ─── */
+.tooltip--left .tooltip__bubble {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tooltip--left .tooltip__bubble::after {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: var(--color-text);
+}
+
+/* ─── Position: right ─── */
+.tooltip--right .tooltip__bubble {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tooltip--right .tooltip__bubble::after {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: var(--color-text);
+}
+
+/* ─── Rich content: multi-line bubble ─── */
+.tooltip__bubble--rich {
+  white-space: normal;
+  max-width: 200px;
+  text-align: left;
+}
+
+.tooltip__bubble-title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+}
+
+.tooltip__bubble-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.tooltip__bubble-icon svg {
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   Trigger styles
+───────────────────────────────────────── */
+
+/* Info icon button */
+.trigger-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  transition: border-color 0.12s, color 0.12s;
+}
+.trigger-icon:hover,
+.trigger-icon:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Text link with dotted underline */
+.trigger-link {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: help;
+  font-size: 0.875rem;
+}
+.trigger-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Full button */
+.trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-family: var(--font-base);
+  transition: border-color 0.12s;
+}
+.trigger-btn:hover,
+.trigger-btn:focus-visible {
+  border-color: var(--color-accent);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────
+   Form row demo
+───────────────────────────────────────── */
+.com009__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 320px;
+}
+
+.com009__label-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.com009__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.com009__input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-family: var(--font-base);
+  box-sizing: border-box;
+}
+.com009__input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+.com009__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ─────────────────────────────────────────
+   Layout
+───────────────────────────────────────── */
+.com009__section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.com009__block {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.com009__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.com009__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.com009__cell-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Extra padding in position row to give bubbles room */
+.com009__row--positions {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+</style>
+</head>
+<body>
+
+<section class="section" id="com009-section">
+  <div class="container">
+
+    <div class="com009__block">
+
+      <!-- 1. Posiciones -->
+      <div>
+        <p class="com009__section-title">Posiciones</p>
+        <div class="com009__row com009__row--positions">
+
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top" id="demo-pos-1">
+              <button class="trigger-btn">Arriba</button>
+              <span class="tooltip__bubble" role="tooltip">Tooltip arriba</span>
+            </div>
+            <span class="com009__cell-label">top (por defecto)</span>
+          </div>
+
+          <div class="com009__cell">
+            <div class="tooltip tooltip--bottom" id="demo-pos-2">
+              <button class="trigger-btn">Abajo</button>
+              <span class="tooltip__bubble" role="tooltip">Tooltip abajo</span>
+            </div>
+            <span class="com009__cell-label">bottom</span>
+          </div>
+
+          <div class="com009__cell">
+            <div class="tooltip tooltip--left" id="demo-pos-3">
+              <button class="trigger-btn">Izquierda</button>
+              <span class="tooltip__bubble" role="tooltip">Tooltip izquierda</span>
+            </div>
+            <span class="com009__cell-label">left</span>
+          </div>
+
+          <div class="com009__cell">
+            <div class="tooltip tooltip--right" id="demo-pos-4">
+              <button class="trigger-btn">Derecha</button>
+              <span class="tooltip__bubble" role="tooltip">Tooltip derecha</span>
+            </div>
+            <span class="com009__cell-label">right</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. Triggers -->
+      <div>
+        <p class="com009__section-title">Tipos de trigger</p>
+        <div class="com009__row">
+
+          <!-- Icono ⓘ -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <button class="trigger-icon" aria-label="Más información">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                  <circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-width="1.5"/>
+                  <rect x="5.25" y="5" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+                  <circle cx="6" cy="3.25" r="0.85" fill="currentColor"/>
+                </svg>
+              </button>
+              <span class="tooltip__bubble" role="tooltip">Información adicional</span>
+            </div>
+            <span class="com009__cell-label">Icono ⓘ</span>
+          </div>
+
+          <!-- Enlace con subrayado punteado -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <span class="trigger-link" tabindex="0">¿Qué es esto?</span>
+              <span class="tooltip__bubble" role="tooltip">Texto explicativo breve</span>
+            </div>
+            <span class="com009__cell-label">Enlace punteado</span>
+          </div>
+
+          <!-- Botón completo -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <button class="trigger-btn">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M7 1.5a5.5 5.5 0 1 1 0 11A5.5 5.5 0 0 1 7 1.5Z" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M7 6v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  <circle cx="7" cy="4.25" r="0.85" fill="currentColor"/>
+                </svg>
+                Acción
+              </button>
+              <span class="tooltip__bubble" role="tooltip">Ejecuta la operación principal</span>
+            </div>
+            <span class="com009__cell-label">Botón completo</span>
+          </div>
+
+          <!-- Etiqueta de input deshabilitado -->
+          <div class="com009__cell">
+            <div class="com009__form-group">
+              <div class="com009__label-row">
+                <label class="com009__label" for="demo-disabled-input">Campo bloqueado</label>
+                <div class="tooltip tooltip--top">
+                  <button class="trigger-icon" type="button" aria-label="Más información">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                      <circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-width="1.5"/>
+                      <rect x="5.25" y="5" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+                      <circle cx="6" cy="3.25" r="0.85" fill="currentColor"/>
+                    </svg>
+                  </button>
+                  <span class="tooltip__bubble" role="tooltip">Gestionado por el administrador</span>
+                </div>
+              </div>
+              <input class="com009__input" id="demo-disabled-input" type="text" value="usuario@empresa.com" disabled aria-disabled="true">
+            </div>
+            <span class="com009__cell-label">Input con tooltip en etiqueta</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3. Rich content -->
+      <div>
+        <p class="com009__section-title">Tooltips con contenido enriquecido</p>
+        <div class="com009__row">
+
+          <!-- Icono + texto inline -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <button class="trigger-btn">Con icono</button>
+              <span class="tooltip__bubble" role="tooltip">
+                <span class="tooltip__bubble-icon">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M6 1.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M4.5 6l1.2 1.2L7.5 4.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Verificado y activo
+                </span>
+              </span>
+            </div>
+            <span class="com009__cell-label">Icono + texto</span>
+          </div>
+
+          <!-- Dos líneas -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <button class="trigger-btn">Dos líneas</button>
+              <span class="tooltip__bubble tooltip__bubble--rich" role="tooltip">
+                <strong class="tooltip__bubble-title">Límite de caracteres</strong>
+                Máximo 160 caracteres permitidos en este campo.
+              </span>
+            </div>
+            <span class="com009__cell-label">Título + descripción</span>
+          </div>
+
+          <!-- Advertencia -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <button class="trigger-btn">Advertencia</button>
+              <span class="tooltip__bubble tooltip__bubble--rich" role="tooltip">
+                <span class="tooltip__bubble-icon">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M6.5 1.5 1 11h11L6.5 1.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                    <path d="M6.5 5.5v2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    <circle cx="6.5" cy="9.3" r="0.7" fill="currentColor"/>
+                  </svg>
+                  Esta acción no se puede deshacer
+                </span>
+              </span>
+            </div>
+            <span class="com009__cell-label">Advertencia con icono</span>
+          </div>
+
+          <!-- Atajo de teclado -->
+          <div class="com009__cell">
+            <div class="tooltip tooltip--top">
+              <button class="trigger-btn">Guardar</button>
+              <span class="tooltip__bubble tooltip__bubble--rich" role="tooltip">
+                <strong class="tooltip__bubble-title">Guardar cambios</strong>
+                Atajo: Ctrl + S
+              </span>
+            </div>
+            <span class="com009__cell-label">Atajo de teclado</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 4. Tooltip en formulario -->
+      <div>
+        <p class="com009__section-title">Tooltip en formulario</p>
+        <div class="com009__row" style="align-items: flex-start;">
+
+          <div class="com009__form-group">
+            <div class="com009__label-row">
+              <label class="com009__label" for="form-rfc">RFC / NIF fiscal
+                <span style="color: var(--color-accent); margin-left: 2px;" aria-hidden="true">*</span>
+              </label>
+              <div class="tooltip tooltip--right">
+                <button class="trigger-icon" type="button" aria-label="Ayuda sobre este campo">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="5.25" y="5" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+                    <circle cx="6" cy="3.25" r="0.85" fill="currentColor"/>
+                  </svg>
+                </button>
+                <span class="tooltip__bubble tooltip__bubble--rich" role="tooltip">
+                  <strong class="tooltip__bubble-title">Campo requerido</strong>
+                  Este campo es requerido para el procesamiento de la factura electrónica.
+                </span>
+              </div>
+            </div>
+            <input class="com009__input" id="form-rfc" type="text" placeholder="Ej. XAXX010101000">
+          </div>
+
+          <div class="com009__form-group">
+            <div class="com009__label-row">
+              <label class="com009__label" for="form-correo">Correo de notificación</label>
+              <div class="tooltip tooltip--right">
+                <button class="trigger-icon" type="button" aria-label="Ayuda sobre este campo">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="5.25" y="5" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+                    <circle cx="6" cy="3.25" r="0.85" fill="currentColor"/>
+                  </svg>
+                </button>
+                <span class="tooltip__bubble tooltip__bubble--rich" role="tooltip">
+                  Se usará para enviar el comprobante de pago y avisos de vencimiento.
+                </span>
+              </div>
+            </div>
+            <input class="com009__input" id="form-correo" type="email" placeholder="correo@empresa.com">
+          </div>
+
+          <div class="com009__form-group">
+            <div class="com009__label-row">
+              <label class="com009__label" for="form-cuenta">Número de cuenta
+                <span style="color: var(--color-accent); margin-left: 2px;" aria-hidden="true">*</span>
+              </label>
+              <div class="tooltip tooltip--right">
+                <button class="trigger-icon" type="button" aria-label="Ayuda sobre este campo">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="5.25" y="5" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+                    <circle cx="6" cy="3.25" r="0.85" fill="currentColor"/>
+                  </svg>
+                </button>
+                <span class="tooltip__bubble tooltip__bubble--rich" role="tooltip">
+                  <strong class="tooltip__bubble-title">18 dígitos CLABE</strong>
+                  Localízala en tu estado de cuenta o app del banco.
+                </span>
+              </div>
+            </div>
+            <input class="com009__input" id="form-cuenta" type="text" placeholder="000000000000000000" maxlength="18">
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Posición</p>
+      <label class="kit-states__option">
+        <input type="radio" name="pos" value="tooltip--top" checked> Arriba
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="pos" value="tooltip--bottom"> Abajo
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="pos" value="tooltip--left"> Izquierda
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="pos" value="tooltip--right"> Derecha
+      </label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Fondo</p>
+      <label class="kit-states__option">
+        <input type="radio" name="bg" value="var(--color-bg)" checked> Blanco
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="bg" value="var(--color-surface)"> Gris
+      </label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-009-tooltip.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-009</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+    });
+  }
+
+  var POS_CLASSES = ['tooltip--top', 'tooltip--bottom', 'tooltip--left', 'tooltip--right'];
+
+  /* Position radio — swap position modifier on all demo tooltips in the positions row */
+  onRadioGroup('pos', function (newClass) {
+    var section = byId('com009-section');
+    section.querySelectorAll('.tooltip').forEach(function (el) {
+      POS_CLASSES.forEach(function (cls) { el.classList.remove(cls); });
+      el.classList.add(newClass);
+    });
+  });
+
+  /* Background radio */
+  onRadioGroup('bg', function (v) {
+    byId('com009-section').style.background = v;
+  });
+});
+</script>
+
+</body>
+</html>

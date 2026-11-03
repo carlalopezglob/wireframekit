@@ -1,0 +1,26 @@
+#!/bin/sh
+# Bloquea el push directo a main. Todo cambio va por rama + Pull Request.
+# Esto es la libreria base de modulos para todos los proyectos de cliente:
+# un cambio roto o sin revisar aqui afecta a todos los proyectos que lo usen.
+# Activar una vez por clon:  git config core.hooksPath .githooks
+
+PROTEGIDA="main"
+
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    "refs/heads/$PROTEGIDA")
+      echo ""
+      echo "  ⛔  Push directo a '$PROTEGIDA' bloqueado."
+      echo ""
+      echo "  Todo cambio va por rama + Pull Request."
+      echo "     git checkout -b feat/lo-que-sea"
+      echo "     git push -u origin feat/lo-que-sea"
+      echo ""
+      echo "  (Si de verdad hace falta saltárselo: git push --no-verify)"
+      echo ""
+      exit 1
+      ;;
+  esac
+done
+
+exit 0

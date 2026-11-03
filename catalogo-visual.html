@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo visual — Librería base</title>
+<style>
+  :root {
+    --bg: #fafafa; --border: #d0d0d0; --text: #1a1a1a; --muted: #6b6b6b; --accent: #333;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+  }
+  header {
+    padding: 1.5rem 2rem; border-bottom: 2px solid var(--accent); background: #fff;
+    position: sticky; top: 0; z-index: 10;
+  }
+  header h1 { margin: 0 0 0.25rem; font-size: 1.3rem; }
+  header p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+  .categoria { padding: 2rem; }
+  .categoria h2 {
+    font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modulo { margin-bottom: 2.5rem; background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .modulo__label {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.75rem 1rem; background: #f0f0f0; border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .modulo__label code { font-weight: 700; }
+  .modulo__label a { color: var(--muted); text-decoration: none; font-size: 0.8rem; }
+  .modulo__label a:hover { text-decoration: underline; }
+
+  .modulo__frame-wrap { width: 100%; overflow: hidden; }
+  .modulo iframe { width: 100%; border: none; display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Catálogo visual — Librería base</h1>
+  <p>Módulos genéricos reutilizables entre proyectos. Referencia solo para revisión humana — Claude nunca carga este archivo en sesión.</p>
+</header>
+
+<section class="categoria">
+  <h2>CAT-CAB — Cabecera</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CAB-001</code> · Hero principal</span>
+      <a href="registry/CAT-CAB/CAT-CAB-001-hero-principal.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CAB/CAT-CAB-001-hero-principal.html" height="650" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CAB-003</code> · Header ligero sin imagen</span>
+      <a href="registry/CAT-CAB/CAT-CAB-003-header-ligero-sin-imagen.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CAB/CAT-CAB-003-header-ligero-sin-imagen.html" height="650" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="categoria">
+  <h2>CAT-CON — Contenido</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-001</code> · Bloque texto + imagen</span>
+      <a href="registry/CAT-CON/CAT-CON-001-bloque-texto-imagen.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-001-bloque-texto-imagen.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-002</code> · Bloque solo texto</span>
+      <a href="registry/CAT-CON/CAT-CON-002-bloque-solo-texto.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-002-bloque-solo-texto.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-003</code> · Cita destacada</span>
+      <a href="registry/CAT-CON/CAT-CON-003-cita-destacada.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-003-cita-destacada.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-005</code> · Stats</span>
+      <a href="registry/CAT-CON/CAT-CON-005-stats.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-005-stats.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-006</code> · Acordeon FAQ</span>
+      <a href="registry/CAT-CON/CAT-CON-006-acordeon-faq.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-006-acordeon-faq.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-007</code> · Tabs de contenido</span>
+      <a href="registry/CAT-CON/CAT-CON-007-tabs-de-contenido.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-007-tabs-de-contenido.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-008</code> · Timeline Proceso</span>
+      <a href="registry/CAT-CON/CAT-CON-008-timeline-proceso.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-008-timeline-proceso.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-009</code> · Bloque de características</span>
+      <a href="registry/CAT-CON/CAT-CON-009-bloque-de-caracteristicas.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-009-bloque-de-caracteristicas.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-010</code> · Banner CTA</span>
+      <a href="registry/CAT-CON/CAT-CON-010-banner-cta.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-010-banner-cta.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-011</code> · Muro de logos</span>
+      <a href="registry/CAT-CON/CAT-CON-011-muro-de-logos.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-011-muro-de-logos.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-012</code> · Sección de equipo</span>
+      <a href="registry/CAT-CON/CAT-CON-012-seccion-de-equipo.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-012-seccion-de-equipo.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-013</code> · Galería de imágenes</span>
+      <a href="registry/CAT-CON/CAT-CON-013-galeria-de-imagenes.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-013-galeria-de-imagenes.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-014</code> · Newsletter Suscripción</span>
+      <a href="registry/CAT-CON/CAT-CON-014-newsletter-suscripcion.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-014-newsletter-suscripcion.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-015</code> · Visor de documento interactivo</span>
+      <a href="registry/CAT-CON/CAT-CON-015-visor-de-documento-interactivo.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-015-visor-de-documento-interactivo.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-016</code> · Contenedor de pestañas heterogéneo</span>
+      <a href="registry/CAT-CON/CAT-CON-016-contenedor-de-pestanas-heterogeneo.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-016-contenedor-de-pestanas-heterogeneo.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-017</code> · Lista de datos clave</span>
+      <a href="registry/CAT-CON/CAT-CON-017-lista-de-datos-clave.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-017-lista-de-datos-clave.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CON-018</code> · Lista simple de texto</span>
+      <a href="registry/CAT-CON/CAT-CON-018-lista-simple-de-texto.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CON/CAT-CON-018-lista-simple-de-texto.html" height="600" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="categoria">
+  <h2>CAT-CRD — Cards</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CRD-001</code> · Card basica</span>
+      <a href="registry/CAT-CRD/CAT-CRD-001-card-basica.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CRD/CAT-CRD-001-card-basica.html" height="560" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CRD-002</code> · Grid de cards</span>
+      <a href="registry/CAT-CRD/CAT-CRD-002-grid-de-cards.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CRD/CAT-CRD-002-grid-de-cards.html" height="560" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CRD-003</code> · Carrusel horizontal</span>
+      <a href="registry/CAT-CRD/CAT-CRD-003-carrusel-horizontal.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CRD/CAT-CRD-003-carrusel-horizontal.html" height="560" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CRD-004</code> · Cards de pricing</span>
+      <a href="registry/CAT-CRD/CAT-CRD-004-cards-de-pricing.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CRD/CAT-CRD-004-cards-de-pricing.html" height="560" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CRD-005</code> · Tarjetas de testimonio</span>
+      <a href="registry/CAT-CRD/CAT-CRD-005-tarjetas-de-testimonio.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CRD/CAT-CRD-005-tarjetas-de-testimonio.html" height="560" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-CRD-006</code> · Cards de artículo</span>
+      <a href="registry/CAT-CRD/CAT-CRD-006-cards-de-articulo.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-CRD/CAT-CRD-006-cards-de-articulo.html" height="560" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="categoria">
+  <h2>CAT-FRM — Formularios</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-FRM-001</code> · Formulario de contacto</span>
+      <a href="registry/CAT-FRM/CAT-FRM-001-formulario-de-contacto.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-FRM/CAT-FRM-001-formulario-de-contacto.html" height="650" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-FRM-002</code> · Login Registro</span>
+      <a href="registry/CAT-FRM/CAT-FRM-002-login-registro.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-FRM/CAT-FRM-002-login-registro.html" height="650" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-FRM-003</code> · Buscador con filtros</span>
+      <a href="registry/CAT-FRM/CAT-FRM-003-buscador-con-filtros.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-FRM/CAT-FRM-003-buscador-con-filtros.html" height="650" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-FRM-004</code> · Formulario multi-paso</span>
+      <a href="registry/CAT-FRM/CAT-FRM-004-formulario-multi-paso.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-FRM/CAT-FRM-004-formulario-multi-paso.html" height="650" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="categoria">
+  <h2>CAT-MDL — Capas flotantes (modales)</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-MDL-001</code> · Modal basico</span>
+      <a href="registry/CAT-MDL/CAT-MDL-001-modal-basico.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-MDL/CAT-MDL-001-modal-basico.html" height="750" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-MDL-002</code> · Modal video</span>
+      <a href="registry/CAT-MDL/CAT-MDL-002-modal-video.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-MDL/CAT-MDL-002-modal-video.html" height="750" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-MDL-003</code> · Drawer lateral</span>
+      <a href="registry/CAT-MDL/CAT-MDL-003-drawer-lateral.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-MDL/CAT-MDL-003-drawer-lateral.html" height="750" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-MDL-004</code> · Menú desplegable</span>
+      <a href="registry/CAT-MDL/CAT-MDL-004-menu-desplegable.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-MDL/CAT-MDL-004-menu-desplegable.html" height="750" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-MDL-005</code> · Panel de cookies</span>
+      <a href="registry/CAT-MDL/CAT-MDL-005-panel-cookies.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-MDL/CAT-MDL-005-panel-cookies.html" height="750" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="categoria">
+  <h2>CAT-NAV — Navegación</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-NAV-001</code> · Nav bar</span>
+      <a href="registry/CAT-NAV/CAT-NAV-001-nav-bar.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-NAV/CAT-NAV-001-nav-bar.html" height="450" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-NAV-002</code> · Footer completo</span>
+      <a href="registry/CAT-NAV/CAT-NAV-002-footer-completo.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-NAV/CAT-NAV-002-footer-completo.html" height="450" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-NAV-003</code> · Breadcrumbs</span>
+      <a href="registry/CAT-NAV/CAT-NAV-003-breadcrumbs.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-NAV/CAT-NAV-003-breadcrumbs.html" height="450" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-NAV-004</code> · Paginacion</span>
+      <a href="registry/CAT-NAV/CAT-NAV-004-paginacion.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-NAV/CAT-NAV-004-paginacion.html" height="450" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-NAV-005</code> · Stepper</span>
+      <a href="registry/CAT-NAV/CAT-NAV-005-stepper.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-NAV/CAT-NAV-005-stepper.html" height="450" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-NAV-006</code> · Lista de enlaces</span>
+      <a href="registry/CAT-NAV/CAT-NAV-006-lista-de-enlaces.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-NAV/CAT-NAV-006-lista-de-enlaces.html" height="450" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="categoria">
+  <h2>CAT-COM — Componentes atómicos</h2>
+
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-001</code> · Botón</span>
+      <a href="registry/CAT-COM/CAT-COM-001-boton.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-001-boton.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-002</code> · Input de texto</span>
+      <a href="registry/CAT-COM/CAT-COM-002-input-de-texto.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-002-input-de-texto.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-003</code> · Select</span>
+      <a href="registry/CAT-COM/CAT-COM-003-select.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-003-select.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-004</code> · Badge</span>
+      <a href="registry/CAT-COM/CAT-COM-004-badge.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-004-badge.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-005</code> · Checkbox y Radio</span>
+      <a href="registry/CAT-COM/CAT-COM-005-checkbox-y-radio.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-005-checkbox-y-radio.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-006</code> · Toggle</span>
+      <a href="registry/CAT-COM/CAT-COM-006-toggle.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-006-toggle.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-007</code> · Avatar</span>
+      <a href="registry/CAT-COM/CAT-COM-007-avatar.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-007-avatar.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-008</code> · Loader</span>
+      <a href="registry/CAT-COM/CAT-COM-008-loader.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-008-loader.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-009</code> · Tooltip</span>
+      <a href="registry/CAT-COM/CAT-COM-009-tooltip.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-009-tooltip.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-010</code> · Chip Filtro</span>
+      <a href="registry/CAT-COM/CAT-COM-010-chip-filtro.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-010-chip-filtro.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-011</code> · Toast Notificación</span>
+      <a href="registry/CAT-COM/CAT-COM-011-toast-notificacion.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-011-toast-notificacion.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-012</code> · Widget flotante</span>
+      <a href="registry/CAT-COM/CAT-COM-012-widget-flotante.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-012-widget-flotante.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="modulo">
+    <div class="modulo__label">
+      <span><code>CAT-COM-013</code> · Bloque social (iconos)</span>
+      <a href="registry/CAT-COM/CAT-COM-013-bloque-social-iconos.md" target="_blank">Ver spec →</a>
+    </div>
+    <div class="modulo__frame-wrap">
+      <iframe src="modules/CAT-COM/CAT-COM-013-bloque-social-iconos.html" height="500" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+</body>
+</html>

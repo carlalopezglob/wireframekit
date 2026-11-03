@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-013 · Galería de imágenes</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── Header ── */
+.con013__header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-12);
+}
+.con013__overtitle {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-accent); margin: 0 0 var(--space-2);
+}
+.con013__title    { margin: 0 0 var(--space-3); font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+.con013__subtitle { margin: 0; color: var(--color-text-muted); font-size: 1rem; line-height: 1.6; }
+
+/* ── Placeholders ── */
+.con013__img {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted); font-size: 0.75rem;
+  width: 100%; aspect-ratio: 4/3;
+  border-radius: var(--radius-md);
+}
+.con013__img--wide   { aspect-ratio: 16/9; }
+.con013__img--tall   { aspect-ratio: 3/4; }
+.con013__img--square { aspect-ratio: 1; }
+
+.con013__vid {
+  display: none;
+  width: 100%; aspect-ratio: 16/9;
+  background: #2a2a2a;
+  border-radius: var(--radius-md);
+  align-items: center; justify-content: center;
+  position: relative;
+}
+.con013__vid-play {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: rgba(255,255,255,0.9);
+  padding-left: 3px;
+}
+.con013__vid-label {
+  position: absolute; bottom: var(--space-3); left: var(--space-3);
+  font-size: 0.65rem; font-family: monospace; color: rgba(255,255,255,0.45);
+}
+
+/* Video mode: swap placeholders */
+.con013__grid--video .con013__img { display: none; }
+.con013__grid--video .con013__vid { display: flex; }
+
+/* ── Grid ── */
+.con013__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+@media (min-width: 640px)  { .con013__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .con013__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.con013__grid--2col { grid-template-columns: 1fr; }
+@media (min-width: 640px) { .con013__grid--2col { grid-template-columns: repeat(2, 1fr); } }
+
+/* ── Masonry ── */
+.con013__grid--masonry {
+  display: block;
+  column-count: 1; column-gap: var(--space-3);
+}
+@media (min-width: 640px)  { .con013__grid--masonry { column-count: 2; } }
+@media (min-width: 1024px) { .con013__grid--masonry { column-count: 3; } }
+.con013__grid--masonry .con013__item {
+  break-inside: avoid; margin-bottom: var(--space-3); display: block;
+}
+
+/* ── Gallery item ── */
+.con013__item {
+  cursor: pointer; border: none; padding: 0; background: none;
+  border-radius: var(--radius-md); overflow: hidden;
+  position: relative; display: block; width: 100%; text-align: left;
+}
+.con013__item:focus-visible {
+  outline: 2px solid var(--color-accent); outline-offset: 2px;
+}
+.con013__overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s;
+  border-radius: var(--radius-md);
+  color: #fff; font-size: 1.5rem;
+}
+.con013__item:hover .con013__overlay,
+.con013__item:focus-visible .con013__overlay { opacity: 1; }
+/* Ícono ▶ en modo vídeo */
+.con013__grid--video .con013__overlay::before { content: '▶'; font-size: 1.2rem; }
+.con013__grid--video .con013__overlay { font-size: 0; } /* oculta el ⊕ original */
+
+/* ── Footer "Ver más" ── */
+.con013__footer {
+  margin-top: var(--space-8); text-align: center;
+}
+
+/* ── Collapsed: mobile muestra solo 4 ítems ── */
+@media (max-width: 639px) {
+  .con013__grid--collapsed .con013__item:nth-child(n+5) {
+    display: none;
+  }
+}
+
+/* ── Lightbox ── */
+.con013__lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.88);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1100;
+  padding: var(--space-6);
+  overflow-y: auto;
+}
+.con013__lightbox[hidden] { display: none !important; }
+
+.con013__lightbox-inner {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  max-width: 720px;
+  width: 100%;
+  max-height: calc(100vh - var(--space-12));
+  overflow-y: auto;
+  padding: var(--space-6);
+  position: relative;
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.con013__lightbox-close {
+  position: absolute; top: var(--space-3); right: var(--space-3);
+  background: none; border: none;
+  font-size: 1.4rem; cursor: pointer;
+  color: var(--color-text-muted); line-height: 1; padding: var(--space-1);
+  border-radius: var(--radius-sm);
+}
+.con013__lightbox-close:hover { color: var(--color-text); }
+
+/* Lightbox: placeholder imagen */
+.con013__lb-img {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  width: 100%; aspect-ratio: 16/9;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted); font-size: 0.875rem;
+}
+/* Lightbox: placeholder vídeo */
+.con013__lb-vid {
+  background: #2a2a2a; width: 100%; aspect-ratio: 16/9;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.con013__lb-vid-play {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: rgba(255,255,255,0.9); padding-left: 4px;
+}
+.con013__lb-vid-label {
+  position: absolute; bottom: var(--space-3); left: var(--space-3);
+  font-size: 0.7rem; font-family: monospace; color: rgba(255,255,255,0.4);
+}
+.con013__lb-caption {
+  font-size: 0.875rem; color: var(--color-text-muted); margin: 0;
+}
+.con013__lb-title {
+  font-size: 1rem; font-weight: 700; margin: 0;
+}
+</style>
+</head>
+<body>
+
+<section class="section" id="con013-section" aria-labelledby="con013-title">
+  <div class="container">
+
+    <!-- Cabecera -->
+    <div class="con013__header" id="con013-header">
+      <p class="con013__overtitle">Galería</p>
+      <h2 class="con013__title" id="con013-title"
+          data-max="Título largo de la galería de imágenes del proyecto o trabajo">Nuestro trabajo</h2>
+      <p class="con013__subtitle"
+         data-max="Subtítulo descriptivo más largo sobre el contenido de la galería y lo que representa.">Una selección de proyectos y momentos que definen quiénes somos.</p>
+    </div>
+
+    <!-- Grid -->
+    <div class="con013__grid con013__grid--collapsed" id="con013-grid">
+
+      <button class="con013__item" data-index="1" aria-label="Ver elemento 1 ampliado">
+        <div class="con013__img">Imagen 1</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="2" aria-label="Ver elemento 2 ampliado">
+        <div class="con013__img">Imagen 2</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="3" aria-label="Ver elemento 3 ampliado">
+        <div class="con013__img">Imagen 3</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="4" aria-label="Ver elemento 4 ampliado">
+        <div class="con013__img">Imagen 4</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="5" aria-label="Ver elemento 5 ampliado">
+        <div class="con013__img">Imagen 5</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="6" aria-label="Ver elemento 6 ampliado">
+        <div class="con013__img">Imagen 6</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="7" aria-label="Ver elemento 7 ampliado" id="con013-item7" hidden>
+        <div class="con013__img">Imagen 7</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="8" aria-label="Ver elemento 8 ampliado" id="con013-item8" hidden>
+        <div class="con013__img">Imagen 8</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+      <button class="con013__item" data-index="9" aria-label="Ver elemento 9 ampliado" id="con013-item9" hidden>
+        <div class="con013__img">Imagen 9</div>
+        <div class="con013__vid"><div class="con013__vid-play">▶</div><span class="con013__vid-label">vídeo — 16:9</span></div>
+        <div class="con013__overlay" aria-hidden="true">⊕</div>
+      </button>
+
+    </div><!-- /.con013__grid -->
+
+    <!-- Botón Ver más -->
+    <div class="con013__footer" id="con013-footer">
+      <button class="btn btn--outline" id="con013-load-more" data-slot="cta-vermas"
+              data-max="Ver más fotos — texto alternativo más largo">Ver más fotos</button>
+    </div>
+
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tipo de medio</span>
+      <label><input type="radio" name="media-type" value="img" checked> Imagen</label>
+      <label><input type="radio" name="media-type" value="video"> Vídeo</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Layout</span>
+      <label><input type="radio" name="layout" value="3col" checked> Cuadrícula (3 cols)</label>
+      <label><input type="radio" name="layout" value="2col"> Cuadrícula (2 cols)</label>
+      <label><input type="radio" name="layout" value="masonry"> Masonry</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Separación</span>
+      <label><input type="radio" name="gap" value="compacta"> Compacta</label>
+      <label><input type="radio" name="gap" value="normal" checked> Normal</label>
+      <label><input type="radio" name="gap" value="amplia"> Amplia</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="con013-toggle-header" checked> Encabezado</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="con013-toggle-more" checked> Botón "Ver más"</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-vermas']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--outline">Outline</option>
+          <option value="">Primario</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="blanco" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="gris"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-013-galeria-de-imagenes.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-013</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<!-- Lightbox — al final del body para z-index correcto -->
+<div class="con013__lightbox" id="con013-lightbox" hidden role="dialog" aria-modal="true" aria-labelledby="con013-lb-title">
+  <div class="con013__lightbox-inner" id="con013-lightbox-inner">
+    <button class="con013__lightbox-close" id="con013-lightbox-close" aria-label="Cerrar">✕</button>
+    <div class="con013__lb-img" id="con013-lb-img">Vista previa — imagen ampliada</div>
+    <div class="con013__lb-vid" id="con013-lb-vid" hidden>
+      <div class="con013__lb-vid-play">▶</div>
+      <span class="con013__lb-vid-label">Vídeo embed — 16:9</span>
+    </div>
+    <div>
+      <p class="con013__lb-title" id="con013-lb-title">Imagen 1</p>
+      <p class="con013__lb-caption" id="con013-lb-caption">Vista ampliada</p>
+    </div>
+  </div>
+</div>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Imagen':       'Aspect ratio configurable por ítem (4:3, 16:9, 3:4, 1:1). En masonry se mezclan ratios.',
+    'Vídeo':        'Siempre 16:9. En UI real, botón play abre modal o autoplay muted. El lightbox muestra el embed.',
+    'Lightbox':     'z-index 1100 — por encima de todos los paneles del kit. Cierra con ✕, Escape o clic exterior.',
+    'Grid 3 cols':  'Default. 1 col mobile → 2 col tablet → 3 col desktop.',
+    'Grid 2 cols':  '1 col mobile → 2 col desktop. Bueno para imágenes más grandes.',
+    'Masonry':      'CSS columns. Cada ítem mantiene su aspect ratio propio para crear el efecto escalonado.',
+    'Ver más':      'Mobile: aparece tras 4 ítems (oculta 5–6 en 1 col). Tablet/desktop: tras 6. Al pulsar revela todo (5–9). En UI real puede ser paginación o carga infinita.',
+  };
+
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+    });
+  }
+
+  var grid        = byId('con013-grid');
+  var isVideo     = false;
+  var isCollapsed = true;
+
+  // ── Tipo de medio ──
+  onRadioGroup('media-type', function (v) {
+    isVideo = (v === 'video');
+    grid.classList.toggle('con013__grid--video', isVideo);
+  });
+
+  // ── Masonry aspect-ratio variants ──
+  var masonryRatios = ['4/3','3/4','16/9','1','3/4','4/3','16/9','1','3/4'];
+  function applyMasonryRatios(active) {
+    document.querySelectorAll('.con013__item').forEach(function (item, i) {
+      var ph = item.querySelector('.con013__img');
+      if (!ph) return;
+      ph.style.aspectRatio = active ? (masonryRatios[i] || '4/3') : '';
+    });
+  }
+
+  // ── Layout ──
+  onRadioGroup('layout', function (v) {
+    var isMasonry = v === 'masonry';
+    var is2col    = v === '2col';
+    var videoClass     = isVideo ? ' con013__grid--video' : '';
+    var collapsedClass = isCollapsed ? ' con013__grid--collapsed' : '';
+    grid.className = 'con013__grid' +
+      (isMasonry ? ' con013__grid--masonry' : '') +
+      (is2col    ? ' con013__grid--2col'    : '') +
+      videoClass + collapsedClass;
+    applyMasonryRatios(isMasonry);
+    var checkedGap = document.querySelector('input[name="gap"]:checked');
+    if (checkedGap) setGap(checkedGap.value);
+  });
+
+  // ── Separación ──
+  function setGap(v) {
+    var gapMap = { compacta: '0.5rem', normal: 'var(--space-3)', amplia: 'var(--space-6)' };
+    var val = gapMap[v] || 'var(--space-3)';
+    grid.style.gap = val;
+    grid.style.columnGap = val;
+  }
+  onRadioGroup('gap', function (v) { setGap(v); });
+
+  // ── Encabezado ──
+  onCheck('con013-toggle-header', function (v) { byId('con013-header').hidden = !v; });
+
+  // ── Botón Ver más ──
+  onCheck('con013-toggle-more', function (v) { byId('con013-footer').hidden = !v; });
+
+  var loadMoreBtn = byId('con013-load-more');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function () {
+      // Quitar colapso mobile (muestra ítems 5-6) y revelar ítems 7-9
+      isCollapsed = false;
+      grid.classList.remove('con013__grid--collapsed');
+      ['con013-item7','con013-item8','con013-item9'].forEach(function (id) {
+        var el = byId(id); if (el) el.hidden = false;
+      });
+      byId('con013-footer').hidden = true;
+    });
+  }
+
+  // ── Fondo ──
+  onRadioGroup('bg', function (v) {
+    byId('con013-section').style.background = v === 'gris' ? 'var(--color-surface)' : '';
+  });
+
+  // ── Lightbox ──
+  var lightbox = byId('con013-lightbox');
+  var lbInner  = byId('con013-lightbox-inner');
+  var lbImg    = byId('con013-lb-img');
+  var lbVid    = byId('con013-lb-vid');
+  var lbTitle  = byId('con013-lb-title');
+  var lbCaption= byId('con013-lb-caption');
+  var lbClose  = byId('con013-lightbox-close');
+
+  function openLightbox(index) {
+    var label = (isVideo ? 'Vídeo ' : 'Imagen ') + index;
+    lbImg.hidden = isVideo;
+    lbVid.hidden = !isVideo;
+    lbImg.textContent = 'Imagen ' + index + ' — vista ampliada';
+    lbTitle.textContent   = label;
+    lbCaption.textContent = label + ' — Vista ampliada';
+    lightbox.hidden = false;
+    lbClose.focus();
+  }
+
+  function closeLightbox() { lightbox.hidden = true; }
+
+  document.querySelectorAll('.con013__item').forEach(function (btn) {
+    btn.addEventListener('click', function () { openLightbox(btn.getAttribute('data-index') || '?'); });
+  });
+
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+
+  if (lightbox) {
+    lightbox.addEventListener('click', function (e) {
+      if (lbInner && !lbInner.contains(e.target)) closeLightbox();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
+  });
+});
+</script>
+</body>
+</html>

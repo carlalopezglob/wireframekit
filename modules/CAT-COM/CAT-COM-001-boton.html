@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-001 · Botón</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Showcase layout ── */
+  .com-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    padding: var(--space-8) 0;
+  }
+  .com-row__label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-2); margin-bottom: var(--space-4);
+  }
+  .com-row__items {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6);
+  }
+  .com-item {
+    display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2);
+  }
+  .com-item__name {
+    font-size: 0.65rem; font-family: monospace; color: var(--color-text-muted);
+    background: var(--color-surface-alt, #f5f5f5);
+    padding: 0.15em 0.5em; border-radius: var(--radius-sm);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COMPONENTE — referencia de variantes
+     ══════════════════════════════════════════════ -->
+<section class="section" id="com001-section" aria-labelledby="com001-title">
+  <div class="container">
+
+    <div class="section-head">
+      <p class="overtitle">CAT-COM-001</p>
+      <h2 id="com001-title">Botón</h2>
+      <p style="color:var(--color-text-muted)">Componente de acción principal. Cuatro variantes visuales + destructiva. Tres tallas. Cuatro estados.</p>
+    </div>
+
+    <div class="com-showcase">
+
+      <!-- Variantes -->
+      <div class="com-row" id="com001-variants">
+        <p class="com-row__label">Variantes</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <a href="#" class="btn" data-max="Llamada a la acción">Primario</a>
+            <span class="com-item__name">.btn</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--outline" data-max="Acción secundaria">Outline</a>
+            <span class="com-item__name">.btn--outline</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--ghost" data-max="Acción terciaria">Ghost</a>
+            <span class="com-item__name">.btn--ghost</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--link" data-max="Enlace de acción →">Enlace</a>
+            <span class="com-item__name">.btn--link</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--danger" data-max="Eliminar definitivamente">Destructivo</a>
+            <span class="com-item__name">.btn--danger</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tallas -->
+      <div class="com-row">
+        <p class="com-row__label">Tallas — referencia: primario</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <a href="#" class="btn btn--sm">Pequeño</a>
+            <span class="com-item__name">.btn--sm (40px)</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn">Mediano</a>
+            <span class="com-item__name">.btn (48px, default)</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--lg">Grande</a>
+            <span class="com-item__name">.btn--lg (56px)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estados -->
+      <div class="com-row">
+        <p class="com-row__label">Estados — referencia: primario</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <a href="#" class="btn">Default</a>
+            <span class="com-item__name">default</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn" style="opacity:0.85">Hover</a>
+            <span class="com-item__name">:hover → opacity 0.85</span>
+          </div>
+          <div class="com-item">
+            <a class="btn" aria-disabled="true" tabindex="-1"
+               style="opacity:0.4;cursor:not-allowed;pointer-events:none">Deshabilitado</a>
+            <span class="com-item__name">aria-disabled / :disabled</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--loading">Enviando</a>
+            <span class="com-item__name">.btn--loading</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Con icono (opcional) -->
+      <div class="com-row" id="com001-icon-row" hidden>
+        <p class="com-row__label">Con icono — placeholder de texto</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <a href="#" class="btn">← Icono izquierda</a>
+            <span class="com-item__name">icon-left</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn">Icono derecha →</a>
+            <span class="com-item__name">icon-right</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--outline">← Outline</a>
+            <span class="com-item__name">outline + icon</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--link">Ver más →</a>
+            <span class="com-item__name">link + icon</span>
+          </div>
+          <div class="com-item">
+            <a href="#" class="btn btn--sm" style="min-width:40px;padding:0"
+               aria-label="Acción de icono">✕</a>
+            <span class="com-item__name">icon-only (.btn--sm)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin componente -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Mostrar</span>
+      <label><input type="checkbox" id="toggle-icon-row" data-max-state> Con icono (placeholder)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-001-boton.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-001</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    '.btn (primario)':        'Fondo de acento, texto blanco. Solo una acción primaria por pantalla.',
+    '.btn--outline':          'Borde y texto de acento. Acción secundaria junto a un primario.',
+    '.btn--ghost':            'Sin borde ni fondo visible. Acción terciaria o en superficies con mucho color.',
+    '.btn--link':             'Solo texto subrayado. Para acciones que deben pasar como enlace en flujo.',
+    '.btn--danger':           'Rojo. Únicamente para acciones destructivas irreversibles — siempre con confirmación.',
+    'Talla sm (40px)':        'Contextos compactos: tablas, formularios densos, acciones inline.',
+    'Talla md (48px)':        'Uso general — default.',
+    'Talla lg (56px)':        'CTAs de hero o secciones con mucho espacio visual. Usar con moderación.',
+    'Estado loading':         'Oculta el texto y muestra spinner. Mantener mismo width para evitar layout shift.',
+    'Estado disabled':        'opacity: 0.4 + pointer-events: none. Explicar siempre al usuario por qué.',
+    'Máx. caracteres':        'sm: 20 / md: 30 / lg: 40 car.',
+    'Nunca':                  'Dos primarios juntos. Outline sin primario cercano. Danger sin confirmación previa.',
+    'Accesibilidad':          'Botones de icono: siempre aria-label. Loading: aria-busy="true" + texto de espera oculto.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var el = document.getElementById('toggle-icon-row');
+    if (el) el.addEventListener('change', function () {
+      document.getElementById('com001-icon-row').hidden = !el.checked;
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-002 · Bloque solo texto</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Wrapper de ancho ── */
+  .con002__wrap {
+    max-width: 700px;
+  }
+  .con002__wrap--narrow { max-width: 55ch; }
+  .con002__wrap--wide   { max-width: none; }
+
+  /* ── Columna de texto — misma lógica que CON-001 ── */
+  .con002__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .con002__title    { margin: 0; }
+  .con002__subtitle { margin: 0; color: var(--color-text-muted); font-size: 1.125rem; }
+
+  /* ── Slot (zona apilable entre título y CTAs) ── */
+  .con002__slot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Párrafo */
+  .slot-text { color: var(--color-text-muted); margin: 0; }
+
+  /* Lista */
+  .slot-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: var(--space-2);
+  }
+  .slot-list li {
+    display: flex; align-items: flex-start; gap: var(--space-3);
+    font-size: 0.95rem;
+  }
+  .slot-list li::before {
+    content: '';
+    flex-shrink: 0; width: 6px; height: 6px;
+    margin-top: 0.48em;
+    border-radius: 50%; background: var(--color-accent);
+  }
+
+  /* Mini-stats */
+  .slot-stats {
+    display: flex; gap: var(--space-6);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .slot-stats__item { display: flex; flex-direction: column; gap: var(--space-1); }
+  .slot-stats__number {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 800; line-height: 1; color: var(--color-text);
+  }
+  .slot-stats__label { font-size: 0.8rem; color: var(--color-text-muted); }
+
+  /* ── CTAs ── */
+  .con002__ctas {
+    display: flex; flex-wrap: wrap;
+    gap: var(--space-3); align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con002-section" aria-labelledby="con002-title">
+  <div class="container">
+    <div class="con002__wrap" id="con002-wrap">
+      <div class="con002__body">
+
+        <p class="overtitle" id="con002-overtitle"
+           data-max="Categoría — eyebrow de la sección, largo">Categoría o eyebrow</p>
+
+        <h2 class="con002__title" id="con002-title"
+            data-max="El título principal del bloque hasta llegar al máximo de caracteres posible en la UI">El título principal del bloque de texto va aquí</h2>
+
+        <p class="con002__subtitle" id="con002-subtitle"
+           data-max="Una frase de apoyo más larga que complementa el título con el contexto adicional para el lector sin superar el límite.">Una frase de apoyo opcional que complementa el título con contexto adicional para el lector.</p>
+
+        <!-- Slot — zona apilable de contenido extra -->
+        <div class="con002__slot" id="con002-slot">
+
+          <div id="slot-text" data-slot-type="text">
+            <p class="slot-text"
+               data-max="Párrafo extenso que desarrolla el mensaje del título con contexto adicional. Alineado siempre a la izquierda para máxima legibilidad en cualquier tamaño de pantalla y dispositivo.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula ligula vel augue volutpat, at mollis orci condimentum. Sed efficitur metus et arcu pretium, ac posuere sapien posuere.</p>
+            <p class="slot-text" style="margin-top: var(--space-3)">Phasellus euismod magna id nunc feugiat, non sagittis nisi dignissim. Proin at purus at libero blandit tincidunt et vel mi.</p>
+          </div>
+
+          <div id="slot-list" data-slot-type="list" hidden>
+            <ul class="slot-list">
+              <li data-max="Primer punto clave con texto extenso que llega al límite">Primer punto clave que resume una idea o ventaja.</li>
+              <li data-max="Segundo punto que complementa con bastante más detalle">Segundo punto que complementa el anterior con más detalle.</li>
+              <li data-max="Tercer punto adicional para reforzar el mensaje general">Tercer punto adicional para reforzar el mensaje general.</li>
+              <li data-max="Cuarto punto opcional con texto más largo si lo requiere">Cuarto punto opcional si el contenido lo requiere.</li>
+            </ul>
+          </div>
+
+          <div id="slot-stats" data-slot-type="stats" hidden>
+            <div class="slot-stats">
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="99,9%">98%</span>
+                <span class="slot-stats__label" data-max="Satisfacción clientes">Satisfacción</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+9.999">+500</span>
+                <span class="slot-stats__label" data-max="Proyectos completados">Proyectos</span>
+              </div>
+              <div class="slot-stats__item">
+                <span class="slot-stats__number" data-max="+50K">12</span>
+                <span class="slot-stats__label" data-max="Años de experiencia">Años</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /slot -->
+
+        <div class="con002__ctas" id="con002-ctas">
+          <a href="#" class="btn" id="con002-cta-primary" data-slot="cta-prim"
+             data-max="Llamada a la acción principal">Acción principal</a>
+          <a href="#" class="btn--link" id="con002-cta-secondary" data-slot="cta-sec"
+             data-max="Enlace secundario con texto largo →">Saber más →</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <!-- Elementos — checkboxes con selects inline para CTAs -->
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-overtitle" checked> Overtitle</label>
+      <label><input type="checkbox" id="toggle-subtitle" checked> Subtítulo</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta-prim" checked> CTA principal</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-prim']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta-sec" checked> CTA secundario</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-sec']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--link">Enlace</option>
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Contenido — slot con selector de tipo -->
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Contenido</span>
+      <label>
+        <input type="checkbox" id="toggle-slot" checked> Slot
+        <select class="kit-slot-type" data-slot-target="con002-slot">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Ancho — radio (propiedad del módulo) -->
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Ancho del bloque</span>
+      <label><input type="radio" name="width" value="default" checked> Estándar (700px)</label>
+      <label><input type="radio" name="width" value="narrow"> Estrecho (55ch)</label>
+      <label><input type="radio" name="width" value="wide"> Sin límite</label>
+    </div>
+
+    <!-- Fondo — radio -->
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg2" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg2" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-002-bloque-solo-texto.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-002</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Overtitle':           'Máx. 40 car. Opcional.',
+    'Subtítulo':           'Máx. 120 car. (~1 línea desktop). Complementa el título.',
+    'Título (H2)':         'Máx. 80 car. (~2 líneas a 700px). H2 semántico.',
+    'Párrafo':             'Máx. 200 car. (~3 líneas). Solo un slot activo a la vez.',
+    'Lista':               '2–4 ítems. Máx. 60 car. por ítem. Alternativa al párrafo.',
+    'Mini-stats':          '2–4 cifras. Número máx. 6 car. Etiqueta máx. 30 car. Alternativa al párrafo.',
+    'CTA principal':       'Máx. 30 car.',
+    'CTA secundario':      'Máx. 40 car. Solo si hay un destino alternativo claro.',
+    'Ancho estándar':      '700px — cubre la mayoría de casos de uso.',
+    'Ancho estrecho':      '55ch — para texto de artículo o lectura larga.',
+    'Sin límite de ancho': 'Full width — para secciones sin restricción de ancho.',
+    'Alineación':          'Todo el texto siempre a la izquierda. Nunca centrar párrafos.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Elementos
+    onCheck('toggle-overtitle', function (v) { byId('con002-overtitle').hidden = !v; });
+    onCheck('toggle-subtitle',  function (v) { byId('con002-subtitle').hidden  = !v; });
+    onCheck('toggle-cta-prim',  function (v) { byId('con002-cta-primary').hidden   = !v; });
+    onCheck('toggle-cta-sec',   function (v) { byId('con002-cta-secondary').hidden = !v; });
+
+    // Slot — mostrar/ocultar el bloque completo (el tipo lo gestiona wireframe.js via kit-slot-type)
+    onCheck('toggle-slot', function (v) { byId('con002-slot').hidden = !v; });
+
+    // Ancho
+    onRadioGroup('width', function (v) {
+      var wrap = byId('con002-wrap');
+      wrap.classList.remove('con002__wrap--narrow', 'con002__wrap--wide');
+      if (v === 'narrow') wrap.classList.add('con002__wrap--narrow');
+      if (v === 'wide')   wrap.classList.add('con002__wrap--wide');
+    });
+
+    // Fondo
+    onRadioGroup('bg2', function (v) { byId('con002-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

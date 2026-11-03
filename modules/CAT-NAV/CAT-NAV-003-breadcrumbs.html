@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-NAV-003 · Breadcrumbs</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* nav003__ */
+.nav003 {}
+.nav003__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+.nav003__item {
+  display: flex;
+  align-items: center;
+}
+.nav003__item:not(:last-child)::after {
+  content: "/";
+  color: var(--color-text-muted);
+  margin-left: var(--space-2);
+}
+.nav003__link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.nav003__link:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+.nav003__item--current {
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section section--sm" aria-labelledby="nav003-heading" id="nav003-section">
+  <div class="container">
+    <nav aria-label="Ruta de navegación" class="nav003">
+      <ol class="nav003__list" id="nav003-list">
+        <li class="nav003__item" id="nav003-l1">
+          <a href="#" class="nav003__link">Inicio</a>
+        </li>
+        <li class="nav003__item" id="nav003-l2">
+          <a href="#" class="nav003__link">Sección</a>
+        </li>
+        <li class="nav003__item" id="nav003-l3">
+          <a href="#" class="nav003__link">Subsección</a>
+        </li>
+        <li class="nav003__item nav003__item--current" id="nav003-l4" aria-current="page">
+          Página actual
+        </li>
+      </ol>
+    </nav>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Niveles</span>
+      <label><input type="radio" name="levels" value="2"> 2 niveles</label>
+      <label><input type="radio" name="levels" value="3" checked> 3 niveles</label>
+      <label><input type="radio" name="levels" value="4"> 4 niveles</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-NAV/CAT-NAV-003-breadcrumbs.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-NAV-003</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'HTML semántico':  'Usar &lt;nav aria-label="Ruta de navegación"&gt; y &lt;ol&gt; (no &lt;ul&gt;) — es una secuencia ordenada.',
+    'página actual':   'El ítem actual no es enlace; lleva aria-current="page".',
+    'mobile 4 niveles':'Con 4 niveles en mobile, valorar colapsar los ítems intermedios a "…" para no partir en 3 líneas.'
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Initial state: 3 levels (l1=Inicio, l2=Sección, l3+l4 visible; l3=link, l4=current)
+    // For 2 levels: l1 link + l2 current (hide l3, l4)
+    // For 3 levels: l1, l2 links + l3 current (hide l4) — but spec shows l4 as current so let's remap
+    // Levels mean total items in breadcrumb including current
+    // Default=3: Inicio / Sección / Página actual
+    var l2 = byId('nav003-l2');
+    var l3 = byId('nav003-l3');
+    var l4 = byId('nav003-l4');
+
+    function setLevels(n) {
+      // l1 always visible
+      // 2: l1 link, l2 current — hide l3, l4
+      // 3: l1, l2 links, l3 current — hide l4
+      // 4: l1, l2, l3 links, l4 current — all visible
+      if (n === '2') {
+        if (l2) { l2.hidden = false; l2.setAttribute('aria-current', 'page'); l2.classList.add('nav003__item--current'); var a = l2.querySelector('a'); if(a) { a.outerHTML = a.textContent; } }
+        if (l3) l3.hidden = true;
+        if (l4) l4.hidden = true;
+      } else if (n === '3') {
+        // restore default
+        location.reload();
+      } else {
+        if (l2) { l2.hidden = false; }
+        if (l3) { l3.hidden = false; }
+        if (l4) { l4.hidden = false; }
+      }
+    }
+
+    // Simpler approach — just show/hide items
+    onRadioGroup('levels', function (val) {
+      var items = [
+        byId('nav003-l1'),
+        byId('nav003-l2'),
+        byId('nav003-l3'),
+        byId('nav003-l4')
+      ];
+      var n = parseInt(val, 10);
+      items.forEach(function (item, i) {
+        if (!item) return;
+        item.hidden = (i >= n);
+        item.removeAttribute('aria-current');
+        item.classList.remove('nav003__item--current');
+      });
+      var current = items[n - 1];
+      if (current) {
+        current.setAttribute('aria-current', 'page');
+        current.classList.add('nav003__item--current');
+      }
+    });
+
+    // Set default to 3 levels (hide l4)
+    byId('nav003-l4') && (byId('nav003-l4').hidden = true);
+    // l3 is current at 3 levels
+    var l3el = byId('nav003-l3');
+    if (l3el) {
+      l3el.setAttribute('aria-current', 'page');
+      l3el.classList.add('nav003__item--current');
+    }
+
+    onRadioGroup('bg', function (val) {
+      var sec = byId('nav003-section');
+      if (sec) sec.style.background = val;
+    });
+  });
+</script>
+</body>
+</html>

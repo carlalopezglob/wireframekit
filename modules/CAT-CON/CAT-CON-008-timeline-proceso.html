@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-008 · Timeline / Proceso</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Vertical layout (default) ── */
+  .con008__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 680px;
+  }
+  .con008__step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    position: relative;
+  }
+  .con008__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .con008__circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .con008__line {
+    width: 2px;
+    flex: 1;
+    min-height: var(--space-8);
+    background: var(--color-border);
+    margin-top: 0;
+  }
+  /* Hide line on last visible step */
+  .con008__step:last-child .con008__line,
+  .con008__step[hidden] + .con008__step .con008__line {
+    display: none;
+  }
+  .con008__content {
+    padding-bottom: var(--space-8);
+    flex: 1;
+  }
+  .con008__content h3 {
+    margin: 0 0 var(--space-2) 0;
+    line-height: 1.2;
+    /* Align text vertically with circle center */
+    padding-top: calc((40px - 1.2em * 1.2) / 2);
+  }
+  .con008__content p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Horizontal layout (desktop variant) ── */
+  .con008__list--horizontal {
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: none;
+    gap: 0;
+  }
+  .con008__list--horizontal .con008__step {
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .con008__list--horizontal .con008__left {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+  .con008__list--horizontal .con008__line {
+    flex: 1;
+    width: auto;
+    height: 2px;
+    min-height: 0;
+    margin: 0;
+  }
+  .con008__list--horizontal .con008__step:last-child .con008__line {
+    display: none;
+  }
+  .con008__list--horizontal .con008__step[hidden] {
+    display: none;
+  }
+  .con008__list--horizontal .con008__content {
+    width: 100%;
+    padding: var(--space-4) var(--space-3) 0;
+    text-align: left;
+    box-sizing: border-box;
+  }
+  .con008__list--horizontal .con008__content h3 {
+    padding-top: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-height: 2.8em; /* alinea títulos entre columnas (~2 líneas) */
+  }
+  .con008__list--horizontal .con008__content p {
+    font-size: 0.875rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Ocultar control de disposición en mobile — siempre vertical */
+  @media (max-width: 767px) {
+    #ctrl-layout8 { display: none; }
+  }
+
+  @media (max-width: 767px) {
+    .con008__list--horizontal {
+      flex-direction: column;
+      max-width: 680px;
+    }
+    .con008__list--horizontal .con008__step {
+      flex: none;
+      width: 100%;
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .con008__list--horizontal .con008__left {
+      flex-direction: column;
+      width: 40px;
+    }
+    .con008__list--horizontal .con008__line {
+      width: 2px;
+      height: auto;
+      min-height: var(--space-8);
+      flex: 1;
+    }
+    .con008__list--horizontal .con008__content {
+      text-align: left;
+      padding-top: 0;
+      padding-bottom: var(--space-8);
+    }
+    .con008__list--horizontal .con008__content h3 {
+      padding-top: calc((40px - 1.2em * 1.2) / 2);
+    }
+    .con008__list--horizontal .con008__step:last-child .con008__line {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con008-section" aria-labelledby="con008-title">
+  <div class="container">
+
+    <div class="section-head" id="con008-header">
+      <p class="overtitle">Proceso</p>
+      <h2 id="con008-title">Así trabajamos contigo</h2>
+      <p>Un proceso claro y transparente para que sepas exactamente qué esperar en cada etapa.</p>
+    </div>
+
+    <ol class="con008__list" id="con008-list" aria-label="Pasos del proceso">
+
+      <li class="con008__step" id="con008-step-1">
+        <div class="con008__left">
+          <div class="con008__circle" aria-hidden="true">1</div>
+          <div class="con008__line" aria-hidden="true"></div>
+        </div>
+        <div class="con008__content">
+          <h3>Descubrimiento y diagnóstico</h3>
+          <p class="con008__desc-el">Analizamos tu situación actual, tus objetivos y el contexto del proyecto para definir el alcance y la estrategia más adecuada.</p>
+        </div>
+      </li>
+
+      <li class="con008__step" id="con008-step-2">
+        <div class="con008__left">
+          <div class="con008__circle" aria-hidden="true">2</div>
+          <div class="con008__line" aria-hidden="true"></div>
+        </div>
+        <div class="con008__content">
+          <h3>Propuesta y planificación</h3>
+          <p class="con008__desc-el">Presentamos una propuesta detallada con tiempos, entregables y metodología. Una vez aprobada, comenzamos la planificación del sprint.</p>
+        </div>
+      </li>
+
+      <li class="con008__step" id="con008-step-3">
+        <div class="con008__left">
+          <div class="con008__circle" aria-hidden="true">3</div>
+          <div class="con008__line" aria-hidden="true"></div>
+        </div>
+        <div class="con008__content">
+          <h3>Diseño y desarrollo</h3>
+          <p class="con008__desc-el">Ejecutamos el proyecto con revisiones periódicas para asegurarnos de que cada entregable cumple con tus expectativas antes de avanzar.</p>
+        </div>
+      </li>
+
+      <li class="con008__step" id="con008-step-4">
+        <div class="con008__left">
+          <div class="con008__circle" aria-hidden="true">4</div>
+          <div class="con008__line" aria-hidden="true"></div>
+        </div>
+        <div class="con008__content">
+          <h3>Entrega y acompañamiento</h3>
+          <p class="con008__desc-el">Hacemos entrega del proyecto final con documentación completa y un período de soporte incluido para garantizar una transición sin fricciones.</p>
+        </div>
+      </li>
+
+      <li class="con008__step con008__extra" id="con008-step-5">
+        <div class="con008__left">
+          <div class="con008__circle" aria-hidden="true">5</div>
+          <div class="con008__line" aria-hidden="true"></div>
+        </div>
+        <div class="con008__content">
+          <h3>Evaluación y mejora continua</h3>
+          <p class="con008__desc-el">Medimos resultados, recopilamos feedback y definimos acciones de mejora para la siguiente iteración del proyecto.</p>
+        </div>
+      </li>
+
+    </ol>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-header8" checked> Encabezado de sección</label>
+      <label><input type="checkbox" id="toggle-descs8" checked> Descripciones</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cantidad de pasos</span>
+      <label><input type="radio" name="count8" value="4" checked> 4 pasos</label>
+      <label><input type="radio" name="count8" value="3"> 3 pasos</label>
+      <label><input type="radio" name="count8" value="5"> 5 pasos</label>
+    </div>
+    <div class="kit-states__group" id="ctrl-layout8">
+      <span class="kit-states__group-label">Disposición</span>
+      <label><input type="radio" name="layout8" value="vertical" checked> Vertical</label>
+      <label><input type="radio" name="layout8" value="horizontal"> Horizontal</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-008-timeline-proceso.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-008</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'línea-conectora': 'La línea conectora es un div hermano del círculo, dentro de .con008__left. Crece para llenar el espacio entre pasos.',
+    'último-paso': 'El último paso visible NO debe mostrar línea conectora. En vertical la línea está en cada item excepto el último.',
+    'horizontal-mobile': 'En móvil la variante horizontal vuelve a vertical automáticamente via media query.',
+    'numeración': 'Los números en los círculos son contenido HTML — actualizarlos si se reordenan pasos.'
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-header8', function (v) {
+      var el = byId('con008-header');
+      if (v) el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+    });
+    onCheck('toggle-descs8', function (v) {
+      document.querySelectorAll('.con008__desc-el').forEach(function (el) {
+        if (v) el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+      });
+    });
+
+    onRadioGroup('count8', function (v) {
+      var step4 = byId('con008-step-4');
+      var step5 = byId('con008-step-5');
+      if (v === '3') {
+        step4.setAttribute('hidden', '');
+        step5.setAttribute('hidden', '');
+      } else if (v === '4') {
+        step4.removeAttribute('hidden');
+        step5.setAttribute('hidden', '');
+      } else {
+        step4.removeAttribute('hidden');
+        step5.removeAttribute('hidden');
+      }
+    });
+
+    onRadioGroup('layout8', function (v) {
+      var list = byId('con008-list');
+      if (v === 'horizontal') {
+        list.classList.add('con008__list--horizontal');
+      } else {
+        list.classList.remove('con008__list--horizontal');
+      }
+    });
+
+    onRadioGroup('bg', function (v) { byId('con008-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesión</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+.login-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-6) 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+.login-social {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.login-social .btn--outline {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.login-remember-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  font-size: 0.875rem;
+}
+.login-privacy {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.login-privacy input {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<nav class="login-nav" role="navigation" aria-label="Navegación">
+  <span class="nav-bar__logo">Logo</span>
+  <a href="#" style="color:var(--color-text-muted);font-size:0.875rem;text-decoration:none;">&#8592; Volver</a>
+</nav>
+
+<main style="background:var(--color-surface);min-height:calc(100vh - 128px);display:flex;align-items:center;justify-content:center;padding:var(--space-8) var(--space-4);">
+  <div style="max-width:440px;width:100%;background:var(--color-bg);border-radius:var(--radius-lg);padding:var(--space-8);box-shadow:var(--shadow-md);">
+
+    <div class="tabs" role="tablist" aria-label="Modo de acceso">
+      <button class="tab-btn is-active" role="tab" aria-selected="true" aria-controls="panel-login" id="tab-login">Iniciar sesión</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-register" id="tab-register">Registrarse</button>
+    </div>
+
+    <!-- Panel: Login -->
+    <div class="tab-panel" id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+      <form novalidate style="margin-top:var(--space-6)">
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label class="field-label" for="login-email">Correo electrónico</label>
+          <input class="field" type="email" id="login-email" placeholder="tu@email.com" autocomplete="email">
+        </div>
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label class="field-label" for="login-password">Contraseña</label>
+          <input class="field" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div class="login-remember-row">
+          <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer">
+            <input type="checkbox" id="remember-me"> Recordarme
+          </label>
+          <a href="#" class="btn--link" style="font-size:0.875rem">¿Olvidaste tu contraseña?</a>
+        </div>
+        <button type="submit" class="btn" style="width:100%;text-align:center">Iniciar sesión</button>
+      </form>
+
+      <div class="login-divider">o</div>
+
+      <div class="login-social">
+        <button class="btn--outline" style="width:100%;text-align:center">Continuar con Google</button>
+        <button class="btn--outline" style="width:100%;text-align:center">Continuar con Apple</button>
+      </div>
+    </div>
+
+    <!-- Panel: Register -->
+    <div class="tab-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register" hidden>
+      <form novalidate style="margin-top:var(--space-6)">
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label class="field-label" for="reg-name">Nombre completo</label>
+          <input class="field" type="text" id="reg-name" placeholder="Nombre Apellido" autocomplete="name">
+        </div>
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label class="field-label" for="reg-email">Correo electrónico</label>
+          <input class="field" type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email">
+        </div>
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label class="field-label" for="reg-password">Contraseña</label>
+          <input class="field" type="password" id="reg-password" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label class="field-label" for="reg-confirm">Confirmar contraseña</label>
+          <input class="field" type="password" id="reg-confirm" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="login-privacy" style="margin-bottom:var(--space-6)">
+          <input type="checkbox" id="reg-privacy">
+          <label for="reg-privacy">He leído y acepto la <a href="#">Política de privacidad</a> y los <a href="#">Términos de uso</a>.</label>
+        </div>
+        <button type="submit" class="btn" style="width:100%;text-align:center">Crear cuenta</button>
+      </form>
+    </div>
+
+  </div>
+</main>
+
+<footer style="height:64px;border-top:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;background:var(--color-bg);">
+  <p style="margin:0;color:var(--color-text-muted);font-size:0.875rem">© 2025 Nombre de empresa. Todos los derechos reservados.</p>
+</footer>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+          document.getElementById(t.getAttribute('aria-controls')).hidden = true;
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+      });
+    });
+  });
+</script>
+</body>
+</html>

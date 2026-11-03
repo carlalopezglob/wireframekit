@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-003 · Cita destacada</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Wrapper de variantes ── */
+  .con003__wrap {
+    width: 100%;
+  }
+  .con003__wrap--centrada {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .con003__wrap--lateral {
+    max-width: 720px;
+  }
+
+  /* ── Carrusel ── */
+  .con003__carousel {
+    position: relative;
+  }
+  .con003__slide {
+    display: none;
+  }
+  .con003__slide.is-active {
+    display: block;
+  }
+
+  /* ── Navegación ── */
+  .con003__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .con003__wrap--centrada .con003__nav {
+    justify-content: center;
+  }
+  .con003__nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    transition: background 0.15s, border-color 0.15s;
+    line-height: 1;
+  }
+  .con003__nav-btn:hover {
+    background: var(--color-surface-alt, #f5f5f5);
+    border-color: var(--color-text-muted);
+  }
+  .con003__nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .con003__counter {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    min-width: 3ch;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Blockquote ── */
+  .con003__blockquote {
+    position: relative;
+    margin: 0;
+    padding: 0;
+  }
+  .con003__blockquote::before {
+    content: '\201C';
+    display: block;
+    color: var(--color-accent);
+    font-size: 6rem;
+    line-height: 0;
+    margin-bottom: var(--space-6);
+    font-family: Georgia, serif;
+  }
+  /* Lateral: borde izquierdo, sin comilla decorativa */
+  .con003__wrap--lateral .con003__blockquote {
+    border-left: 4px solid var(--color-accent);
+    padding-left: var(--space-6);
+  }
+  .con003__wrap--lateral .con003__blockquote::before {
+    display: none;
+  }
+
+  .con003__text {
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.45;
+    margin: 0;
+    font-style: normal;
+  }
+
+  /* ── Atribución ── */
+  .con003__attribution {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+  .con003__avatar {
+    width: 48px;
+    height: 48px;
+    background: var(--color-placeholder);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .con003__author-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .con003__author {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+  .con003__role {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con003-section" aria-labelledby="con003-quote-1">
+  <div class="container">
+    <div class="con003__wrap con003__wrap--centrada" id="con003-wrap">
+
+      <div class="con003__carousel" id="con003-carousel" aria-live="polite">
+
+        <!-- Cita 1 -->
+        <div class="con003__slide is-active" id="con003-slide-1">
+          <blockquote class="con003__blockquote">
+            <p class="con003__text" id="con003-quote-1"
+               data-max="La calidad del trabajo habla por sí misma, pero hay que darte el espacio para que esa voz llegue a quien realmente importa en el momento justo.">La calidad del trabajo habla por sí misma, pero hay que darte el espacio para que esa voz llegue a quien realmente importa.</p>
+            <footer class="con003__attribution con003__attr-el">
+              <div class="con003__avatar con003__avatar-el" aria-hidden="true"></div>
+              <div class="con003__author-block">
+                <span class="con003__author con003__author-el"
+                      data-max="Nombre Apellido Muy Largo de Verdad">Nombre Apellido</span>
+                <span class="con003__role con003__role-el"
+                      data-max="Directora de Operaciones · Empresa con Nombre Largo S.L.">Cargo · Empresa</span>
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+
+        <!-- Cita 2 -->
+        <div class="con003__slide" id="con003-slide-2">
+          <blockquote class="con003__blockquote">
+            <p class="con003__text"
+               data-max="Trabajar con el equipo fue una experiencia verdaderamente transformadora. Cada detalle cuidado, cada plazo respetado y cada resultado superó con creces nuestras expectativas.">Trabajar con el equipo fue una experiencia transformadora. Cada detalle cuidado, cada plazo respetado y cada resultado superó nuestras expectativas.</p>
+            <footer class="con003__attribution con003__attr-el">
+              <div class="con003__avatar con003__avatar-el" aria-hidden="true"></div>
+              <div class="con003__author-block">
+                <span class="con003__author con003__author-el"
+                      data-max="Otra Persona con Nombre Largo">Otra Persona</span>
+                <span class="con003__role con003__role-el"
+                      data-max="Directora de Marketing · Empresa Internacional">Directora · Otra Empresa</span>
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+
+        <!-- Cita 3 -->
+        <div class="con003__slide" id="con003-slide-3">
+          <blockquote class="con003__blockquote">
+            <p class="con003__text"
+               data-max="Desde el primer día sentimos que entendían exactamente lo que necesitábamos. La comunicación fue impecable, los plazos se respetaron y el resultado fue excelente.">Desde el primer día sentimos que entendían exactamente lo que necesitábamos. La comunicación fue impecable y el resultado, excelente.</p>
+            <footer class="con003__attribution con003__attr-el">
+              <div class="con003__avatar con003__avatar-el" aria-hidden="true"></div>
+              <div class="con003__author-block">
+                <span class="con003__author con003__author-el"
+                      data-max="Tercer Cliente con Apellido">Tercer Cliente</span>
+                <span class="con003__role con003__role-el"
+                      data-max="CEO &amp; Cofundador · Tercera Empresa Global">CEO · Tercera Empresa</span>
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+
+      </div><!-- /carousel -->
+
+      <!-- Navegación -->
+      <nav class="con003__nav" id="con003-nav" aria-label="Citas">
+        <button class="con003__nav-btn" id="con003-prev" aria-label="Cita anterior" disabled>&#8592;</button>
+        <span class="con003__counter" id="con003-counter" aria-live="polite">1 / 3</span>
+        <button class="con003__nav-btn" id="con003-next" aria-label="Cita siguiente">&#8594;</button>
+      </nav>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-author" checked> Autor</label>
+      <label><input type="checkbox" id="toggle-role" checked> Cargo / empresa</label>
+      <label><input type="checkbox" id="toggle-avatar" checked> Avatar</label>
+      <label><input type="checkbox" id="toggle-nav" checked> Navegación (flechas)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Número de citas</span>
+      <label><input type="radio" name="quotecount" value="1"> 1 cita (sin nav)</label>
+      <label><input type="radio" name="quotecount" value="2"> 2 citas</label>
+      <label><input type="radio" name="quotecount" value="3" checked> 3 citas</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Variante</span>
+      <label><input type="radio" name="variant" value="centrada" checked> Centrada</label>
+      <label><input type="radio" name="variant" value="lateral"> Lateral</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg3" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg3" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-003-cita-destacada.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-003</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Texto de cita':     'Máx. 200 car. (~3 líneas). Sin font-style italic — comunica por tipografía y tamaño.',
+    'Nombre autor':      'Máx. 40 car.',
+    'Cargo / empresa':   'Máx. 60 car. Formato recomendado: "Cargo · Empresa".',
+    'Número de citas':   '1–3 citas. Con 1 sola cita la navegación se oculta automáticamente.',
+    'Variante centrada': 'Comilla decorativa ::before (Georgia, 6rem). Ancho máx. 640px.',
+    'Variante lateral':  'Borde izquierdo 4px, sin comilla decorativa. Ancho máx. 720px.',
+    'Navegación':        'Flechas deshabilitadas en los extremos. Ocultar si solo hay 1 cita.',
+    'Avatar':            'Círculo 48×48px. Opcional — sin él el texto del autor alinea al inicio.',
+    'Alineación texto':  'Siempre a la izquierda aunque el bloque esté centrado en la página.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var slides  = Array.from(document.querySelectorAll('.con003__slide'));
+    var current = 0;
+    var total   = 3; // controlled by quotecount radio
+
+    function updateNav() {
+      byId('con003-prev').disabled = current === 0;
+      byId('con003-next').disabled = current >= total - 1;
+      byId('con003-counter').textContent = (current + 1) + ' / ' + total;
+    }
+
+    function goTo(idx) {
+      slides[current].classList.remove('is-active');
+      current = Math.max(0, Math.min(idx, total - 1));
+      slides[current].classList.add('is-active');
+      updateNav();
+    }
+
+    byId('con003-prev').addEventListener('click', function () { goTo(current - 1); });
+    byId('con003-next').addEventListener('click', function () { goTo(current + 1); });
+
+    // Elementos (aplica a todas las slides)
+    onCheck('toggle-author', function (v) {
+      document.querySelectorAll('.con003__author-el').forEach(function (el) { el.hidden = !v; });
+    });
+    onCheck('toggle-role', function (v) {
+      document.querySelectorAll('.con003__role-el').forEach(function (el) { el.hidden = !v; });
+    });
+    onCheck('toggle-avatar', function (v) {
+      document.querySelectorAll('.con003__avatar-el').forEach(function (el) { el.hidden = !v; });
+    });
+    onCheck('toggle-nav', function (v) { byId('con003-nav').hidden = !v; });
+
+    // Número de citas
+    onRadioGroup('quotecount', function (v) {
+      total = parseInt(v, 10);
+      slides.forEach(function (s, i) { s.hidden = i >= total; });
+      if (current >= total) goTo(total - 1); else goTo(current);
+      byId('con003-nav').hidden = total < 2;
+      // sync toggle-nav checkbox
+      var cb = byId('toggle-nav');
+      if (cb) cb.checked = total >= 2;
+    });
+
+    // Variante
+    onRadioGroup('variant', function (v) {
+      var wrap = byId('con003-wrap');
+      wrap.classList.remove('con003__wrap--centrada', 'con003__wrap--lateral');
+      wrap.classList.add('con003__wrap--' + v);
+    });
+
+    // Fondo
+    onRadioGroup('bg3', function (v) { byId('con003-section').style.background = v; });
+
+    // Init
+    updateNav();
+  });
+</script>
+</body>
+</html>

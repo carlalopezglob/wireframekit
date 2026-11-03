@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preguntas frecuentes</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq-item:first-child {
+  border-top: 1px solid var(--color-border);
+}
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: left;
+  line-height: 1.4;
+}
+.faq-trigger:hover {
+  color: var(--color-accent);
+}
+.faq-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
+  transition: transform 0.2s;
+  line-height: 1;
+}
+.faq-trigger[aria-expanded="true"] .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-panel {
+  padding: 0 0 var(--space-5);
+}
+.faq-panel p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+.faq-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar" role="navigation" aria-label="Navegación principal">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:0;padding-bottom:0;height:64px;">
+    <span class="nav-bar__logo">Logo</span>
+    <ul class="nav-bar__links" aria-label="Menú principal">
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Sobre nosotros</a></li>
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#" style="font-weight:700;color:var(--color-text)">Contacto</a></li>
+    </ul>
+    <a href="#" class="btn btn--sm">Empieza ya</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- Page header -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <p class="overtitle">Ayuda</p>
+        <h1>Preguntas frecuentes</h1>
+        <p style="color:var(--color-text-muted);max-width:560px">Encuentra respuesta a las dudas más habituales sobre nuestro producto, facturación, soporte y envíos. Si no encuentras lo que buscas, escríbenos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category tabs -->
+  <section class="section section--sm" style="padding-bottom:0">
+    <div class="container">
+      <div class="tabs" role="tablist" aria-label="Categorías de preguntas frecuentes">
+        <button class="tab-btn is-active" role="tab" aria-selected="true" aria-controls="faq-panel-general" id="faq-tab-general">General</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="faq-panel-producto" id="faq-tab-producto">Producto</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="faq-panel-pagos" id="faq-tab-pagos">Pagos</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="faq-panel-envios" id="faq-tab-envios">Envíos</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ accordion panels -->
+  <section class="section">
+    <div class="container" style="max-width:760px">
+
+      <!-- General -->
+      <div class="tab-panel" id="faq-panel-general" role="tabpanel" aria-labelledby="faq-tab-general">
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-a-1" id="faq-q-1">
+            ¿Qué es Nombre de empresa y qué ofrece?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-1" role="region" aria-labelledby="faq-q-1">
+            <p>Somos una empresa especializada en soluciones digitales para pymes y grandes organizaciones. Ofrecemos servicios de diseño, desarrollo web, consultoría de estrategia digital y soporte continuo para que tu negocio crezca en el entorno online.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-a-2" id="faq-q-2">
+            ¿Cómo puedo ponerme en contacto con el equipo de soporte?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-2" role="region" aria-labelledby="faq-q-2">
+            <p>Puedes contactarnos a través del formulario de contacto en nuestra página, por correo en hola@empresa.com o por teléfono al +34 900 000 000. Nuestro horario de atención es de lunes a viernes de 9:00 a 18:00 (CET).</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">
+            ¿En qué países están disponibles vuestros servicios?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-3" role="region" aria-labelledby="faq-q-3" hidden>
+            <p>Operamos principalmente en España, México, Argentina y Colombia, aunque podemos trabajar con clientes de cualquier país hispanohablante de forma remota. Para proyectos internacionales fuera de estos mercados, consúltanos.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">
+            ¿Ofrecéis un período de prueba gratuito?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-4" role="region" aria-labelledby="faq-q-4" hidden>
+            <p>Sí, ofrecemos un período de prueba de 14 días sin necesidad de tarjeta de crédito. Durante ese tiempo tienes acceso completo a todas las funcionalidades del plan seleccionado para que puedas evaluar si se adapta a tus necesidades.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">
+            ¿Puedo cancelar mi suscripción en cualquier momento?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-5" role="region" aria-labelledby="faq-q-5" hidden>
+            <p>Absolutamente. No hay permanencia ni penalizaciones por cancelación. Puedes cancelar tu suscripción en cualquier momento desde tu panel de cuenta y el servicio permanecerá activo hasta el final del período ya abonado.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-a-6" id="faq-q-6">
+            ¿Mis datos están seguros con vosotros?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-6" role="region" aria-labelledby="faq-q-6" hidden>
+            <p>La seguridad de tus datos es nuestra prioridad. Utilizamos cifrado TLS en todas las comunicaciones, almacenamos la información en servidores certificados ISO 27001 y cumplimos con el RGPD. Puedes consultar nuestra política de privacidad para más detalles.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-a-7" id="faq-q-7">
+            ¿Ofrecéis descuentos para organizaciones sin ánimo de lucro?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-7" role="region" aria-labelledby="faq-q-7" hidden>
+            <p>Sí, tenemos un programa especial para ONGs y entidades sin ánimo de lucro con descuentos de hasta el 40% sobre el precio estándar. Contacta con nuestro equipo con la documentación que acredite el estatus de tu organización para solicitar el descuento.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-a-8" id="faq-q-8">
+            ¿Tenéis programa de afiliados o partners?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-a-8" role="region" aria-labelledby="faq-q-8" hidden>
+            <p>Sí, nuestro programa de partners ofrece comisiones recurrentes por cada cliente referido que se suscriba a un plan de pago. Puedes solicitar más información y registrarte en nuestra página de partners o enviando un correo a partners@empresa.com.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Producto (hidden) -->
+      <div class="tab-panel" id="faq-panel-producto" role="tabpanel" aria-labelledby="faq-tab-producto" hidden>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-p-1" id="faq-pq-1">
+            ¿Qué navegadores son compatibles con vuestra plataforma?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-p-1" role="region" aria-labelledby="faq-pq-1">
+            <p>Nuestra plataforma es compatible con las dos últimas versiones de Chrome, Firefox, Safari y Edge. Recomendamos mantener el navegador actualizado para disfrutar de la mejor experiencia y de las últimas funcionalidades de seguridad.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-p-2" id="faq-pq-2">
+            ¿Hay aplicación móvil disponible?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-p-2" role="region" aria-labelledby="faq-pq-2">
+            <p>Disponemos de aplicaciones nativas para iOS y Android que puedes descargar gratuitamente desde la App Store y Google Play. La app incluye todas las funcionalidades principales y se sincroniza en tiempo real con la versión de escritorio.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagos (hidden) -->
+      <div class="tab-panel" id="faq-panel-pagos" role="tabpanel" aria-labelledby="faq-tab-pagos" hidden>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-pg-1" id="faq-pgq-1">
+            ¿Qué métodos de pago aceptáis?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-pg-1" role="region" aria-labelledby="faq-pgq-1">
+            <p>Aceptamos tarjetas Visa, Mastercard y American Express, así como pagos por transferencia bancaria para contratos anuales. También ofrecemos pago mediante PayPal y, en algunos mercados, domiciliación bancaria (SEPA).</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-pg-2" id="faq-pgq-2">
+            ¿Cuándo se emite la factura mensual?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-pg-2" role="region" aria-labelledby="faq-pgq-2">
+            <p>Las facturas se emiten automáticamente el mismo día de cada mes en que te registraste. Recibirás una copia por correo electrónico y también estará disponible en la sección de facturación de tu panel de cuenta.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Envíos (hidden) -->
+      <div class="tab-panel" id="faq-panel-envios" role="tabpanel" aria-labelledby="faq-tab-envios" hidden>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-e-1" id="faq-eq-1">
+            ¿Cuáles son los plazos de entrega?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-e-1" role="region" aria-labelledby="faq-eq-1">
+            <p>Los plazos de entrega estándar son de 3 a 5 días hábiles para la Península Ibérica y Baleares, y de 5 a 8 días hábiles para Canarias, Ceuta y Melilla. Para envíos internacionales, el plazo varía entre 7 y 15 días hábiles según el destino.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="true" aria-controls="faq-e-2" id="faq-eq-2">
+            ¿Puedo rastrear mi pedido?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-e-2" role="region" aria-labelledby="faq-eq-2">
+            <p>Sí. Una vez que tu pedido sea enviado recibirás un correo con el número de seguimiento. Podrás rastrear el estado de tu envío en tiempo real tanto en nuestra web como directamente en la página del transportista.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA section -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>¿No encontraste lo que buscabas?</h2>
+        <p style="color:var(--color-text-muted)">Nuestro equipo de soporte está disponible para resolver cualquier duda que no esté contemplada en estas preguntas.</p>
+        <div class="faq-cta">
+          <a href="#" class="btn">Contactar con soporte</a>
+          <a href="#" class="btn--link">Ver documentación completa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer-bar">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-4)">
+    <p style="margin:0">© 2025 Nombre de empresa. Todos los derechos reservados.</p>
+    <nav aria-label="Pie de página">
+      <a href="#" style="margin-right:var(--space-4);color:var(--color-text-muted);font-size:0.875rem">Privacidad</a>
+      <a href="#" style="color:var(--color-text-muted);font-size:0.875rem">Cookies</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── Tab switching ── */
+    var tabs = document.querySelectorAll('[role="tab"]');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var group = tab.closest('[role="tablist"]') || document.querySelector('[role="tablist"]');
+        group.querySelectorAll('[role="tab"]').forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = true;
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        var activePanel = document.getElementById(tab.getAttribute('aria-controls'));
+        if (activePanel) activePanel.hidden = false;
+      });
+    });
+
+    /* ── Accordion ── */
+    document.querySelectorAll('.faq-trigger').forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var expanded = trigger.getAttribute('aria-expanded') === 'true';
+        var panelId = trigger.getAttribute('aria-controls');
+        var panel = document.getElementById(panelId);
+        trigger.setAttribute('aria-expanded', String(!expanded));
+        if (panel) panel.hidden = expanded;
+      });
+    });
+
+  });
+</script>
+</body>
+</html>

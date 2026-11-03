@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-NAV-005 · Stepper</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── Stepper container ── */
+.stepper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+/* ── Step ── */
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 80px;
+  position: relative;
+  gap: var(--space-2);
+}
+
+/* Connector line between steps */
+.step::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: calc(-50% + 16px);
+  right: calc(50% + 16px);
+  height: 2px;
+  background: var(--color-border);
+  z-index: 0;
+}
+.step:first-child::before { display: none; }
+.step--done::before,
+.step--active::before { background: var(--color-accent); }
+
+/* Step bubble */
+.step__bubble {
+  position: relative; z-index: 1;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+  border: 2px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.step--done .step__bubble {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+}
+.step--active .step__bubble {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+/* Step label */
+.step__label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.step--active .step__label { color: var(--color-text); font-weight: 600; }
+.step--done .step__label { color: var(--color-text-muted); }
+
+/* Optional sub-label */
+.step__sub {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ── Vertical variant ── */
+.stepper--vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: visible;
+}
+.stepper--vertical .step {
+  flex-direction: row;
+  flex: none;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
+  min-width: auto;
+}
+.stepper--vertical .step::before {
+  left: 15px; top: 32px; bottom: 0;
+  right: auto; width: 2px; height: auto;
+}
+.stepper--vertical .step:last-child { padding-bottom: 0; }
+.stepper--vertical .step:last-child::before { display: none; }
+.stepper--vertical .step__content { display: flex; flex-direction: column; gap: var(--space-1); padding-top: 4px; }
+.stepper--vertical .step__label { white-space: normal; font-size: 0.875rem; }
+.stepper--vertical .step__sub { white-space: normal; font-size: 0.8rem; }
+
+/* ── Done step shows checkmark instead of number ── */
+.step--done .step__bubble::after {
+  content: '✓';
+  font-size: 0.85rem;
+}
+.step--done .step__num { display: none; }
+
+/* ── Compact (no labels) ── */
+.stepper--compact .step__label,
+.stepper--compact .step__sub { display: none; }
+.stepper--compact .step { gap: 0; min-width: 40px; }
+</style>
+</head>
+<body>
+<section class="section" id="nav005-section">
+  <div class="container">
+
+    <!-- Instance 1: step 1 active -->
+    <div style="margin-bottom: var(--space-10);">
+      <p style="font-size:0.75rem;color:var(--color-text-muted);margin:0 0 var(--space-4);font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Paso 1 activo</p>
+      <div class="stepper" id="nav005-stepper">
+        <div class="step step--active">
+          <div class="step__bubble"><span class="step__num">1</span></div>
+          <span class="step__label">Información</span>
+        </div>
+        <div class="step">
+          <div class="step__bubble"><span class="step__num">2</span></div>
+          <span class="step__label">Revisión</span>
+        </div>
+        <div class="step">
+          <div class="step__bubble"><span class="step__num">3</span></div>
+          <span class="step__label">Pago</span>
+        </div>
+        <div class="step">
+          <div class="step__bubble"><span class="step__num">4</span></div>
+          <span class="step__label">Confirmación</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instance 2: step 3 active (1 and 2 done) -->
+    <div style="margin-bottom: var(--space-10);">
+      <p style="font-size:0.75rem;color:var(--color-text-muted);margin:0 0 var(--space-4);font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Paso 3 activo</p>
+      <div class="stepper">
+        <div class="step step--done">
+          <div class="step__bubble"><span class="step__num">1</span></div>
+          <span class="step__label">Información</span>
+        </div>
+        <div class="step step--done">
+          <div class="step__bubble"><span class="step__num">2</span></div>
+          <span class="step__label">Revisión</span>
+        </div>
+        <div class="step step--active">
+          <div class="step__bubble"><span class="step__num">3</span></div>
+          <span class="step__label">Pago</span>
+        </div>
+        <div class="step">
+          <div class="step__bubble"><span class="step__num">4</span></div>
+          <span class="step__label">Confirmación</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instance 3: vertical variant, step 2 active -->
+    <div>
+      <p style="font-size:0.75rem;color:var(--color-text-muted);margin:0 0 var(--space-4);font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Vertical</p>
+      <div class="stepper stepper--vertical" style="max-width:320px;">
+        <div class="step step--done">
+          <div class="step__bubble"><span class="step__num">1</span></div>
+          <div class="step__content">
+            <span class="step__label">Cuenta creada</span>
+            <span class="step__sub">Completado</span>
+          </div>
+        </div>
+        <div class="step step--active">
+          <div class="step__bubble"><span class="step__num">2</span></div>
+          <div class="step__content">
+            <span class="step__label">Configura tu perfil</span>
+            <span class="step__sub">En progreso</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__bubble"><span class="step__num">3</span></div>
+          <div class="step__content">
+            <span class="step__label">Invita a tu equipo</span>
+            <span class="step__sub">Pendiente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <!-- Group 1: Paso activo -->
+    <div class="kit-states__group">
+      <p class="kit-states__label">Paso activo</p>
+      <label class="kit-states__option">
+        <input type="radio" name="active-step" value="1" checked> Paso 1
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="active-step" value="2"> Paso 2
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="active-step" value="3"> Paso 3
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="active-step" value="4"> Paso 4 — completado
+      </label>
+    </div>
+
+    <!-- Group 2: Etiquetas -->
+    <div class="kit-states__group">
+      <p class="kit-states__label">Etiquetas</p>
+      <label class="kit-states__option">
+        <input type="radio" name="labels" value="on" checked> Con etiquetas
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="labels" value="off"> Sin etiquetas
+      </label>
+    </div>
+
+    <!-- Group 3: Fondo -->
+    <div class="kit-states__group">
+      <p class="kit-states__label">Fondo</p>
+      <label class="kit-states__option">
+        <input type="radio" name="bg" value="white" checked> Blanco
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="bg" value="gray"> Gris (alt)
+      </label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-NAV/CAT-NAV-005-stepper.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-NAV-005</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'paso completado':  'Marcar con icono ✓ y estado visual diferenciado (color + aria-label="Completado").',
+    'paso activo':      'Único paso con foco; usar aria-current="step" en el ítem activo.',
+    'paso deshabilitado':'No debe ser clickable; comunicar también con aria-disabled="true".',
+    'labels':           'Etiquetas cortas (1–3 palabras); en mobile pueden ocultarse y mostrar solo el número.',
+    'navegación libre': 'Decidir en el proyecto si los pasos anteriores son clicables o solo se avanza hacia delante.'
+  };
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onRadioGroup(name, cb) { document.querySelectorAll('input[name="'+name+'"]').forEach(function(r){ r.addEventListener('change', function(){ if(r.checked) cb(r.value); }); }); }
+
+  // Paso activo: update step--done / step--active classes on the interactive stepper
+  onRadioGroup('active-step', function(v) {
+    var steps = byId('nav005-stepper').querySelectorAll('.step');
+    var active = parseInt(v);
+    steps.forEach(function(step, i) {
+      step.classList.remove('step--done', 'step--active');
+      if (i + 1 < active) step.classList.add('step--done');
+      else if (i + 1 === active) step.classList.add('step--active');
+    });
+  });
+
+  // Etiquetas: toggle compact mode on the interactive stepper
+  onRadioGroup('labels', function(v) {
+    var stepper = byId('nav005-stepper');
+    if (v === 'off') stepper.classList.add('stepper--compact');
+    else stepper.classList.remove('stepper--compact');
+  });
+
+  // Fondo: toggle section background
+  onRadioGroup('bg', function(v) {
+    var section = byId('nav005-section');
+    if (v === 'gray') section.style.background = 'var(--color-surface)';
+    else section.style.background = '#ffffff';
+  });
+});
+</script>
+</body>
+</html>

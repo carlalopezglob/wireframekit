@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-006 · Acordeón FAQ</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  .con006__list {
+    max-width: 760px;
+  }
+  .con006__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .con006__trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-4) 0;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .con006__trigger:hover {
+    color: var(--color-accent);
+  }
+  .con006__icon {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .con006__icon--open {
+    transform: rotate(90deg);
+  }
+  .con006__panel {
+    overflow: hidden;
+  }
+  .con006__panel-inner {
+    padding-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .con006__panel-inner p {
+    margin: 0;
+  }
+
+  /* ── Marcador opcional (icono o imagen) ── */
+  .con006__trigger-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+  .con006__marker {
+    flex-shrink: 0;
+    display: none;
+    border-radius: var(--radius-sm);
+  }
+  /* Icono placeholder */
+  .con006__marker--icon {
+    width: 32px; height: 32px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--color-accent);
+  }
+  .con006__marker--icon::before { content: '◆'; }
+  /* Imagen placeholder */
+  .con006__marker--img {
+    width: 32px; height: 32px;
+    background: var(--color-placeholder);
+  }
+  /* Activar según clase en la lista */
+  .con006__list--icon .con006__marker--icon { display: flex; }
+  .con006__list--img  .con006__marker--img  { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con006-section" aria-labelledby="con006-title">
+  <div class="container">
+
+    <div class="section-head" id="con006-header">
+      <p class="overtitle">Preguntas frecuentes</p>
+      <h2 id="con006-title">Todo lo que necesitas saber</h2>
+      <p>Respuestas a las preguntas más comunes de nuestros clientes.</p>
+    </div>
+
+    <div class="con006__list" role="list">
+
+      <div class="con006__item" role="listitem">
+        <button class="con006__trigger" aria-expanded="true" aria-controls="con006-panel-1" id="con006-trigger-1">
+          <span class="con006__trigger-left"><span class="con006__marker con006__marker--icon" aria-hidden="true"></span><span class="con006__marker con006__marker--img" aria-hidden="true"></span><span>¿Cuál es el plazo de entrega habitual?</span></span>
+          <span class="con006__icon con006__icon--open" aria-hidden="true">&#9658;</span>
+        </button>
+        <div class="con006__panel" id="con006-panel-1" role="region" aria-labelledby="con006-trigger-1">
+          <div class="con006__panel-inner">
+            <p>El plazo estándar de entrega es de 5 a 10 días hábiles dependiendo de la complejidad del proyecto. Para proyectos urgentes ofrecemos un servicio exprés con un plazo de 48 a 72 horas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="con006__item" role="listitem">
+        <button class="con006__trigger" aria-expanded="false" aria-controls="con006-panel-2" id="con006-trigger-2">
+          <span class="con006__trigger-left"><span class="con006__marker con006__marker--icon" aria-hidden="true"></span><span class="con006__marker con006__marker--img" aria-hidden="true"></span><span>¿Ofrecen soporte técnico postventa?</span></span>
+          <span class="con006__icon" aria-hidden="true">&#9658;</span>
+        </button>
+        <div class="con006__panel" id="con006-panel-2" role="region" aria-labelledby="con006-trigger-2" hidden>
+          <div class="con006__panel-inner">
+            <p>Sí, todos nuestros planes incluyen soporte técnico durante 30 días tras la entrega. Para proyectos más grandes ofrecemos planes de mantenimiento mensual con tiempos de respuesta garantizados.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="con006__item" role="listitem">
+        <button class="con006__trigger" aria-expanded="false" aria-controls="con006-panel-3" id="con006-trigger-3">
+          <span class="con006__trigger-left"><span class="con006__marker con006__marker--icon" aria-hidden="true"></span><span class="con006__marker con006__marker--img" aria-hidden="true"></span><span>¿Cuáles son los métodos de pago aceptados?</span></span>
+          <span class="con006__icon" aria-hidden="true">&#9658;</span>
+        </button>
+        <div class="con006__panel" id="con006-panel-3" role="region" aria-labelledby="con006-trigger-3" hidden>
+          <div class="con006__panel-inner">
+            <p>Aceptamos transferencia bancaria, tarjeta de crédito/débito y PayPal. Los pagos se realizan en dos partes: 50% al inicio del proyecto y 50% en la entrega final.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="con006__item" role="listitem">
+        <button class="con006__trigger" aria-expanded="false" aria-controls="con006-panel-4" id="con006-trigger-4">
+          <span class="con006__trigger-left"><span class="con006__marker con006__marker--icon" aria-hidden="true"></span><span class="con006__marker con006__marker--img" aria-hidden="true"></span><span>¿Trabajan con clientes internacionales?</span></span>
+          <span class="con006__icon" aria-hidden="true">&#9658;</span>
+        </button>
+        <div class="con006__panel" id="con006-panel-4" role="region" aria-labelledby="con006-trigger-4" hidden>
+          <div class="con006__panel-inner">
+            <p>Absolutamente. Contamos con clientes en más de 20 países y todo nuestro proceso de trabajo está diseñado para funcionar de forma asíncrona a través de diferentes zonas horarias.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="con006__item" role="listitem">
+        <button class="con006__trigger" aria-expanded="false" aria-controls="con006-panel-5" id="con006-trigger-5">
+          <span class="con006__trigger-left"><span class="con006__marker con006__marker--icon" aria-hidden="true"></span><span class="con006__marker con006__marker--img" aria-hidden="true"></span><span>¿Puedo solicitar revisiones al diseño final?</span></span>
+          <span class="con006__icon" aria-hidden="true">&#9658;</span>
+        </button>
+        <div class="con006__panel" id="con006-panel-5" role="region" aria-labelledby="con006-trigger-5" hidden>
+          <div class="con006__panel-inner">
+            <p>Cada proyecto incluye hasta tres rondas de revisiones sin coste adicional. Las revisiones adicionales se presupuestan por hora según la complejidad de los cambios solicitados.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="con006__item con006__extra" role="listitem">
+        <button class="con006__trigger" aria-expanded="false" aria-controls="con006-panel-6" id="con006-trigger-6">
+          <span class="con006__trigger-left"><span class="con006__marker con006__marker--icon" aria-hidden="true"></span><span class="con006__marker con006__marker--img" aria-hidden="true"></span><span>¿Ofrecen garantía de devolución?</span></span>
+          <span class="con006__icon" aria-hidden="true">&#9658;</span>
+        </button>
+        <div class="con006__panel" id="con006-panel-6" role="region" aria-labelledby="con006-trigger-6" hidden>
+          <div class="con006__panel-inner">
+            <p>Garantizamos la satisfacción en cada proyecto. Si el resultado no cumple con las especificaciones acordadas, lo revisamos sin coste hasta conseguir el objetivo pactado.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-header6" checked> Encabezado de sección</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Marcador por ítem</span>
+      <label><input type="radio" name="marker" value="none" checked> Ninguno</label>
+      <label><input type="radio" name="marker" value="icon"> Icono</label>
+      <label><input type="radio" name="marker" value="img"> Imagen</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cantidad de ítems</span>
+      <label><input type="radio" name="count6" value="5" checked> 5 ítems</label>
+      <label><input type="radio" name="count6" value="4"> 4 ítems</label>
+      <label><input type="radio" name="count6" value="6"> 6 ítems</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-006-acordeon-faq.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-006</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'accesibilidad': 'Cada trigger tiene aria-expanded actualizado por JS. El panel tiene role="region" y aria-labelledby.',
+    'chevron': 'El icono rota 90deg cuando está abierto via clase .con006__icon--open.',
+    'único-abierto': 'El acordeón no cierra otros paneles — permite múltiples abiertos. Ajustar si se necesita comportamiento exclusivo.',
+    'animación': 'Usar transition en max-height para animar si se necesita. El estado actual usa hidden para simplicidad.'
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Accordion toggle logic
+    document.querySelectorAll('.con006__trigger').forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var expanded = trigger.getAttribute('aria-expanded') === 'true';
+        var panelId = trigger.getAttribute('aria-controls');
+        var panel = byId(panelId);
+        var icon = trigger.querySelector('.con006__icon');
+
+        if (expanded) {
+          trigger.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('hidden', '');
+          icon.classList.remove('con006__icon--open');
+        } else {
+          trigger.setAttribute('aria-expanded', 'true');
+          panel.removeAttribute('hidden');
+          icon.classList.add('con006__icon--open');
+        }
+      });
+    });
+
+    onCheck('toggle-header6', function (v) {
+      var el = byId('con006-header');
+      if (v) el.removeAttribute('hidden'); else el.setAttribute('hidden', '');
+    });
+
+    // item 5 is index 4 (the 5th item), item 6 is .con006__extra
+    var items = document.querySelectorAll('.con006__item');
+    onRadioGroup('count6', function (v) {
+      // items: 0-3 always visible, item 4 visible for 5+6, item 5 only for 6
+      var item5 = items[4]; // 5th item (index 4)
+      var item6 = document.querySelector('.con006__extra'); // 6th item
+      if (v === '4') {
+        if (item5) item5.setAttribute('hidden', '');
+        if (item6) item6.setAttribute('hidden', '');
+      } else if (v === '5') {
+        if (item5) item5.removeAttribute('hidden');
+        if (item6) item6.setAttribute('hidden', '');
+      } else {
+        if (item5) item5.removeAttribute('hidden');
+        if (item6) item6.removeAttribute('hidden');
+      }
+    });
+
+    onRadioGroup('marker', function (v) {
+      var list = document.querySelector('.con006__list');
+      list.classList.remove('con006__list--icon', 'con006__list--img');
+      if (v === 'icon') list.classList.add('con006__list--icon');
+      if (v === 'img')  list.classList.add('con006__list--img');
+    });
+
+    onRadioGroup('bg', function (v) { byId('con006-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

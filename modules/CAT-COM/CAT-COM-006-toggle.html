@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-006 · Toggle</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── Toggle base ── */
+.toggle { display: inline-flex; align-items: center; gap: var(--space-3); cursor: pointer; user-select: none; }
+.toggle__track {
+  position: relative; flex-shrink: 0;
+  width: 44px; height: 24px;
+  background: var(--color-border);
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.toggle__track::after {
+  content: '';
+  position: absolute; left: 3px; top: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.toggle input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.toggle input[type="checkbox"]:checked + .toggle__track { background: var(--color-accent); }
+.toggle input[type="checkbox"]:checked + .toggle__track::after { transform: translateX(20px); }
+.toggle input[type="checkbox"]:disabled + .toggle__track { opacity: 0.4; cursor: not-allowed; }
+.toggle--disabled { cursor: not-allowed; opacity: 0.4; pointer-events: none; }
+
+/* ── Sizes ── */
+.toggle--sm .toggle__track { width: 34px; height: 20px; }
+.toggle--sm .toggle__track::after { width: 14px; height: 14px; }
+.toggle--sm input[type="checkbox"]:checked + .toggle__track::after { transform: translateX(14px); }
+
+.toggle--lg .toggle__track { width: 56px; height: 30px; }
+.toggle--lg .toggle__track::after { width: 24px; height: 24px; left: 3px; top: 3px; }
+.toggle--lg input[type="checkbox"]:checked + .toggle__track::after { transform: translateX(26px); }
+
+.toggle__label { font-size: 0.95rem; color: var(--color-text); line-height: 1.4; }
+.toggle__sub { font-size: 0.8rem; color: var(--color-text-muted); display: block; }
+
+/* ── Layout ── */
+.com006__section-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0 0 var(--space-4); padding-bottom: var(--space-2); border-bottom: 1px solid var(--color-border); }
+.com006__block { display: flex; flex-direction: column; gap: var(--space-8); }
+.com006__row { display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: center; }
+.com006__col { display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* ── Estados row: label below each toggle ── */
+.com006__state-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.com006__state-caption { font-size: 0.7rem; color: var(--color-text-muted); text-align: center; white-space: nowrap; }
+
+/* ── Settings-style rows ── */
+.com006__setting { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+.com006__setting:last-child { border-bottom: none; }
+.com006__setting-text { display: flex; flex-direction: column; gap: 2px; }
+.com006__setting-label { font-size: 0.95rem; color: var(--color-text); font-weight: 500; }
+.com006__setting-sub { font-size: 0.8rem; color: var(--color-text-muted); }
+.com006__setting-toggle { flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<section class="section" id="com006-section">
+  <div class="container">
+    <div class="com006__block">
+
+      <!-- 1. Estados -->
+      <div>
+        <p class="com006__section-title">Estados</p>
+        <div class="com006__row">
+
+          <div class="com006__state-item">
+            <label class="toggle">
+              <input type="checkbox">
+              <span class="toggle__track"></span>
+            </label>
+            <span class="com006__state-caption">Desactivado</span>
+          </div>
+
+          <div class="com006__state-item">
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="toggle__track"></span>
+            </label>
+            <span class="com006__state-caption">Activado</span>
+          </div>
+
+          <div class="com006__state-item">
+            <label class="toggle toggle--disabled">
+              <input type="checkbox" disabled>
+              <span class="toggle__track"></span>
+            </label>
+            <span class="com006__state-caption">Deshabilitado off</span>
+          </div>
+
+          <div class="com006__state-item">
+            <label class="toggle toggle--disabled">
+              <input type="checkbox" checked disabled>
+              <span class="toggle__track"></span>
+            </label>
+            <span class="com006__state-caption">Deshabilitado on</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. Tamaños -->
+      <div>
+        <p class="com006__section-title">Tamaños</p>
+        <div class="com006__row">
+
+          <label class="toggle toggle--sm">
+            <input type="checkbox">
+            <span class="toggle__track"></span>
+            <span class="toggle__label">Pequeño</span>
+          </label>
+
+          <label class="toggle">
+            <input type="checkbox">
+            <span class="toggle__track"></span>
+            <span class="toggle__label">Normal</span>
+          </label>
+
+          <label class="toggle toggle--lg">
+            <input type="checkbox">
+            <span class="toggle__track"></span>
+            <span class="toggle__label">Grande</span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- 3. Con etiqueta y descripción (settings-style) -->
+      <div>
+        <p class="com006__section-title">Con etiqueta y descripción</p>
+        <div class="com006__col" style="max-width: 480px;">
+
+          <div class="com006__setting">
+            <div class="com006__setting-text">
+              <span class="com006__setting-label">Notificaciones por email</span>
+              <span class="com006__setting-sub">Recibe avisos de nuevas respuestas</span>
+            </div>
+            <div class="com006__setting-toggle">
+              <label class="toggle">
+                <input type="checkbox">
+                <span class="toggle__track"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="com006__setting">
+            <div class="com006__setting-text">
+              <span class="com006__setting-label">Modo oscuro</span>
+              <span class="com006__setting-sub">Activar tema oscuro en la interfaz</span>
+            </div>
+            <div class="com006__setting-toggle">
+              <label class="toggle">
+                <input type="checkbox" checked>
+                <span class="toggle__track"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="com006__setting">
+            <div class="com006__setting-text">
+              <span class="com006__setting-label">Actualizaciones automáticas</span>
+              <span class="com006__setting-sub">Instala actualizaciones en segundo plano</span>
+            </div>
+            <div class="com006__setting-toggle">
+              <label class="toggle">
+                <input type="checkbox">
+                <span class="toggle__track"></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <!-- Fondo -->
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Fondo</p>
+      <label class="kit-states__option">
+        <input type="radio" name="bg" value="var(--color-bg)" checked> Blanco
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="bg" value="var(--color-surface)"> Gris (alt)
+      </label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-006-toggle.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-006</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+    });
+  }
+  onRadioGroup('bg', function (v) { byId('com006-section').style.background = v; });
+});
+</script>
+
+</body>
+</html>

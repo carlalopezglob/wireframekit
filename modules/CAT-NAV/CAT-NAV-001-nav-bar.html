@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-NAV-001 · Nav bar</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* nav001__ */
+.nav001 {
+  width: 100%;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+.nav001__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.nav001__logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.nav001__links {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav001__link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.nav001__link.is-active {
+  font-weight: 700;
+  color: var(--color-text);
+}
+.nav001__cta {
+  flex-shrink: 0;
+}
+.nav001__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.nav001__hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 1px;
+}
+.nav001__mobile-menu {
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-4) 0;
+}
+.nav001__mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav001__mobile-link-item {
+  border-bottom: 1px solid var(--color-border);
+}
+.nav001__mobile-link-item:last-child {
+  border-bottom: none;
+}
+.nav001__mobile-link {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.nav001__mobile-link.is-active {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+@media (max-width: 767px) {
+  .nav001__links,
+  .nav001__cta {
+    display: none;
+  }
+  .nav001__hamburger {
+    display: flex;
+  }
+}
+@media (min-width: 768px) {
+  .nav001__mobile-menu {
+    display: none !important;
+  }
+}
+
+/* sticky variant */
+.nav001--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<nav class="nav001" id="nav001" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <div class="nav001__inner">
+      <a href="#" class="nav001__logo">Logo</a>
+
+      <ul class="nav001__links" id="nav001-desktop-links">
+        <li><a href="#" class="nav001__link is-active">Inicio</a></li>
+        <li><a href="#" class="nav001__link">Sobre nosotros</a></li>
+        <li><a href="#" class="nav001__link">Servicios</a></li>
+        <li><a href="#" class="nav001__link">Blog</a></li>
+        <li><a href="#" class="nav001__link">Contacto</a></li>
+      </ul>
+
+      <button
+        class="nav001__hamburger"
+        id="nav001-hamburger"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="nav001-mobile-menu"
+      >
+        <span class="nav001__hamburger-line"></span>
+        <span class="nav001__hamburger-line"></span>
+        <span class="nav001__hamburger-line"></span>
+      </button>
+
+      <div class="nav001__cta" id="nav001-cta">
+        <a href="#" class="btn btn--sm">Empieza ya</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav001__mobile-menu" id="nav001-mobile-menu" hidden>
+    <div class="container">
+      <ul class="nav001__mobile-links">
+        <li class="nav001__mobile-link-item"><a href="#" class="nav001__mobile-link is-active">Inicio</a></li>
+        <li class="nav001__mobile-link-item"><a href="#" class="nav001__mobile-link">Sobre nosotros</a></li>
+        <li class="nav001__mobile-link-item"><a href="#" class="nav001__mobile-link">Servicios</a></li>
+        <li class="nav001__mobile-link-item"><a href="#" class="nav001__mobile-link">Blog</a></li>
+        <li class="nav001__mobile-link-item"><a href="#" class="nav001__mobile-link">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Botón CTA</span>
+      <label><input type="checkbox" id="toggle-cta" checked> Mostrar botón CTA</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Enlace activo</span>
+      <label><input type="checkbox" id="toggle-active" checked> Mostrar enlace activo</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Sticky</span>
+      <label><input type="checkbox" id="toggle-sticky"> Sticky (position:sticky)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-NAV/CAT-NAV-001-nav-bar.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-NAV-001</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'enlace activo':  'Establecer vía JS/server según la ruta actual; no hardcodear.',
+    'botón CTA':      'Usar <a> si redirige a otra página, o <button> si abre un modal.',
+    'ítems de menú':  'Máximo 7 ítems — considerar menús desplegables si crece.',
+    'z-index sticky': 'Coordinar con modales y drawers del proyecto para evitar solapamientos.'
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Hamburger toggle
+    var hamburger = byId('nav001-hamburger');
+    var mobileMenu = byId('nav001-mobile-menu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function () {
+        var isOpen = !mobileMenu.hidden;
+        mobileMenu.hidden = isOpen;
+        hamburger.setAttribute('aria-expanded', String(!isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
+      });
+    }
+
+    // Toggle CTA
+    onCheck('toggle-cta', function (checked) {
+      var cta = byId('nav001-cta');
+      if (cta) cta.hidden = !checked;
+    });
+
+    // Toggle active link
+    onCheck('toggle-active', function (checked) {
+      document.querySelectorAll('.nav001__link, .nav001__mobile-link').forEach(function (el) {
+        if (checked) {
+          // restore first as active
+          var links = document.querySelectorAll('.nav001__link');
+          if (links[0]) links[0].classList.add('is-active');
+          var mlinks = document.querySelectorAll('.nav001__mobile-link');
+          if (mlinks[0]) mlinks[0].classList.add('is-active');
+        } else {
+          el.classList.remove('is-active');
+        }
+      });
+    });
+
+    // Toggle sticky
+    onCheck('toggle-sticky', function (checked) {
+      var nav = byId('nav001');
+      if (nav) nav.classList.toggle('nav001--sticky', checked);
+    });
+
+    // Bg radio
+    onRadioGroup('bg', function (val) {
+      var nav = byId('nav001');
+      if (nav) nav.style.background = val;
+    });
+  });
+</script>
+</body>
+</html>

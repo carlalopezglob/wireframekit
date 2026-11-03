@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-MDL-001 · Modal básico</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* mdl001__ BEM CSS */
+.mdl001__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-placeholder);
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+.mdl001__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+}
+.mdl001__panel {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.mdl001__panel--large {
+  max-width: 800px;
+}
+.mdl001__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+.mdl001__header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.mdl001__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+  padding: var(--space-2);
+}
+.mdl001__close:hover {
+  color: var(--color-text);
+}
+.mdl001__body {
+  padding: var(--space-6);
+  flex: 1;
+}
+.mdl001__body p {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-muted);
+}
+.mdl001__body p:last-child {
+  margin-bottom: 0;
+}
+.mdl001__footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section section--alt" id="mdl001-trigger-section">
+  <div class="container" style="text-align:center">
+    <p style="margin-bottom:var(--space-4);color:var(--color-text-muted);font-size:0.9rem">Haz clic para abrir el modal</p>
+    <button class="btn" id="mdl001-open-btn">Abrir modal</button>
+  </div>
+</section>
+
+<div class="mdl001__overlay" id="mdl001-overlay" role="dialog" aria-modal="true" aria-labelledby="mdl001-title">
+  <div class="mdl001__panel" id="mdl001-panel">
+    <div class="mdl001__header">
+      <h2 id="mdl001-title">Título del modal</h2>
+      <button class="mdl001__close" aria-label="Cerrar modal">&#x2715;</button>
+    </div>
+    <div class="mdl001__body">
+      <div class="mdl001__image" id="mdl001-image" hidden>imagen — 16:9</div>
+      <p>Este es el contenido principal del modal. Aquí puedes colocar cualquier información relevante, formularios, confirmaciones o mensajes importantes que el usuario necesite atender antes de continuar con su navegación.</p>
+      <p>El modal bloquea la interacción con el fondo mientras está abierto. Puede cerrarse con el botón de cerrar, el botón de cancelar en el pie, o haciendo clic fuera del panel sobre el overlay.</p>
+    </div>
+    <div class="mdl001__footer" id="mdl001-footer">
+      <button class="btn btn--outline" id="mdl001-btn-secondary">Cancelar</button>
+      <button class="btn" id="mdl001-btn-primary">Guardar</button>
+    </div>
+  </div>
+</div>
+<!-- fin módulo -->
+
+
+<!-- kit-states panel -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Estado</span>
+      <label><input type="radio" name="modal-state" value="open" checked> Abierto</label>
+      <label><input type="radio" name="modal-state" value="closed"> Cerrado</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Contenido</span>
+      <label><input type="radio" name="modal-content" value="text" checked> Solo texto</label>
+      <label><input type="radio" name="modal-content" value="image"> Imagen + texto</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">CTA</span>
+      <div class="kit-states__prop">
+        <span class="kit-states__prop-label">Principal</span>
+        <select id="mdl001-style-primary" class="kit-swap">
+          <option value="btn">Activo</option>
+          <option value="btn--outline">Secundario</option>
+          <option value="btn--ghost">Ghost</option>
+        </select>
+      </div>
+      <div class="kit-states__prop">
+        <span class="kit-states__prop-label">Secundario</span>
+        <select id="mdl001-style-secondary" class="kit-swap">
+          <option value="btn--outline">Secundario</option>
+          <option value="btn">Activo</option>
+          <option value="btn--ghost">Ghost</option>
+        </select>
+      </div>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tamaño</span>
+      <label><input type="radio" name="modal-size" value="default" checked> Por defecto (560px)</label>
+      <label><input type="radio" name="modal-size" value="large"> Grande (800px)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Pie de modal</span>
+      <label><input type="checkbox" id="toggle-footer" checked> Mostrar pie</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#f5f5f5" checked> Gris (alt)</label>
+      <label><input type="radio" name="bg" value="#ffffff"> Blanco</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-MDL/CAT-MDL-001-modal-basico.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-MDL-001</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {};
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    function openModal() { byId('mdl001-overlay').hidden = false; }
+    function closeModal() { byId('mdl001-overlay').hidden = true; }
+
+    byId('mdl001-open-btn').addEventListener('click', openModal);
+
+    // Cierre: X del header + ambos botones del footer por ID
+    document.querySelectorAll('.mdl001__close').forEach(function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+    byId('mdl001-btn-primary').addEventListener('click', closeModal);
+    byId('mdl001-btn-secondary').addEventListener('click', closeModal);
+
+    byId('mdl001-overlay').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+
+    onRadioGroup('modal-state', function (v) { if (v === 'open') openModal(); else closeModal(); });
+
+    onRadioGroup('modal-content', function (v) {
+      byId('mdl001-image').hidden = (v !== 'image');
+    });
+
+    var BTN_MODIFIERS = ['btn--outline', 'btn--ghost'];
+
+    function applyBtnVariant(btn, variant) {
+      // Eliminar solo modificadores — 'btn' siempre se mantiene
+      BTN_MODIFIERS.forEach(function (cls) { btn.classList.remove(cls); });
+      if (variant !== 'btn') btn.classList.add(variant);
+    }
+
+    byId('mdl001-style-primary').addEventListener('change', function () {
+      applyBtnVariant(byId('mdl001-btn-primary'), this.value);
+    });
+
+    byId('mdl001-style-secondary').addEventListener('change', function () {
+      applyBtnVariant(byId('mdl001-btn-secondary'), this.value);
+    });
+
+    onRadioGroup('modal-size', function (v) {
+      var panel = byId('mdl001-panel');
+      if (v === 'large') panel.classList.add('mdl001__panel--large');
+      else panel.classList.remove('mdl001__panel--large');
+    });
+
+    byId('toggle-footer').addEventListener('change', function () {
+      byId('mdl001-footer').hidden = !this.checked;
+    });
+
+    onRadioGroup('bg', function (v) { byId('mdl001-trigger-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

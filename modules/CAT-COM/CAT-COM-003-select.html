@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-003 · Select</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+.select {
+  display: block; width: 100%;
+  padding: 0.6em 2.2em 0.6em 0.75em;
+  font-size: 1rem; font-family: var(--font-base);
+  color: var(--color-text); background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none; cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75em center;
+  transition: border-color 0.15s;
+}
+.select:hover { border-color: #aaa; }
+.select:focus, .select.is-focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(51,51,51,0.08); }
+.select.is-error { border-color: #e53e3e; }
+.select:disabled { opacity: 0.45; cursor: not-allowed; background-color: var(--color-surface); }
+.select--sm { padding: 0.4em 2em 0.4em 0.6em; font-size: 0.875rem; }
+
+.field { display: flex; flex-direction: column; gap: var(--space-1); }
+.field__label { font-size: 0.875rem; font-weight: 600; color: var(--color-text); }
+.field__helper { font-size: 0.78rem; color: var(--color-text-muted); }
+.field__error { font-size: 0.78rem; color: #e53e3e; }
+
+.com003__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); }
+.com003__section-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0 0 var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--color-border); }
+.com003__block { display: flex; flex-direction: column; gap: var(--space-6); }
+</style>
+</head>
+<body>
+
+<section class="section" id="com003-section">
+  <div class="container">
+
+    <!-- ── Showcase ── -->
+    <div class="com003__block">
+
+      <!-- 1. Estados -->
+      <div>
+        <p class="com003__section-title">Estados</p>
+        <div class="com003__grid">
+
+          <!-- Default -->
+          <div class="field">
+            <span class="field__label">Default</span>
+            <select class="select">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+
+          <!-- Con valor seleccionado -->
+          <div class="field">
+            <span class="field__label">Con valor seleccionado</span>
+            <select class="select">
+              <option value="" disabled>Selecciona una opción</option>
+              <option selected>México</option>
+              <option>España</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+
+          <!-- Focus -->
+          <div class="field">
+            <span class="field__label">Focus</span>
+            <select class="select is-focus">
+              <option value="" disabled>Selecciona una opción</option>
+              <option>España</option>
+              <option selected>Argentina</option>
+              <option>México</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+
+          <!-- Error -->
+          <div class="field">
+            <span class="field__label">Error</span>
+            <select class="select is-error">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+            <span class="field__error">Este campo es obligatorio.</span>
+          </div>
+
+          <!-- Disabled -->
+          <div class="field">
+            <span class="field__label">Disabled</span>
+            <select class="select" disabled>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. Con grupos de opciones -->
+      <div>
+        <p class="com003__section-title">Con grupos de opciones</p>
+        <div style="max-width: 280px;">
+          <div class="field">
+            <span class="field__label">País de residencia</span>
+            <select class="select">
+              <option value="" disabled selected>Selecciona un país</option>
+              <optgroup label="Europa">
+                <option>España</option>
+                <option>Francia</option>
+                <option>Alemania</option>
+              </optgroup>
+              <optgroup label="América Latina">
+                <option>México</option>
+                <option>Argentina</option>
+                <option>Colombia</option>
+                <option>Chile</option>
+                <option>Perú</option>
+              </optgroup>
+              <optgroup label="América del Norte">
+                <option>Estados Unidos</option>
+                <option>Canadá</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Con label y helper / error -->
+      <div>
+        <p class="com003__section-title">Con label y helper</p>
+        <div class="com003__grid">
+
+          <!-- Label + helper -->
+          <div class="field">
+            <label class="field__label" for="select-helper">País de envío</label>
+            <select class="select" id="select-helper">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+            <span class="field__helper">El envío puede tardar entre 3 y 7 días hábiles según el país.</span>
+          </div>
+
+          <!-- Label + error -->
+          <div class="field">
+            <label class="field__label" for="select-error">País de facturación</label>
+            <select class="select is-error" id="select-error">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+            <span class="field__error">Debes seleccionar un país de facturación.</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 4. Tamaños -->
+      <div>
+        <p class="com003__section-title">Tamaños</p>
+        <div class="com003__grid">
+
+          <!-- Small -->
+          <div class="field">
+            <span class="field__label">Pequeño <code style="font-size:0.72rem; font-weight:400; color:var(--color-text-muted);">.select--sm</code></span>
+            <select class="select select--sm">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+
+          <!-- Normal -->
+          <div class="field">
+            <span class="field__label">Normal <code style="font-size:0.72rem; font-weight:400; color:var(--color-text-muted);">.select</code></span>
+            <select class="select">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Demo interactivo -->
+      <div>
+        <p class="com003__section-title">Demo interactivo</p>
+        <div style="max-width: 280px;">
+          <div class="field">
+            <label class="field__label" for="demo-select">País</label>
+            <select class="select" id="demo-select">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>España</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Colombia</option>
+              <option>Chile</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Kit States ── -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <!-- Grupo: Estado -->
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Estado</p>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-state" value="default" checked> Default
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-state" value="value"> Con valor
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-state" value="focus"> Focus
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-state" value="error"> Error
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-state" value="disabled"> Disabled
+      </label>
+    </div>
+
+    <!-- Grupo: Tamaño -->
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Tamaño</p>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-size" value="normal" checked> Normal
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-size" value="small"> Pequeño
+      </label>
+    </div>
+
+    <!-- Grupo: Fondo -->
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Fondo</p>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-bg" value="white" checked> Blanco
+      </label>
+      <label class="kit-states__option">
+        <input type="radio" name="com003-bg" value="grey"> Gris (alt)
+      </label>
+    </div>
+
+  </div>
+</details>
+
+<!-- ── Kit Notes ── -->
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-003-select.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-003</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+    });
+  }
+
+  var demo = byId('demo-select');
+  var section = byId('com003-section');
+
+  // Estado → demo select classes + disabled
+  onRadioGroup('com003-state', function (val) {
+    if (!demo) return;
+    demo.classList.remove('is-focus', 'is-error');
+    demo.disabled = false;
+    demo.value = '';
+
+    if (val === 'value') {
+      demo.value = 'México';
+    } else if (val === 'focus') {
+      demo.classList.add('is-focus');
+    } else if (val === 'error') {
+      demo.classList.add('is-error');
+    } else if (val === 'disabled') {
+      demo.disabled = true;
+    }
+  });
+
+  // Tamaño → demo select size
+  onRadioGroup('com003-size', function (val) {
+    if (!demo) return;
+    if (val === 'small') {
+      demo.classList.add('select--sm');
+    } else {
+      demo.classList.remove('select--sm');
+    }
+  });
+
+  // Fondo → section background
+  onRadioGroup('com003-bg', function (val) {
+    if (!section) return;
+    if (val === 'grey') {
+      section.style.background = 'var(--color-surface)';
+    } else {
+      section.style.background = 'var(--color-bg)';
+    }
+  });
+});
+</script>
+</body>
+</html>

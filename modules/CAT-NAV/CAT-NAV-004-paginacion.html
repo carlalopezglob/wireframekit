@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-NAV-004 · Paginación</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* nav004__ */
+.nav004 {}
+.nav004__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.nav004__page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+.nav004__page-btn:hover:not(.is-active):not([disabled]) {
+  background: var(--color-surface);
+}
+.nav004__page-btn.is-active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+  font-weight: 700;
+}
+.nav004__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.nav004__prev,
+.nav004__next {
+  white-space: nowrap;
+}
+.nav004__prev--disabled,
+.nav004__next--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Mobile: hide intermediate pages */
+.nav004__mobile-info {
+  display: none;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  padding: 0 var(--space-2);
+}
+@media (max-width: 767px) {
+  .nav004__pages {
+    display: none;
+  }
+  .nav004__mobile-info {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section section--sm" aria-labelledby="nav004-heading" id="nav004-section">
+  <div class="container">
+    <nav aria-label="Paginación" class="nav004">
+      <div class="nav004__bar">
+
+        <button
+          class="btn btn--outline btn--sm nav004__prev"
+          id="nav004-prev"
+          aria-label="Página anterior"
+        >← Anterior</button>
+
+        <!-- Desktop page numbers -->
+        <div class="nav004__pages" role="list">
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 1">1</button>
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 2">2</button>
+          <span class="nav004__ellipsis" aria-hidden="true">…</span>
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 7">7</button>
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 8">8</button>
+          <button class="nav004__page-btn is-active" role="listitem" aria-label="Página 9, actual" aria-current="page">9</button>
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 10">10</button>
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 11">11</button>
+          <span class="nav004__ellipsis" aria-hidden="true">…</span>
+          <button class="nav004__page-btn" role="listitem" aria-label="Página 20">20</button>
+        </div>
+
+        <!-- Mobile current info -->
+        <span class="nav004__mobile-info" aria-live="polite">Página 9 de 20</span>
+
+        <button
+          class="btn btn--outline btn--sm nav004__next"
+          id="nav004-next"
+          aria-label="Página siguiente"
+        >Siguiente →</button>
+
+      </div>
+    </nav>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Anterior</span>
+      <label><input type="checkbox" id="toggle-prev-disabled"> Anterior deshabilitado</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Siguiente</span>
+      <label><input type="checkbox" id="toggle-next-disabled"> Siguiente deshabilitado</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-NAV/CAT-NAV-004-paginacion.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-NAV-004</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'estado deshabilitado': 'Combinar atributo disabled + aria-disabled="true" + opacity 0.4.',
+    'página activa':        'Lleva aria-current="page" además del estilo visual.',
+    'scroll infinito':      'En listados con scroll infinito, reemplazar este componente por un botón "Cargar más".',
+    'ventana mobile':       'La ventana de 5 páginas puede reducirse a 3 en viewports muy estrechos.'
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-prev-disabled', function (checked) {
+      var btn = byId('nav004-prev');
+      if (!btn) return;
+      btn.classList.toggle('nav004__prev--disabled', checked);
+      btn.setAttribute('aria-disabled', String(checked));
+      if (checked) btn.setAttribute('disabled', '');
+      else btn.removeAttribute('disabled');
+    });
+
+    onCheck('toggle-next-disabled', function (checked) {
+      var btn = byId('nav004-next');
+      if (!btn) return;
+      btn.classList.toggle('nav004__next--disabled', checked);
+      btn.setAttribute('aria-disabled', String(checked));
+      if (checked) btn.setAttribute('disabled', '');
+      else btn.removeAttribute('disabled');
+    });
+
+    onRadioGroup('bg', function (val) {
+      var sec = byId('nav004-section');
+      if (sec) sec.style.background = val;
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CRD-003 · Carrusel horizontal</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* CRD-003 — Carrusel editorial (imagen de fondo + texto superpuesto) */
+
+  /* ── Cabecera + flechas ── */
+  .crd003__header-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .crd003__header-text { flex: 1; min-width: 0; }
+  .crd003__header-text .overtitle { margin-bottom: var(--space-2); }
+  .crd003__header-text h2 { margin: 0 0 var(--space-2); }
+  .crd003__header-text p  { margin: 0; color: var(--color-text-muted); }
+
+  .crd003__nav { display: flex; gap: var(--space-2); flex-shrink: 0; }
+  .crd003__arrow {
+    width: 48px; height: 48px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.125rem; color: var(--color-text);
+    transition: box-shadow 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+  .crd003__arrow:hover:not(:disabled) { box-shadow: var(--shadow-sm); background: var(--color-surface); }
+  .crd003__arrow:disabled { opacity: 0.4; pointer-events: none; }
+  .crd003__arrow:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  /* ── Track ── */
+  .crd003__track {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: var(--space-2);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .crd003__track::-webkit-scrollbar { display: none; }
+
+  /* ── Card: todo imagen con texto superpuesto ── */
+  .crd003__slide {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  @media (min-width: 1200px) { .crd003__slide { flex-basis: 320px; } }
+  /* Mobile: 1 card + peekaboo */
+  @media (max-width: 639px)  { .crd003__slide { flex: 0 0 calc(80% - var(--space-2)); } }
+
+  /* Placeholder que actúa como imagen de fondo */
+  .crd003__img {
+    width: 100%;
+    aspect-ratio: 2 / 3;   /* portrait editorial */
+    min-height: unset;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: var(--space-4);
+    font-size: 0.75rem;
+    color: rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;   /* el slide ya tiene border-radius */
+  }
+
+  /* Gradiente de texto sobre imagen */
+  .crd003__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.90) 0%,
+      rgba(0,0,0,0.60) 40%,
+      transparent 70%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--space-6);          /* 24 px en todos los lados */
+    gap: var(--space-3);              /* 12 px entre tag / título / extracto */
+    color: #fff;
+  }
+
+  /* Tag adaptado para fondo oscuro — contraste AA garantizado */
+  .crd003__tag-el .tag {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: inline-flex;             /* no estira al 100% del ancho */
+  }
+
+  .crd003__title {
+    margin: 0;
+    font-size: 1.0625rem;             /* ≈ 17 px — legible en overlay oscuro */
+    font-weight: 700;
+    line-height: 1.35;
+    color: #fff;                      /* blanco puro: ratio > 12:1 sobre negro 90% */
+  }
+
+  .crd003__excerpt {
+    margin: 0;
+    font-size: 0.875rem;              /* 14 px — cuerpo secundario */
+    line-height: 1.6;
+    color: rgba(255,255,255,0.80);    /* ~9:1 sobre negro 90% → supera AA */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Foco visible para navegación por teclado */
+  .crd003__slide:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Hover: leve brillo */
+  .crd003__slide:hover .crd003__img {
+    filter: brightness(1.06);
+    transition: filter 0.2s ease;
+  }
+</style>
+</head>
+<body>
+
+<section class="section" id="crd003-section" aria-labelledby="crd003-heading">
+  <div class="container">
+
+    <div class="crd003__header-row">
+      <div class="crd003__header-text" id="crd003-header">
+        <p class="overtitle">Contenido destacado</p>
+        <h2 id="crd003-heading">Explora nuestros recursos</h2>
+        <p>Artículos, guías y casos de estudio seleccionados por el equipo editorial.</p>
+      </div>
+      <nav class="crd003__nav" id="crd003-nav" aria-label="Navegación del carrusel">
+        <button class="crd003__arrow" id="crd003-prev" aria-label="Anterior" disabled>←</button>
+        <button class="crd003__arrow" id="crd003-next" aria-label="Siguiente">→</button>
+      </nav>
+    </div>
+
+    <div class="crd003__track" id="crd003-track" role="region" aria-label="Carrusel editorial">
+
+      <!-- Slide 1 -->
+      <article class="crd003__slide" tabindex="0">
+        <div class="img-placeholder crd003__img" role="img" aria-label="Imagen artículo 1">2:3</div>
+        <div class="crd003__overlay">
+          <div class="crd003__tag-el"><span class="tag">Diseño</span></div>
+          <h3 class="crd003__title">Principios de diseño visual para productos digitales</h3>
+          <p class="crd003__excerpt crd003__excerpt-el">Jerarquía, contraste, alineación y proximidad como herramientas de comunicación visual que reducen la carga cognitiva.</p>
+        </div>
+      </article>
+
+      <!-- Slide 2 -->
+      <article class="crd003__slide" tabindex="0">
+        <div class="img-placeholder crd003__img" role="img" aria-label="Imagen artículo 2">2:3</div>
+        <div class="crd003__overlay">
+          <div class="crd003__tag-el"><span class="tag">Tecnología</span></div>
+          <h3 class="crd003__title">Cómo estructurar un sistema de componentes escalable</h3>
+          <p class="crd003__excerpt crd003__excerpt-el">Reducir deuda técnica y acelerar el desarrollo con principios claros de nomenclatura y jerarquía desde el inicio.</p>
+        </div>
+      </article>
+
+      <!-- Slide 3 -->
+      <article class="crd003__slide" tabindex="0">
+        <div class="img-placeholder crd003__img" role="img" aria-label="Imagen artículo 3">2:3</div>
+        <div class="crd003__overlay">
+          <div class="crd003__tag-el"><span class="tag">Producto</span></div>
+          <h3 class="crd003__title">Investigación de usuarios en proyectos ágiles</h3>
+          <p class="crd003__excerpt crd003__excerpt-el">Integrar entrevistas y pruebas de usabilidad en un sprint sin frenar la velocidad del equipo con sesiones bien preparadas.</p>
+        </div>
+      </article>
+
+      <!-- Slide 4 -->
+      <article class="crd003__slide" tabindex="0">
+        <div class="img-placeholder crd003__img" role="img" aria-label="Imagen artículo 4">2:3</div>
+        <div class="crd003__overlay">
+          <div class="crd003__tag-el"><span class="tag">Estrategia</span></div>
+          <h3 class="crd003__title">Medición del impacto del diseño en métricas de negocio</h3>
+          <p class="crd003__excerpt crd003__excerpt-el">Conectar decisiones de diseño con KPIs tangibles y establecer cultura de medición desde el inicio del proyecto.</p>
+        </div>
+      </article>
+
+      <!-- Slide 5 -->
+      <article class="crd003__slide" tabindex="0">
+        <div class="img-placeholder crd003__img" role="img" aria-label="Imagen artículo 5">2:3</div>
+        <div class="crd003__overlay">
+          <div class="crd003__tag-el"><span class="tag">Accesibilidad</span></div>
+          <h3 class="crd003__title">Accesibilidad desde el primer wireframe: checklist práctico</h3>
+          <p class="crd003__excerpt crd003__excerpt-el">Incorporar criterios WCAG desde la fase de diseño reduce el costo de corrección y garantiza nivel AA sin ralentizar la entrega.</p>
+        </div>
+      </article>
+
+      <!-- Slide 6 -->
+      <article class="crd003__slide" id="crd003-slide6" hidden>
+        <div class="img-placeholder crd003__img" role="img" aria-label="Imagen artículo 6">2:3</div>
+        <div class="crd003__overlay">
+          <div class="crd003__tag-el"><span class="tag">Contenido</span></div>
+          <h3 class="crd003__title">Diseño de contenido: cuando las palabras son parte del producto</h3>
+          <p class="crd003__excerpt crd003__excerpt-el">UX writing, microcopy y estructura de información como disciplinas que impactan en la conversión y retención del usuario.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cabecera</span>
+      <label><input type="checkbox" id="toggle-header" checked> Mostrar cabecera</label>
+      <label><input type="checkbox" id="toggle-nav" checked> Mostrar flechas</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Número de cards</span>
+      <label><input type="radio" name="count" value="5" checked> 5 cards</label>
+      <label><input type="radio" name="count" value="6"> 6 cards</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos de card</span>
+      <label><input type="checkbox" id="toggle-tag" checked> Etiqueta (tag)</label>
+      <label><input type="checkbox" id="toggle-excerpt" checked> Extracto</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CRD/CAT-CRD-003-carrusel-horizontal.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CRD-003</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Diferencia con CRD-002': 'CRD-003 usa cards editoriales tipo revista: la imagen ocupa todo el card y el texto se superpone con gradiente. CRD-002 usa cards estándar con imagen arriba y cuerpo de texto debajo.',
+    'Aspect ratio 2:3':       'Formato portrait (vertical), más editorial. Las cards son más altas que anchas, enfatizando la imagen.',
+    'Gradiente overlay':      'De negro 88% (abajo) a transparente (arriba). En producción ajustar la opacidad según la luminosidad media de las imágenes reales.',
+    'Tag en overlay':         'Fondo semi-transparente + blur. En producción puede reemplazarse por una pastilla de color sólido o eliminarse si el diseño no lo requiere.',
+    'Sin CTA ni fecha':       'El card completo es clickable. Fecha y tiempo de lectura no aplican en este formato de presentación visual.',
+    'Tamaño fijo':            'flex: 0 0 280px garantiza ancho constante en todas las cards. Mobile cambia a ~80% del contenedor para mostrar el siguiente card.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var track  = byId('crd003-track');
+    var prev   = byId('crd003-prev');
+    var next   = byId('crd003-next');
+    var slide6 = byId('crd003-slide6');
+
+    function getCardWidth() {
+      var slide = track.querySelector('.crd003__slide:not([hidden])');
+      if (!slide) return 300;
+      return slide.offsetWidth + parseInt(getComputedStyle(track).gap || 0, 10);
+    }
+    function updateArrows() {
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      prev.setAttribute('aria-disabled', String(prev.disabled));
+      next.setAttribute('aria-disabled', String(next.disabled));
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left:  getCardWidth(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    updateArrows();
+
+    onCheck('toggle-header', function (v) { byId('crd003-header').hidden = !v; });
+    onCheck('toggle-nav',    function (v) { byId('crd003-nav').hidden = !v; });
+
+    onRadioGroup('count', function (v) {
+      slide6.hidden = (v !== '6');
+      updateArrows();
+    });
+
+    onCheck('toggle-tag', function (v) {
+      document.querySelectorAll('.crd003__tag-el').forEach(function (el) { el.hidden = !v; });
+    });
+    onCheck('toggle-excerpt', function (v) {
+      document.querySelectorAll('.crd003__excerpt-el').forEach(function (el) { el.hidden = !v; });
+    });
+
+    onRadioGroup('bg', function (v) { byId('crd003-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

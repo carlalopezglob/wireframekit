@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CAB-002 · Hero split texto + imagen</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Grid split ── */
+  .cab002__grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .cab002__grid { grid-template-columns: 1fr 1fr; gap: var(--space-12); }
+  }
+  @media (min-width: 1200px) {
+    .cab002__grid { grid-template-columns: 55fr 45fr; gap: var(--space-16); }
+  }
+
+  /* Orden: imagen antes del texto */
+  .cab002__grid--img-first .cab002__media { order: -1; }
+
+  /* Columna de texto */
+  .cab002__body {
+    display: flex; flex-direction: column;
+    align-items: flex-start; gap: var(--space-4);
+  }
+  .cab002__title { margin: 0; }
+  .cab002__text  { color: var(--color-text-muted); margin: 0; }
+
+  .cab002__ctas {
+    display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;
+  }
+
+  /* Columna de media */
+  .cab002__media { width: 100%; }
+
+  .cab002__img {
+    width: 100%; aspect-ratio: 4 / 3; min-height: unset;
+    border-radius: var(--radius-lg);
+  }
+  @media (max-width: 767px) { .cab002__img { aspect-ratio: 16 / 9; } }
+
+  /* Vídeo placeholder */
+  .cab002__video {
+    width: 100%; aspect-ratio: 16 / 9;
+    background: #2a2a2a;
+    border-radius: var(--radius-lg);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .cab002__video-play {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cab002__video-play::after {
+    content: '';
+    display: block; margin-left: 4px;
+    border-style: solid;
+    border-width: 9px 0 9px 16px;
+    border-color: transparent transparent transparent rgba(255,255,255,0.9);
+  }
+  .cab002__video-label {
+    position: absolute; bottom: var(--space-4); left: var(--space-4);
+    font-size: 0.7rem; font-family: monospace; color: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="cab002-section" aria-labelledby="cab002-title">
+  <div class="container">
+    <div class="cab002__grid" id="cab002-grid">
+
+      <!-- Columna de texto -->
+      <div class="cab002__body">
+        <span class="overtitle" id="cab002-overtitle"
+              data-max="Categoría — eyebrow de la sección, largo">Categoría o sección</span>
+
+        <h1 class="cab002__title" id="cab002-title"
+            data-max="Título del hero largo que desarrolla el mensaje principal en dos o tres líneas visibles">
+          Título principal con espacio para desarrollar el mensaje en dos o tres líneas
+        </h1>
+
+        <p class="cab002__text" id="cab002-text"
+           data-max="Párrafo de apoyo extenso con contexto adicional — hasta tres líneas que explican la propuesta de valor de forma clara y directa al usuario, sin superar el ancho óptimo.">
+          Párrafo de apoyo con más margen que en el hero de fondo — hasta tres líneas que explican el contexto o la propuesta de valor.
+        </p>
+
+        <div class="cab002__ctas" id="cab002-ctas">
+          <a href="#" class="btn" id="cab002-cta-primary" data-slot="cta-prim"
+             data-max="Llamada a la acción principal">Acción principal</a>
+          <a href="#" class="btn--outline" id="cab002-cta-secondary" data-slot="cta-sec"
+             data-max="Segunda acción secundaria">Acción secundaria</a>
+        </div>
+      </div>
+
+      <!-- Columna de media -->
+      <div class="cab002__media" id="cab002-media" aria-hidden="true">
+        <div class="img-placeholder cab002__img" id="cab002-img"></div>
+        <div class="cab002__video" id="cab002-video" hidden>
+          <div class="cab002__video-play" role="img" aria-label="Reproducir vídeo"></div>
+          <span class="cab002__video-label">vídeo embed — 16:9</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-overtitle" checked> Overtitle</label>
+      <label><input type="checkbox" id="toggle-text" checked> Párrafo de apoyo</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta-prim" checked> CTA principal</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-prim']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta-sec" checked> CTA secundario</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-sec']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--outline">Outline</option>
+          <option value="">Primario</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+      <label><input type="checkbox" id="toggle-media" checked> Media</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tipo de media</span>
+      <label><input type="radio" name="media-type" value="img" checked> Imagen (4:3)</label>
+      <label><input type="radio" name="media-type" value="video"> Vídeo (16:9)</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Orden</span>
+      <label><input type="radio" name="layout" value="right" checked> Texto · Imagen</label>
+      <label><input type="radio" name="layout" value="left"> Imagen · Texto</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CAB/CAT-CAB-002 Hero split texto + imagen.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CAB-002</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Overtitle':        'Máx. 40 car. Opcional — si se omite el título sube sin hueco.',
+    'Título (H1)':      'Máx. 90 car. (~3 líneas desktop). H1 semántico — único en la página.',
+    'Párrafo':          'Máx. 220 car. (~3 líneas desktop). Opcional — si se omite los CTAs suben.',
+    'CTA principal':    'Máx. 30 car.',
+    'CTA secundario':   'Máx. 30 car. Solo si hay un segundo destino claro.',
+    'Imagen':           '4:3 desktop, 16:9 mobile. Sin media el texto expande a ancho completo.',
+    'Vídeo':            'Siempre 16:9. En UI real, botón play abre modal o autoplay muted.',
+    'Layout':           'Grid 55/45 en ≥1200px, 50/50 en 768–1199px. Media derecha por defecto.',
+    'Orden mobile':     'Texto arriba por defecto (<768px). Configurable con "Imagen arriba".',
+    'Accesibilidad':    'section aria-labelledby al h1. Media aria-hidden en wireframe; en UI real la imagen necesita alt descriptivo.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Elementos
+    onCheck('toggle-overtitle', function (v) { byId('cab002-overtitle').hidden = !v; });
+    onCheck('toggle-text',      function (v) { byId('cab002-text').hidden = !v; });
+    onCheck('toggle-cta-prim',  function (v) { byId('cab002-cta-primary').hidden = !v; });
+    onCheck('toggle-cta-sec',   function (v) { byId('cab002-cta-secondary').hidden = !v; });
+    onCheck('toggle-media',     function (v) { byId('cab002-media').hidden = !v; });
+
+    // Tipo de media
+    onRadioGroup('media-type', function (v) {
+      byId('cab002-img').hidden   = v !== 'img';
+      byId('cab002-video').hidden = v !== 'video';
+    });
+
+    // Orden
+    onRadioGroup('layout', function (v) {
+      byId('cab002-grid').classList.toggle('cab002__grid--img-first', v === 'left');
+    });
+
+    // Fondo
+    onRadioGroup('bg', function (v) {
+      byId('cab002-section').style.background = v;
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CAB-003 · Header ligero sin imagen</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Header ligero ── */
+  .cab003 {
+    padding: var(--space-8) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 768px)  { .cab003 { padding: var(--space-8) 0 var(--space-12); } }
+  @media (min-width: 1200px) { .cab003 { padding: var(--space-12) 0; } }
+
+  /* Sin borde variante */
+  .cab003--no-border { border-bottom: none; }
+
+  /* Contenido */
+  .cab003__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    max-width: 700px;
+  }
+
+  /* Breadcrumb */
+  .cab003__breadcrumb {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 0; list-style: none; padding: 0; margin: 0;
+    font-size: 0.8rem; color: var(--color-text-muted);
+  }
+  .cab003__breadcrumb li + li::before {
+    content: "/";
+    margin: 0 0.4em;
+    color: var(--color-border);
+  }
+  .cab003__breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .cab003__breadcrumb a:hover { text-decoration: underline; }
+  .cab003__breadcrumb [aria-current="page"] { color: var(--color-text); font-weight: 600; }
+
+  /* Tag de categoría (alternativa al breadcrumb) */
+  .cab003__tag { margin-bottom: var(--space-1); }
+
+  /* Título y texto */
+  .cab003__title { margin: 0; }
+  .cab003__text  { color: var(--color-text-muted); margin: 0; }
+
+  /* CTAs opcionales */
+  .cab003__ctas {
+    display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;
+    margin-top: var(--space-1);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="cab003" id="cab003-section" aria-labelledby="cab003-title">
+  <div class="container">
+    <div class="cab003__inner">
+
+      <!-- Breadcrumb (por defecto) -->
+      <nav id="cab003-breadcrumb" aria-label="Ruta de navegación">
+        <ol class="cab003__breadcrumb">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Sección</a></li>
+          <li><span aria-current="page">Página actual</span></li>
+        </ol>
+      </nav>
+
+      <!-- Tag de categoría (alternativa al breadcrumb) -->
+      <span class="tag cab003__tag" id="cab003-tag" hidden
+            data-max="Categoría larga de artículo">Categoría</span>
+
+      <h1 class="cab003__title" id="cab003-title"
+          data-max="Título directo de la página más extenso para ver el límite de caracteres">Título directo de la página</h1>
+
+      <p class="cab003__text" id="cab003-text"
+         data-max="Texto de apoyo opcional, hasta dos líneas que contextualizan o añaden detalle al título de esta página.">
+        Texto de apoyo opcional, una línea que contextualiza o añade detalle al título.
+      </p>
+
+      <!-- CTAs opcionales (para pages que lo necesitan) -->
+      <div class="cab003__ctas" id="cab003-ctas" hidden>
+        <a href="#" class="btn btn--sm" id="cab003-cta-primary"
+           data-max="Acción principal de la página">Acción principal</a>
+        <a href="#" class="btn--link" id="cab003-cta-secondary"
+           data-max="Enlace secundario con texto →">Enlace secundario →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-text" checked> Texto de apoyo</label>
+      <label><input type="checkbox" id="toggle-ctas" data-max-state> CTAs</label>
+      <label><input type="checkbox" id="toggle-border" checked> Borde inferior</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elemento de contexto</span>
+      <label><input type="radio" name="context" value="breadcrumb" checked> Breadcrumb</label>
+      <label><input type="radio" name="context" value="tag"> Tag de categoría</label>
+      <label><input type="radio" name="context" value="none"> Sin contexto</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Niveles breadcrumb</span>
+      <label><input type="radio" name="bc-depth" value="2"> 2 niveles</label>
+      <label><input type="radio" name="bc-depth" value="3" checked> 3 niveles</label>
+      <label><input type="radio" name="bc-depth" value="4" data-max-state> 4 niveles</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CAB/CAT-CAB-003-header-ligero-sin-imagen.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CAB-003</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Título (H1)':      'Máx. 60 car. (~1 línea). H1 semántico — único en la página. Nunca centrado.',
+    'Texto de apoyo':   'Máx. 120 car. (~1–2 líneas desktop). Opcional — si se omite el título sube.',
+    'Breadcrumb':       'Máx. 4 niveles. Si se supera, colapsar intermedios con "…".',
+    'Tag de categoría': 'Alternativa al breadcrumb. Máx. 25 car. Para páginas de artículo o blog.',
+    'CTAs':             'Opcional. Solo si la cabecera necesita una acción directa (p.ej. "Editar", "Publicar").',
+    'CTA principal':    'Máx. 25 car. Usa btn--sm en este contexto.',
+    'CTA secundario':   'Máx. 35 car.',
+    'Borde inferior':   'Separa visualmente el header del contenido. Quitar si el diseño usa fondos de color distintos.',
+    'Accesibilidad':    'section aria-labelledby al h1. Breadcrumb en nav con aria-label="Ruta de navegación". Último ítem con aria-current="page".',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+    var section = byId('cab003-section');
+
+    // Elementos
+    onCheck('toggle-text',   function (v) { byId('cab003-text').hidden = !v; });
+    onCheck('toggle-ctas',   function (v) { byId('cab003-ctas').hidden = !v; });
+    onCheck('toggle-border', function (v) {
+      section.classList.toggle('cab003--no-border', !v);
+    });
+
+    // Elemento de contexto (breadcrumb vs tag vs ninguno)
+    onRadioGroup('context', function (v) {
+      byId('cab003-breadcrumb').hidden = v !== 'breadcrumb';
+      byId('cab003-tag').hidden        = v !== 'tag';
+    });
+
+    // Profundidad del breadcrumb
+    var bcItems = [
+      null, // placeholder index 0
+      '<li><a href="#">Inicio</a></li>',
+      '<li><a href="#">Sección</a></li>',
+      '<li><a href="#">Subsección</a></li>',
+      '<li><span aria-current="page">Página actual</span></li>'
+    ];
+    onRadioGroup('bc-depth', function (v) {
+      var n = parseInt(v, 10);
+      var ol = document.querySelector('.cab003__breadcrumb');
+      var html = '';
+      // always: Inicio + ... + Página actual
+      html += bcItems[1]; // Inicio
+      if (n >= 3) html += bcItems[2]; // Sección
+      if (n >= 4) html += bcItems[3]; // Subsección
+      html += bcItems[4]; // Página actual
+      ol.innerHTML = html;
+    });
+
+    // Fondo
+    onRadioGroup('bg', function (v) { section.style.background = v; });
+  });
+</script>
+
+</body>
+</html>

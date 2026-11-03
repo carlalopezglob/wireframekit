@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-MDL-002 · Modal de vídeo</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* mdl002__ BEM CSS */
+.mdl002__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+}
+.mdl002__panel {
+  max-width: 900px;
+  width: 100%;
+  background: #000;
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+.mdl002__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.mdl002__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.mdl002__video-area {
+  background: #1a1a1a;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.mdl002__play-icon {
+  width: 56px;
+  height: 56px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mdl002__play-icon::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 16px solid rgba(255, 255, 255, 0.7);
+  margin-left: 4px;
+}
+.mdl002__video-label {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+  font-family: monospace;
+  letter-spacing: 0.03em;
+}
+
+/* Trigger thumbnail */
+.mdl002__thumbnail {
+  background: #1a1a1a;
+  aspect-ratio: 16 / 9;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-3);
+  cursor: pointer;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.15s;
+}
+.mdl002__thumbnail:hover {
+  opacity: 0.85;
+}
+.mdl002__thumb-play {
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+.mdl002__thumb-play::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 13px solid rgba(255, 255, 255, 0.85);
+  margin-left: 3px;
+}
+.mdl002__thumb-label {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  font-family: monospace;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section section--alt" id="mdl002-trigger-section">
+  <div class="container">
+    <p style="margin-bottom:var(--space-4);color:var(--color-text-muted);font-size:0.9rem;text-align:center">Haz clic en la miniatura para reproducir el vídeo</p>
+    <button class="mdl002__thumbnail" id="mdl002-open-btn" aria-label="Reproducir vídeo">
+      <div class="mdl002__thumb-play"></div>
+      <span class="mdl002__thumb-label">miniatura de vídeo — 16:9</span>
+    </button>
+  </div>
+</section>
+
+<div class="mdl002__overlay" id="mdl002-overlay" role="dialog" aria-modal="true" aria-label="Reproductor de vídeo">
+  <button class="mdl002__close" aria-label="Cerrar vídeo">&#x2715;</button>
+  <div class="mdl002__panel">
+    <div class="mdl002__video-area">
+      <div class="mdl002__play-icon"></div>
+      <span class="mdl002__video-label">vídeo embed — 16:9</span>
+    </div>
+  </div>
+</div>
+<!-- fin módulo -->
+
+
+<!-- kit-states panel -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Estado</span>
+      <label><input type="radio" name="modal-state" value="open" checked> Abierto</label>
+      <label><input type="radio" name="modal-state" value="closed"> Cerrado</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#f5f5f5" checked> Gris (alt)</label>
+      <label><input type="radio" name="bg" value="#ffffff"> Blanco</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-MDL/CAT-MDL-002-modal-video.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-MDL-002</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {};
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    function openModal() { byId('mdl002-overlay').hidden = false; }
+    function closeModal() { byId('mdl002-overlay').hidden = true; }
+
+    byId('mdl002-open-btn').addEventListener('click', openModal);
+
+    document.querySelectorAll('.mdl002__close').forEach(function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+
+    byId('mdl002-overlay').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+
+    onRadioGroup('modal-state', function (v) { if (v === 'open') openModal(); else closeModal(); });
+    onRadioGroup('bg', function (v) { byId('mdl002-trigger-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

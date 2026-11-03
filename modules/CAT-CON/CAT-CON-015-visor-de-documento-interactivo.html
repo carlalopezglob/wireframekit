@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-015 · Visor de documento interactivo</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Header ── */
+  .con015__header { margin-bottom: var(--space-6); max-width: 640px; }
+  .con015__title  { margin: 0; }
+
+  /* ── Viewer wrapper ── */
+  .con015__viewer {
+    width: 100%; max-width: 720px; margin: 0 auto;
+  }
+
+  /* ── Canvas ── */
+  .con015__canvas {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .con015__canvas--horizontal { aspect-ratio: 16 / 9; }
+
+  .con015__page {
+    display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+    color: var(--color-text-muted); font-size: 0.9rem;
+    transition: transform 0.15s ease;
+  }
+  .con015__page strong { color: var(--color-text); font-size: 1rem; }
+
+  /* ── Toolbar ── */
+  .con015__toolbar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  @media (min-width: 768px) {
+    .con015__toolbar { justify-content: space-between; flex-wrap: nowrap; }
+  }
+
+  /* Barra superpuesta (variante C) */
+  .con015__viewer--overlay .con015__toolbar {
+    position: absolute; left: var(--space-3); right: var(--space-3); bottom: var(--space-3);
+    margin-top: 0;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(2px);
+  }
+  .con015__viewer--overlay .con015__canvas { position: relative; }
+
+  .con015__group {
+    display: flex; align-items: center; gap: var(--space-2);
+    min-width: 0;
+  }
+
+  /* Botones icono — cuadrados, altura táctil mínima */
+  .con015__icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: var(--control-height-sm); height: var(--control-height-sm);
+    min-height: var(--control-height-sm);
+    border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+    background: var(--color-bg); color: var(--color-text);
+    font-size: 1rem; line-height: 1; cursor: pointer; padding: 0;
+  }
+  .con015__icon-btn:hover:not(:disabled) { background: var(--color-surface); }
+  .con015__icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .con015__icon-btn[aria-pressed="true"] { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+  .con015__zoom-value,
+  .con015__page-of { font-size: 0.8rem; color: var(--color-text-muted); white-space: nowrap; }
+
+  .con015__goto {
+    width: 2.6em; text-align: center;
+    min-height: var(--control-height-sm);
+    padding: 0 var(--space-1);
+    border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+    font-size: 0.9rem; font-family: var(--font-base); color: var(--color-text);
+    background: var(--color-bg);
+  }
+  .con015__goto::-webkit-inner-spin-button,
+  .con015__goto::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .con015__share-confirm {
+    font-size: 0.75rem; color: var(--color-text-muted);
+    margin-left: var(--space-1);
+  }
+
+  /* ── Pantalla completa simulada ── */
+  .con015__viewer--fullscreen {
+    position: fixed; inset: 0; z-index: 1200;
+    max-width: none; margin: 0;
+    background: var(--color-bg);
+    padding: var(--space-6);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .con015__viewer--fullscreen .con015__canvas { flex: 1; max-height: 70vh; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con015-section" aria-labelledby="con015-title">
+  <div class="container">
+
+    <div class="con015__header" id="con015-header">
+      <h2 class="con015__title" id="con015-title"
+          data-max="Título largo de la página o documento que contiene el visor">Documento</h2>
+    </div>
+
+    <div class="con015__viewer" id="con015-viewer" role="group" aria-label="Visor de documento">
+
+      <div class="con015__canvas" id="con015-canvas">
+        <div class="con015__page" id="con015-page" aria-live="polite">
+          <strong id="con015-page-label">Página 1</strong>
+          <span>Vista previa del documento — zoom <span id="con015-zoom-inline">100%</span></span>
+        </div>
+      </div>
+
+      <div class="con015__toolbar" id="con015-toolbar">
+
+        <div class="con015__group" aria-label="Zoom">
+          <button class="con015__icon-btn" id="con015-zoom-out" aria-label="Alejar zoom" type="button">−</button>
+          <span class="con015__zoom-value" id="con015-zoom-value">100%</span>
+          <button class="con015__icon-btn" id="con015-zoom-in" aria-label="Acercar zoom" type="button">+</button>
+        </div>
+
+        <div class="con015__group" id="con015-pagination-group" aria-label="Paginación">
+          <button class="con015__icon-btn" id="con015-prev" aria-label="Página anterior" type="button">‹</button>
+          <input class="con015__goto" id="con015-goto" type="number" min="1" value="1"
+                 aria-label="Ir a página" inputmode="numeric">
+          <span class="con015__page-of">de <span id="con015-total">12</span></span>
+          <button class="con015__icon-btn" id="con015-next" aria-label="Página siguiente" type="button">›</button>
+        </div>
+
+        <div class="con015__group" aria-label="Acciones">
+          <button class="con015__icon-btn" id="con015-bookmark" aria-label="Guardar marcador" aria-pressed="false" type="button">☆</button>
+          <button class="con015__icon-btn" id="con015-share" aria-label="Compartir documento" type="button">⤴</button>
+          <span class="con015__share-confirm" id="con015-share-confirm" hidden>Enlace copiado</span>
+          <button class="con015__icon-btn" id="con015-fullscreen" aria-label="Pantalla completa" aria-pressed="false" type="button">⤢</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-header15" checked> Título de página</label>
+      <label><input type="checkbox" id="toggle-bookmark15" checked> Marcador</label>
+      <label><input type="checkbox" id="toggle-share15" checked> Compartir</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Orientación del documento</span>
+      <label><input type="radio" name="orientation15" value="vertical" checked> Vertical (3:4)</label>
+      <label><input type="radio" name="orientation15" value="horizontal"> Horizontal (16:9)</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Barra de herramientas</span>
+      <label><input type="radio" name="toolbar-pos15" value="below" checked> Debajo del canvas</label>
+      <label><input type="radio" name="toolbar-pos15" value="overlay"> Superpuesta</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Número de páginas</span>
+      <label><input type="radio" name="pagecount15" value="1"> 1 página (sin paginación)</label>
+      <label><input type="radio" name="pagecount15" value="12" checked> 12 páginas</label>
+      <label><input type="radio" name="pagecount15" value="40"> 40 páginas</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg15" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg15" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-015-visor-de-documento-interactivo.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-015</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Patrón':              'Visor con estado propio (página, zoom, marcadores, pantalla completa) — no un embed pasivo. Ver CAT-CON-013 para galería de imágenes/vídeo sin este estado.',
+    'Zoom':                'Pasos de 25%, rango 50%–200%. Botones se deshabilitan en los límites.',
+    'Paginación':          'Botones ‹/› deshabilitados en primera/última página. Input "ir a página" valida 1–N.',
+    'Marcador':            'Estado independiente por página, en memoria durante la sesión (demo). En producción debe persistir.',
+    'Compartir':           'Sin acción real en wireframe — muestra confirmación momentánea "Enlace copiado".',
+    'Pantalla completa':   'Simulada con CSS (position: fixed). En producción usar la Fullscreen API real.',
+    'Variante vertical':   'Canvas 3:4 — documentos paginados tipo informe/PDF a una columna.',
+    'Variante horizontal': 'Canvas 16:9 — presentaciones o documentos apaisados.',
+    'Variante superpuesta':'La barra no ocupa espacio propio: flota sobre el borde inferior del canvas.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var viewer   = byId('con015-viewer');
+    var canvas   = byId('con015-canvas');
+    var pageEl   = byId('con015-page');
+    var pageLbl  = byId('con015-page-label');
+    var zoomVal  = byId('con015-zoom-value');
+    var zoomInline = byId('con015-zoom-inline');
+    var gotoInput = byId('con015-goto');
+    var totalEl  = byId('con015-total');
+    var prevBtn  = byId('con015-prev');
+    var nextBtn  = byId('con015-next');
+    var zoomOutBtn = byId('con015-zoom-out');
+    var zoomInBtn  = byId('con015-zoom-in');
+    var paginationGroup = byId('con015-pagination-group');
+
+    var currentPage = 1;
+    var totalPages  = 12;
+    var zoom        = 100;
+    var bookmarked  = {}; // { pageNumber: true }
+
+    function render() {
+      pageLbl.textContent = 'Página ' + currentPage;
+      totalEl.textContent = totalPages;
+      gotoInput.value = currentPage;
+      gotoInput.max = totalPages;
+      zoomVal.textContent = zoom + '%';
+      zoomInline.textContent = zoom + '%';
+      pageEl.style.transform = 'scale(' + (zoom / 100) + ')';
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+      zoomOutBtn.disabled = zoom <= 50;
+      zoomInBtn.disabled = zoom >= 200;
+      paginationGroup.hidden = totalPages <= 1;
+
+      var bookmarkBtn = byId('con015-bookmark');
+      var isBookmarked = !!bookmarked[currentPage];
+      bookmarkBtn.setAttribute('aria-pressed', String(isBookmarked));
+      bookmarkBtn.textContent = isBookmarked ? '★' : '☆';
+    }
+
+    function goToPage(n) {
+      n = Math.max(1, Math.min(totalPages, n || 1));
+      currentPage = n;
+      render();
+    }
+
+    prevBtn.addEventListener('click', function () { goToPage(currentPage - 1); });
+    nextBtn.addEventListener('click', function () { goToPage(currentPage + 1); });
+
+    zoomOutBtn.addEventListener('click', function () { zoom = Math.max(50, zoom - 25); render(); });
+    zoomInBtn.addEventListener('click', function ()  { zoom = Math.min(200, zoom + 25); render(); });
+
+    gotoInput.addEventListener('change', function () {
+      var n = parseInt(gotoInput.value, 10);
+      if (isNaN(n)) { render(); return; }
+      goToPage(n);
+    });
+
+    byId('con015-bookmark').addEventListener('click', function () {
+      bookmarked[currentPage] = !bookmarked[currentPage];
+      render();
+    });
+
+    var shareConfirm = byId('con015-share-confirm');
+    var shareTimer;
+    byId('con015-share').addEventListener('click', function () {
+      shareConfirm.hidden = false;
+      clearTimeout(shareTimer);
+      shareTimer = setTimeout(function () { shareConfirm.hidden = true; }, 2000);
+    });
+
+    var fullscreenBtn = byId('con015-fullscreen');
+    fullscreenBtn.addEventListener('click', function () {
+      var isFs = viewer.classList.toggle('con015__viewer--fullscreen');
+      fullscreenBtn.setAttribute('aria-pressed', String(isFs));
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && viewer.classList.contains('con015__viewer--fullscreen')) {
+        viewer.classList.remove('con015__viewer--fullscreen');
+        fullscreenBtn.setAttribute('aria-pressed', 'false');
+      }
+    });
+
+    // ── kit-states ──
+    onCheck('toggle-header15', function (v) { byId('con015-header').hidden = !v; });
+    onCheck('toggle-bookmark15', function (v) { byId('con015-bookmark').hidden = !v; });
+    onCheck('toggle-share15', function (v) {
+      byId('con015-share').hidden = !v;
+      if (!v) shareConfirm.hidden = true;
+    });
+
+    onRadioGroup('orientation15', function (v) {
+      canvas.classList.toggle('con015__canvas--horizontal', v === 'horizontal');
+    });
+
+    onRadioGroup('toolbar-pos15', function (v) {
+      viewer.classList.toggle('con015__viewer--overlay', v === 'overlay');
+    });
+
+    onRadioGroup('pagecount15', function (v) {
+      totalPages = parseInt(v, 10) || 1;
+      bookmarked = {};
+      goToPage(1);
+    });
+
+    onRadioGroup('bg15', function (v) { byId('con015-section').style.background = v; });
+
+    render();
+  });
+</script>
+</body>
+</html>

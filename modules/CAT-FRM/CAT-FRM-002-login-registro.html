@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-FRM-002 · Login / Registro</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* frm002__ */
+.frm002 {
+  max-width: 440px;
+  margin: 0 auto;
+}
+.frm002__field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.frm002__remember-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.frm002__remember-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.frm002__forgot {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+.frm002__forgot:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+.frm002__submit {
+  width: 100%;
+  margin-bottom: var(--space-4);
+}
+.frm002__or {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-4);
+}
+.frm002__or::before,
+.frm002__or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+.frm002__social {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.frm002__social-btn {
+  width: 100%;
+}
+.frm002__privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+.frm002__privacy input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.frm002__privacy a {
+  color: var(--color-text);
+}
+
+/* fuerza el ocultado de paneles aunque shared/styles sobreescriba [hidden] */
+.frm002 .tab-panel[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" aria-labelledby="frm002-heading" id="frm002-section">
+  <div class="container">
+    <div class="frm002">
+
+      <div class="tabs" role="tablist" aria-label="Autenticación" id="frm002-tabs">
+        <button
+          class="tab-btn is-active"
+          id="frm002-tab-login"
+          role="tab"
+          aria-selected="true"
+          aria-controls="frm002-panel-login"
+          data-tab="login"
+        >Iniciar sesión</button>
+        <button
+          class="tab-btn"
+          id="frm002-tab-registro"
+          role="tab"
+          aria-selected="false"
+          aria-controls="frm002-panel-registro"
+          data-tab="registro"
+        >Registrarse</button>
+      </div>
+
+      <!-- LOGIN PANEL -->
+      <div
+        class="tab-panel"
+        id="frm002-panel-login"
+        role="tabpanel"
+        aria-labelledby="frm002-tab-login"
+        data-tab="login"
+      >
+        <form novalidate aria-label="Iniciar sesión">
+
+          <div class="frm002__field-wrap">
+            <label class="field-label" for="frm002-login-email">Email</label>
+            <input class="field" type="email" id="frm002-login-email" name="email" required autocomplete="email" placeholder="tu@email.com">
+          </div>
+
+          <div class="frm002__field-wrap">
+            <label class="field-label" for="frm002-login-password">Contraseña</label>
+            <input class="field" type="password" id="frm002-login-password" name="password" required autocomplete="current-password" placeholder="Tu contraseña">
+          </div>
+
+          <div class="frm002__remember-row">
+            <label class="frm002__remember-label">
+              <input type="checkbox" name="remember">
+              Recordarme
+            </label>
+            <a href="#" class="frm002__forgot">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" class="btn frm002__submit">Iniciar sesión</button>
+
+          <!-- Social auth (optional) -->
+          <div id="frm002-social">
+            <div class="frm002__or">o</div>
+            <div class="frm002__social">
+              <button type="button" class="btn btn--outline frm002__social-btn">Continuar con Google</button>
+              <button type="button" class="btn btn--outline frm002__social-btn">Continuar con Apple</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- REGISTER PANEL -->
+      <div
+        class="tab-panel"
+        id="frm002-panel-registro"
+        role="tabpanel"
+        aria-labelledby="frm002-tab-registro"
+        data-tab="registro"
+        hidden
+      >
+        <form novalidate aria-label="Registrarse">
+
+          <div class="frm002__field-wrap">
+            <label class="field-label" for="frm002-reg-nombre">Nombre</label>
+            <input class="field" type="text" id="frm002-reg-nombre" name="nombre" required autocomplete="name" placeholder="Tu nombre completo">
+          </div>
+
+          <div class="frm002__field-wrap">
+            <label class="field-label" for="frm002-reg-email">Email</label>
+            <input class="field" type="email" id="frm002-reg-email" name="email" required autocomplete="email" placeholder="tu@email.com">
+          </div>
+
+          <div class="frm002__field-wrap">
+            <label class="field-label" for="frm002-reg-password">Contraseña</label>
+            <input class="field" type="password" id="frm002-reg-password" name="password" required autocomplete="new-password" placeholder="Crea una contraseña">
+          </div>
+
+          <div class="frm002__field-wrap">
+            <label class="field-label" for="frm002-reg-password2">Confirmar contraseña</label>
+            <input class="field" type="password" id="frm002-reg-password2" name="password2" required autocomplete="new-password" placeholder="Repite tu contraseña">
+          </div>
+
+          <label class="frm002__privacy">
+            <input type="checkbox" name="privacidad" required>
+            <span>Acepto la <a href="#">política de privacidad</a> y los <a href="#">términos de uso</a>.</span>
+          </label>
+
+          <button type="submit" class="btn frm002__submit">Crear cuenta</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Redes sociales</span>
+      <label><input type="checkbox" id="toggle-social" checked> Mostrar botones sociales</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tab activo</span>
+      <label><input type="radio" name="tab" value="login" checked> Login</label>
+      <label><input type="radio" name="tab" value="registro"> Registro</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-FRM/CAT-FRM-002-login-registro.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-FRM-002</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {};
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Tab switching — usa data-tab para ser compatible con wireframe.js
+    function activateTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(function (b) {
+        var active = b.getAttribute('data-tab') === tabId;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-selected', String(active));
+      });
+      document.querySelectorAll('.tab-panel').forEach(function (p) {
+        p.hidden = p.getAttribute('data-tab') !== tabId;
+      });
+    }
+    // Los clics en .tab-btn los gestiona wireframe.js — no duplicar listeners aquí.
+
+    // Kit-states social toggle
+    onCheck('toggle-social', function (checked) {
+      var el = byId('frm002-social');
+      if (el) el.hidden = !checked;
+    });
+
+    // Kit-states tab radio
+    onRadioGroup('tab', function (val) {
+      activateTab(val);
+    });
+
+    // Bg radio
+    onRadioGroup('bg', function (val) {
+      var sec = byId('frm002-section');
+      if (sec) sec.style.background = val;
+    });
+  });
+</script>
+</body>
+</html>

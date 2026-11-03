@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-009 · Bloque de características</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Encabezado de sección ── */
+  .con009__head {
+    max-width: 640px;
+    margin-bottom: var(--space-12);
+  }
+  .con009__head-title { margin: var(--space-2) 0 0; }
+  .con009__head-text  { color: var(--color-text-muted); margin: var(--space-3) 0 0; }
+
+  /* ── Grid ── */
+  .con009__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  @media (min-width: 480px) {
+    .con009__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 768px) {
+    .con009__grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); max-width: 680px; }
+    .con009__grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+    .con009__grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* Segunda fila — sin estilos propios; el gap del grid da la separación */
+
+  /* ── Item ── */
+  .feat__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* ── Marcador: icono ── */
+  .feat__icon {
+    width: 48px; height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--color-placeholder);
+    flex-shrink: 0;
+  }
+
+  /* ── Marcador: imagen ── */
+  .feat__img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    background: var(--color-placeholder);
+  }
+
+  /* Visibilidad de marcadores controlada por JS */
+  .feat__icon { display: block; }
+  .feat__img  { display: none; }
+
+  .con009__grid.marker--img  .feat__icon { display: none; }
+  .con009__grid.marker--img  .feat__img  { display: block; }
+  .con009__grid.marker--none .feat__icon { display: none; }
+  .con009__grid.marker--none .feat__img  { display: none; }
+
+  .feat__title { margin: 0; font-size: 1.05rem; }
+
+  /* ── Tipo: párrafo ── */
+  .feat__text { color: var(--color-text-muted); margin: 0; font-size: 0.95rem; }
+
+  /* ── Tipo: lista ── */
+  .feat-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: var(--space-2);
+    font-size: 0.9rem; color: var(--color-text-muted);
+  }
+  .feat-list li { display: flex; align-items: flex-start; gap: var(--space-2); }
+  .feat-list li::before {
+    content: '';
+    flex-shrink: 0; width: 5px; height: 5px;
+    margin-top: 0.52em;
+    border-radius: 50%; background: var(--color-accent);
+  }
+
+  /* ── Tipo: stats ── */
+  .feat-stats { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+  .feat-stats__item { display: flex; flex-direction: column; gap: var(--space-1); }
+  .feat-stats__number {
+    font-size: 1.6rem; font-weight: 800; line-height: 1;
+    color: var(--color-text); font-family: var(--font-heading);
+  }
+  .feat-stats__label { font-size: 0.75rem; color: var(--color-text-muted); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con009-section" aria-labelledby="con009-title">
+  <div class="container">
+
+    <!-- Encabezado de sección (opcional) -->
+    <div class="con009__head" id="con009-head">
+      <p class="overtitle" id="con009-overtitle"
+         data-max="Categoría o eyebrow del bloque largo">Categoría</p>
+      <h2 class="con009__head-title" id="con009-title"
+          data-max="Título del bloque de características con algo más de texto largo">
+        Título del bloque
+      </h2>
+      <p class="con009__head-text" id="con009-text"
+         data-max="Texto de apoyo opcional que complementa el título con hasta dos líneas de contexto adicional.">
+        Texto de apoyo opcional que contextualiza el bloque.
+      </p>
+    </div>
+
+    <!-- Grid de características -->
+    <div class="con009__grid" id="con009-grid" data-cols="3">
+
+      <!-- Item 1 -->
+      <article class="feat__item">
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica uno</h3>
+        <div data-slot="feat-1">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la primera característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">42K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">87%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 2 -->
+      <article class="feat__item">
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica dos</h3>
+        <div data-slot="feat-2">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la segunda característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">12K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">95%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 3 -->
+      <article class="feat__item" id="feat-item-3">
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica tres</h3>
+        <div data-slot="feat-3">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la tercera característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">8K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">73%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 4 -->
+      <article class="feat__item" id="feat-item-4" hidden>
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica cuatro</h3>
+        <div data-slot="feat-4">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la cuarta característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">3K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">61%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 5 (segunda fila) -->
+      <article class="feat__item feat__row2" id="feat-item-5" hidden>
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica cinco</h3>
+        <div data-slot="feat-5">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la quinta característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">21K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">54%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 6 (segunda fila) -->
+      <article class="feat__item feat__row2" id="feat-item-6" hidden>
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica seis</h3>
+        <div data-slot="feat-6">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la sexta característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">7K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">82%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 7 (segunda fila) -->
+      <article class="feat__item feat__row2" id="feat-item-7" hidden>
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica siete</h3>
+        <div data-slot="feat-7">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la séptima característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">33K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">68%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 8 (segunda fila) -->
+      <article class="feat__item feat__row2" id="feat-item-8" hidden>
+        <div class="feat__icon" aria-hidden="true"></div>
+        <div class="feat__img"  aria-hidden="true"></div>
+        <h3 class="feat__title" data-max="Título de característica algo más largo">Característica ocho</h3>
+        <div data-slot="feat-8">
+          <p data-slot-type="text" class="feat__text"
+             data-max="Descripción larga de la octava característica para probar el límite de texto visible.">
+            Descripción de esta característica o ventaja del producto o servicio.
+          </p>
+          <ul data-slot-type="list" class="feat-list" hidden>
+            <li data-max="Primer punto de lista algo más largo">Punto de lista uno</li>
+            <li data-max="Segundo punto de la lista">Punto de lista dos</li>
+            <li data-max="Tercer punto de lista">Punto de lista tres</li>
+          </ul>
+          <div data-slot-type="stats" class="feat-stats" hidden>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99,9K">5K</span>
+              <span class="feat-stats__label" data-max="Etiqueta del dato">Etiqueta</span>
+            </div>
+            <div class="feat-stats__item">
+              <span class="feat-stats__number" data-max="99%">91%</span>
+              <span class="feat-stats__label" data-max="Segunda etiqueta">Etiqueta</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Encabezado</span>
+      <label><input type="checkbox" id="toggle-head"      checked> Encabezado de sección</label>
+      <label><input type="checkbox" id="toggle-overtitle" checked> Overtitle</label>
+      <label><input type="checkbox" id="toggle-head-text" checked> Texto de apoyo</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Marcador</span>
+      <div class="kit-states__prop">
+        <select id="select-marker9">
+          <option value="icon" selected>Icono</option>
+          <option value="img">Imagen</option>
+          <option value="none">Ninguno</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Columnas</span>
+      <label><input type="radio" name="cols" value="2"> 2 columnas</label>
+      <label><input type="radio" name="cols" value="3" checked> 3 columnas</label>
+      <label><input type="radio" name="cols" value="4" data-max-state> 4 columnas</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Filas</span>
+      <label><input type="radio" name="rows9" value="1" checked> 1 fila</label>
+      <label><input type="radio" name="rows9" value="2"> 2 filas</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tipo de contenido</span>
+      <div class="kit-states__prop">
+        <span class="kit-states__prop-label">Columna 1</span>
+        <select class="kit-slot-type" data-slot-target="feat-1">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+      <div class="kit-states__prop">
+        <span class="kit-states__prop-label">Columna 2</span>
+        <select class="kit-slot-type" data-slot-target="feat-2">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+      <div class="kit-states__prop" id="feat-slot-3-ctrl">
+        <span class="kit-states__prop-label">Columna 3</span>
+        <select class="kit-slot-type" data-slot-target="feat-3">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+      <div class="kit-states__prop" id="feat-slot-4-ctrl" hidden>
+        <span class="kit-states__prop-label">Columna 4</span>
+        <select class="kit-slot-type" data-slot-target="feat-4">
+          <option value="text">Párrafo</option>
+          <option value="list">Lista</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-009-bloque-de-caracteristicas.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-009</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Encabezado':     'Opcional. Si se omite el grid sube directamente. Máx. 2 líneas en el H2.',
+    'Título item':    'Máx. 40 car. H3 semántico dentro de <article>.',
+    'Párrafo':        'Máx. 120 car. por columna (~3 líneas en 1/3 de ancho).',
+    'Lista':          '2–4 ítems. Máx. 50 car. por ítem.',
+    'Stats':          '1–2 cifras por columna. Número máx. 6 car. Etiqueta máx. 20 car.',
+    'Marcador icono': '48×48px. En UI real: SVG o imagen. Misma familia visual en todos los items.',
+    'Marcador imagen':'16:9. Útil para casos de uso con captura de pantalla o ilustración.',
+    '2 columnas':     'Para 2–4 items con contenido más denso. Max 4 items (2×2).',
+    '3 columnas':     'Uso general. Hasta 6 items (2 filas). Grid 1/3 desktop, 1/2 tablet, 1/1 móvil.',
+    '4 columnas':     'Para contenido muy corto. Hasta 8 items (2 filas). Raro — usar con precaución.',
+    'Consistencia':   'Mismo tipo de contenido en todos los items. Mezclar solo si hay razón semántica.',
+    'Accesibilidad':  'section aria-labelledby al H2. Cada item en <article> con su propio H3.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // Estado actual (para recalcular en cambios)
+    var currentCols = '3';
+    var currentRows = '1';
+
+    // Encabezado
+    onCheck('toggle-head',      function (v) { byId('con009-head').hidden    = !v; });
+    onCheck('toggle-overtitle', function (v) { byId('con009-overtitle').hidden = !v; });
+    onCheck('toggle-head-text', function (v) { byId('con009-text').hidden    = !v; });
+
+    // Marcador: icono / imagen / ninguno
+    var selMarker = byId('select-marker9');
+    if (selMarker) {
+      selMarker.addEventListener('change', function () {
+        var v = selMarker.value;
+        var grid = byId('con009-grid');
+        grid.classList.remove('marker--img', 'marker--none');
+        if (v === 'img')  grid.classList.add('marker--img');
+        if (v === 'none') grid.classList.add('marker--none');
+      });
+    }
+
+    // Recalcula visibilidad de items y controles de slot según cols + rows
+    function updateItems() {
+      var cols = parseInt(currentCols, 10);
+      var rows = parseInt(currentRows, 10);
+
+      // Item 3: visible si cols >= 3
+      byId('feat-item-3').hidden    = cols < 3;
+      byId('feat-slot-3-ctrl').hidden = cols < 3;
+      // Item 4: visible si cols >= 4
+      byId('feat-item-4').hidden    = cols < 4;
+      byId('feat-slot-4-ctrl').hidden = cols < 4;
+
+      // Segunda fila: items 5-8
+      // Item 5 → posición col 1 fila 2
+      byId('feat-item-5').hidden = rows < 2;
+      // Item 6 → posición col 2 fila 2
+      byId('feat-item-6').hidden = rows < 2;
+      // Item 7 → posición col 3 fila 2 (solo si cols >= 3)
+      byId('feat-item-7').hidden = rows < 2 || cols < 3;
+      // Item 8 → posición col 4 fila 2 (solo si cols >= 4)
+      byId('feat-item-8').hidden = rows < 2 || cols < 4;
+
+      // Sincronizar tipo de slot en segunda fila con primera
+      syncRow2SlotTypes();
+    }
+
+    // Cuando cambia el tipo de slot en la primera fila, aplicar también a la segunda fila
+    function syncRow2SlotTypes() {
+      // feat-1 → feat-5, feat-2 → feat-6, feat-3 → feat-7, feat-4 → feat-8
+      var pairs = [['feat-1','feat-5'],['feat-2','feat-6'],['feat-3','feat-7'],['feat-4','feat-8']];
+      pairs.forEach(function(pair) {
+        var srcSelect = document.querySelector('select[data-slot-target="' + pair[0] + '"]');
+        if (srcSelect) setSlotType(pair[1], srcSelect.value);
+      });
+    }
+
+    function setSlotType(slotName, type) {
+      var container = document.querySelector('[data-slot="' + slotName + '"]');
+      if (!container) return;
+      container.querySelectorAll('[data-slot-type]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-slot-type') !== type;
+      });
+    }
+
+    // Columnas
+    onRadioGroup('cols', function (v) {
+      currentCols = v;
+      byId('con009-grid').setAttribute('data-cols', v);
+      updateItems();
+    });
+
+    // Filas
+    onRadioGroup('rows9', function (v) {
+      currentRows = v;
+      updateItems();
+    });
+
+    // Slot types — escuchar cambios en los selects de la primera fila
+    // y replicar a la segunda fila
+    document.querySelectorAll('.kit-slot-type').forEach(function(sel) {
+      sel.addEventListener('change', function() {
+        var target = sel.getAttribute('data-slot-target');
+        setSlotType(target, sel.value);
+        // Sincronizar fila 2
+        var row2map = {'feat-1':'feat-5','feat-2':'feat-6','feat-3':'feat-7','feat-4':'feat-8'};
+        if (row2map[target]) setSlotType(row2map[target], sel.value);
+      });
+    });
+
+    // Fondo
+    onRadioGroup('bg', function (v) { byId('con009-section').style.background = v; });
+  });
+</script>
+
+</body>
+</html>

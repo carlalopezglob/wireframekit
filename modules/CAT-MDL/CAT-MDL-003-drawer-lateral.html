@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-MDL-003 · Drawer lateral</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* mdl003__ BEM CSS */
+.mdl003__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+.mdl003__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 380px;
+  max-width: 90vw;
+  background: var(--color-bg);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+}
+.mdl003__drawer--narrow {
+  width: 280px;
+}
+.mdl003__drawer--wide {
+  width: 480px;
+}
+.mdl003__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.mdl003__header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.mdl003__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+  padding: var(--space-2);
+}
+.mdl003__close:hover {
+  color: var(--color-text);
+}
+.mdl003__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+}
+.mdl003__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mdl003__nav-item {
+  border-bottom: 1px solid var(--color-border);
+}
+.mdl003__nav-link {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) 0;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  color: var(--color-text);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.mdl003__nav-link:hover {
+  color: var(--color-accent);
+}
+.mdl003__footer {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-6);
+  flex-shrink: 0;
+}
+.mdl003__footer .btn {
+  width: 100%;
+  text-align: center;
+}
+
+/* ── Dos niveles ───────────────────────────────────────────── */
+.mdl003__level { display: flex; flex-direction: column; height: 100%; }
+.mdl003__level[hidden] { display: none !important; }
+.mdl003__nav-link--sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mdl003__nav-link--sub::after {
+  content: '›';
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+}
+.mdl003__back {
+  display: flex; align-items: center; gap: var(--space-2);
+  width: 100%; background: none; border: none; cursor: pointer;
+  font-family: var(--font-base); font-size: 0.85rem; font-weight: 700;
+  color: var(--color-text-muted); padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-4); text-align: left;
+}
+.mdl003__back:hover { color: var(--color-text); }
+.mdl003__level-title {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section section--alt" id="mdl003-trigger-section">
+  <div class="container" style="text-align:center">
+    <p style="margin-bottom:var(--space-4);color:var(--color-text-muted);font-size:0.9rem">Haz clic para abrir el drawer lateral</p>
+    <button class="btn" id="mdl003-open-btn">Abrir menú</button>
+  </div>
+</section>
+
+<div class="mdl003__overlay" id="mdl003-overlay" aria-hidden="true"></div>
+<div class="mdl003__drawer" id="mdl003-drawer" role="dialog" aria-modal="true" aria-labelledby="mdl003-title">
+  <div class="mdl003__header">
+    <h2 id="mdl003-title">Menú</h2>
+    <button class="mdl003__close" aria-label="Cerrar menú">&#x2715;</button>
+  </div>
+  <div class="mdl003__body">
+
+    <!-- Nivel 1 -->
+    <div class="mdl003__level" id="mdl003-l1">
+      <nav aria-label="Menú lateral">
+        <ul class="mdl003__nav-list">
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Inicio</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Sobre nosotros</a></li>
+          <li class="mdl003__nav-item">
+            <button class="mdl003__nav-link mdl003__nav-link--sub" id="mdl003-servicios-btn" aria-expanded="false">Servicios</button>
+          </li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Blog</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Casos de éxito</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Nivel 2 — Servicios -->
+    <div class="mdl003__level" id="mdl003-l2" hidden>
+      <button class="mdl003__back" id="mdl003-back-btn">← Volver</button>
+      <p class="mdl003__level-title">Servicios</p>
+      <nav aria-label="Servicios">
+        <ul class="mdl003__nav-list">
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Consultoría</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Desarrollo web</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Diseño UX</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Marketing digital</a></li>
+          <li class="mdl003__nav-item"><a href="#" class="mdl003__nav-link">Soporte técnico</a></li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+  <div class="mdl003__footer" id="mdl003-footer">
+    <a href="#" class="btn">Empieza ya</a>
+  </div>
+</div>
+<!-- fin módulo -->
+
+
+<!-- kit-states panel -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Estado</span>
+      <label><input type="radio" name="modal-state" value="open" checked> Abierto</label>
+      <label><input type="radio" name="modal-state" value="closed"> Cerrado</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Nivel de nav</span>
+      <label><input type="radio" name="nav-level" value="1" checked> Nivel 1</label>
+      <label><input type="radio" name="nav-level" value="2"> Nivel 2 — Servicios</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Ancho</span>
+      <label><input type="radio" name="drawer-width" value="narrow"> Angosto (280px)</label>
+      <label><input type="radio" name="drawer-width" value="default" checked> Normal (380px)</label>
+      <label><input type="radio" name="drawer-width" value="wide"> Ancho (480px)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Pie</span>
+      <label><input type="checkbox" id="toggle-footer" checked> Mostrar pie</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#f5f5f5" checked> Gris (alt)</label>
+      <label><input type="radio" name="bg" value="#ffffff"> Blanco</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-MDL/CAT-MDL-003-drawer-lateral.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-MDL-003</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    categoria: {
+      label: 'Por qué CAT-MDL y no CAT-NAV',
+      notes: [
+        'El drawer usa overlay de pantalla completa y requiere dismissal explícito (clic exterior, Escape o botón ✕). Comparte el patrón de interacción modal aunque su contenido sea de navegación.',
+        'CAT-NAV agrupa componentes estructurales siempre visibles: barras de navegación, breadcrumbs, tabs, paginación.',
+        'Un drawer que contiene navegación sigue siendo MDL por su comportamiento de capa, no por su contenido.'
+      ]
+    },
+    'two-level': {
+      label: 'Navegación de dos niveles',
+      notes: [
+        'Nivel 1: lista principal. "Servicios" tiene flecha › indicando subnivel; es un <button> en vez de <a> para reflejar que dispara una acción de UI, no una ruta.',
+        'Nivel 2: se muestra al tocar "Servicios". "← Volver" regresa al nivel 1 sin cerrar el drawer.',
+        '"Empieza ya" vive en el footer del drawer, fuera de los niveles — permanece visible en ambos estados.',
+        'Al cerrar el drawer el estado vuelve automáticamente al nivel 1 para la próxima apertura.',
+        'En producción: animar la transición entre niveles con translateX (nivel 1 sale a -100%, nivel 2 entra desde 100%) con ~200ms ease.'
+      ]
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    function showLevel(level) {
+      byId('mdl003-l1').hidden = (level !== 1);
+      byId('mdl003-l2').hidden = (level !== 2);
+    }
+
+    function openDrawer() {
+      byId('mdl003-overlay').hidden = false;
+      byId('mdl003-drawer').hidden = false;
+    }
+    function closeDrawer() {
+      byId('mdl003-overlay').hidden = true;
+      byId('mdl003-drawer').hidden = true;
+      showLevel(1);
+    }
+
+    byId('mdl003-open-btn').addEventListener('click', openDrawer);
+
+    byId('mdl003-servicios-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      showLevel(2);
+      document.querySelector('input[name="nav-level"][value="2"]').checked = true;
+    });
+
+    byId('mdl003-back-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      showLevel(1);
+      document.querySelector('input[name="nav-level"][value="1"]').checked = true;
+    });
+
+    onRadioGroup('nav-level', function (v) { showLevel(parseInt(v, 10)); });
+
+    document.querySelectorAll('.mdl003__close').forEach(function (btn) {
+      btn.addEventListener('click', closeDrawer);
+    });
+
+    byId('mdl003-overlay').addEventListener('click', closeDrawer);
+
+    onRadioGroup('modal-state', function (v) { if (v === 'open') openDrawer(); else closeDrawer(); });
+
+    onRadioGroup('drawer-width', function (v) {
+      var drawer = byId('mdl003-drawer');
+      drawer.classList.remove('mdl003__drawer--narrow', 'mdl003__drawer--wide');
+      if (v === 'narrow') drawer.classList.add('mdl003__drawer--narrow');
+      if (v === 'wide') drawer.classList.add('mdl003__drawer--wide');
+    });
+
+    byId('toggle-footer').addEventListener('change', function () {
+      byId('mdl003-footer').hidden = !this.checked;
+    });
+
+    onRadioGroup('bg', function (v) { byId('mdl003-trigger-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

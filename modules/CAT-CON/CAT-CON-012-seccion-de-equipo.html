@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-012 · Sección de equipo</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* Section header */
+.con012__header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-12);
+}
+.con012__overtitle {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-accent); margin: 0 0 var(--space-2);
+}
+.con012__title { margin: 0 0 var(--space-3); font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+.con012__sub   { margin: 0; color: var(--color-text-muted); font-size: 1rem; line-height: 1.6; }
+
+/* Team grid — responsive */
+.con012__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+@media (min-width: 768px) {
+  .con012__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-8); }
+}
+@media (min-width: 1200px) {
+  .con012__grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Member card */
+.member {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.member__photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+/* Circular variant */
+.con012__grid.con012--circular .member__photo { border-radius: 50%; }
+
+.member__name {
+  font-size: 1rem; font-weight: 700; margin: 0;
+}
+.member__role {
+  font-size: 0.85rem; color: var(--color-accent); margin: 0; margin-top: calc(-1 * var(--space-1));
+}
+.member__bio {
+  font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.5; margin: 0;
+}
+.member__links {
+  display: flex; gap: var(--space-2); margin-top: var(--space-1);
+}
+.member__link {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-size: 0.75rem; color: var(--color-text-muted);
+  text-decoration: none;
+}
+.member__link:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* Ver más footer */
+.con012__footer {
+  text-align: center;
+  margin-top: var(--space-8);
+}
+</style>
+</head>
+<body>
+<section class="section" id="con012-section" aria-labelledby="con012-title">
+  <div class="container">
+
+    <!-- Cabecera -->
+    <div class="con012__header" id="con012-header">
+      <p class="con012__overtitle" id="con012-overtitle"
+         data-max="Texto eyebrow largo sobre el equipo">Nuestro equipo</p>
+      <h2 class="con012__title" id="con012-title"
+          data-max="Título largo sobre el equipo de personas que hay detrás del producto">Las personas detrás del producto</h2>
+      <p class="con012__sub" id="con012-sub"
+         data-max="Subtítulo más largo que presenta al equipo con más detalle y contexto sobre su cultura.">Un equipo diverso con una misión clara.</p>
+    </div>
+
+    <div class="con012__grid" id="con012-grid">
+
+      <!-- Miembro 1 -->
+      <div class="member">
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Ana García</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Directora de Producto</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Lidera la estrategia de producto con más de 10 años de experiencia en empresas tecnológicas.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 2 -->
+      <div class="member">
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Luis Martín</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">CTO</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Arquitecto de sistemas distribuidos con pasión por la escalabilidad y la ingeniería de alto rendimiento.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 3 -->
+      <div class="member">
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Marta López</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Diseño UX</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Especialista en investigación de usuarios y diseño de experiencias digitales centradas en las personas.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 4 -->
+      <div class="member">
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Carlos Ramos</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Ingeniería</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Desarrollador full-stack con experiencia en React, Node.js y arquitecturas serverless en producción.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 5 (oculto por defecto) -->
+      <div class="member" id="con012-member5" hidden>
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Sara Blanco</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Marketing</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Responsable de crecimiento y posicionamiento de marca con enfoque en canales digitales y comunidad.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 6 (oculto por defecto) -->
+      <div class="member" id="con012-member6" hidden>
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Diego Torres</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Datos</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Data scientist especializado en modelos predictivos y pipelines de datos para decisiones basadas en evidencia.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 7 (oculto por defecto) -->
+      <div class="member" id="con012-member7" hidden>
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Elena Vega</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Operaciones</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Gestiona los procesos internos y la eficiencia operativa para que el equipo trabaje sin fricciones.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <!-- Miembro 8 (oculto por defecto) -->
+      <div class="member" id="con012-member8" hidden>
+        <div class="member__photo" aria-hidden="true"></div>
+        <div>
+          <p class="member__name" data-max="Nombre completo largo para prueba">Pablo Ruiz</p>
+          <p class="member__role" data-max="Cargo largo — Responsable de área de producto">Soporte</p>
+        </div>
+        <p class="member__bio" data-max="Breve descripción del perfil profesional de esta persona, una o dos frases que resuman su experiencia.">Garantiza que cada cliente tenga la mejor experiencia posible resolviendo dudas con rapidez y empatía.</p>
+        <div class="member__links">
+          <a href="#" class="member__link" aria-label="LinkedIn">in</a>
+          <a href="#" class="member__link" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+    </div><!-- /.con012__grid -->
+
+    <!-- Botón Ver más -->
+    <div class="con012__footer" id="con012-footer">
+      <button class="btn btn--outline" id="con012-vermas-btn" data-slot="cta-vermas"
+              data-max="Ver todo el equipo — texto alternativo más largo">Ver todo el equipo</button>
+    </div>
+
+  </div><!-- /.container -->
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-header" checked> Cabecera</label>
+      <label><input type="checkbox" id="toggle-bio" checked> Bio</label>
+      <label><input type="checkbox" id="toggle-links" checked> Links sociales</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-vermas" checked> Botón "Ver más"</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-vermas']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--outline">Outline</option>
+          <option value="">Primario</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Foto</span>
+      <label><input type="radio" name="photo-shape" value="cuadrada" checked> Cuadrada</label>
+      <label><input type="radio" name="photo-shape" value="circular"> Circular</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="blanco" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="gris"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-012-seccion-de-equipo.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-012</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Foto':         'Cuadrada (border-radius md) o circular (50%). Aspect ratio 1:1 siempre.',
+    'Bio':          'Máx. 120 car. (~2 líneas). Opcional — si se oculta el cargo sube.',
+    'Links sociales': '2–3 iconos. Solo si la página de equipo real los incluye.',
+    'Botón Ver más': 'Alterna entre 4 y 8 miembros. En UI real puede ser un enlace a /equipo.',
+    'Grid':         '2 col. mobile → 3 col. tablet → 4 col. desktop.',
+    'Cabecera':     'Centrada, máx. 600px. Overtitle + título + subtítulo opcionales.',
+  };
+
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onRadioGroup(name, cb) { document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) { r.addEventListener('change', function () { if (r.checked) cb(r.value); }); }); }
+
+  var extraIds = ['con012-member5','con012-member6','con012-member7','con012-member8'];
+  var expanded = false;
+  var btn = byId('con012-vermas-btn');
+
+  // Botón Ver más / Ver menos
+  if (btn) {
+    btn.addEventListener('click', function () {
+      expanded = !expanded;
+      extraIds.forEach(function (id) { var el = byId(id); if (el) el.hidden = !expanded; });
+      btn.textContent = expanded ? 'Ver menos' : 'Ver todo el equipo';
+    });
+  }
+
+  // Cabecera
+  onCheck('toggle-header', function (v) { byId('con012-header').hidden = !v; });
+
+  // Bio
+  onCheck('toggle-bio', function (v) {
+    document.querySelectorAll('.member__bio').forEach(function (el) { el.hidden = !v; });
+  });
+
+  // Links sociales
+  onCheck('toggle-links', function (v) {
+    document.querySelectorAll('.member__links').forEach(function (el) { el.hidden = !v; });
+  });
+
+  // Botón ver más — visibilidad
+  onCheck('toggle-vermas', function (v) { byId('con012-footer').hidden = !v; });
+
+  // Foto: forma
+  onRadioGroup('photo-shape', function (v) {
+    byId('con012-grid').classList.toggle('con012--circular', v === 'circular');
+  });
+
+  // Fondo
+  onRadioGroup('bg', function (v) {
+    byId('con012-section').style.background = v === 'gris' ? 'var(--color-surface)' : '#ffffff';
+  });
+});
+</script>
+</body>
+</html>

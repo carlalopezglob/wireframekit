@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-NAV-002 · Footer completo</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* nav002__ */
+.nav002 {
+  background: var(--color-bg);
+  width: 100%;
+}
+.nav002__top {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-16) 0 var(--space-8);
+}
+.nav002__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-8);
+}
+.nav002__grid--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+.nav002__col-logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin: 0 0 var(--space-3) 0;
+  display: block;
+}
+.nav002__col-desc {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 var(--space-4) 0;
+}
+.nav002__social {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.nav002__social-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.nav002__social-link:hover {
+  color: var(--color-text);
+}
+.nav002__col-heading {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin: 0 0 var(--space-4) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nav002__col-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.nav002__col-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.nav002__col-link:hover {
+  color: var(--color-text);
+}
+.nav002__contact-item {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+  display: flex;
+  flex-direction: column;
+}
+.nav002__contact-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.nav002__bottom {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-4) 0;
+}
+.nav002__bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.nav002__copyright {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.nav002__bottom-links {
+  display: flex;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav002__bottom-link {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+.nav002__bottom-link:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 767px) {
+  .nav002__grid,
+  .nav002__grid--3col {
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .nav002__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .nav002__grid--3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<footer class="nav002" id="nav002">
+  <div class="nav002__top">
+    <div class="container">
+      <div class="nav002__grid" id="nav002-grid">
+
+        <!-- Col 1: logo + desc + social -->
+        <div class="nav002__col">
+          <span class="nav002__col-logo">Logo</span>
+          <p class="nav002__col-desc">Una breve descripción de la empresa que transmite su propósito y valores en dos o tres líneas de texto.</p>
+          <div class="nav002__social" id="nav002-social">
+            <a href="#" class="nav002__social-link">Facebook</a>
+            <a href="#" class="nav002__social-link">Twitter</a>
+            <a href="#" class="nav002__social-link">LinkedIn</a>
+          </div>
+        </div>
+
+        <!-- Col 2: Empresa -->
+        <div class="nav002__col">
+          <p class="nav002__col-heading">Empresa</p>
+          <ul class="nav002__col-links">
+            <li><a href="#" class="nav002__col-link">Sobre nosotros</a></li>
+            <li><a href="#" class="nav002__col-link">Equipo</a></li>
+            <li><a href="#" class="nav002__col-link">Careers</a></li>
+            <li><a href="#" class="nav002__col-link">Blog</a></li>
+            <li><a href="#" class="nav002__col-link">Prensa</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Servicios -->
+        <div class="nav002__col">
+          <p class="nav002__col-heading">Servicios</p>
+          <ul class="nav002__col-links">
+            <li><a href="#" class="nav002__col-link">Consultoría</a></li>
+            <li><a href="#" class="nav002__col-link">Desarrollo web</a></li>
+            <li><a href="#" class="nav002__col-link">Diseño UX</a></li>
+            <li><a href="#" class="nav002__col-link">Marketing digital</a></li>
+            <li><a href="#" class="nav002__col-link">Soporte</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contacto -->
+        <div class="nav002__col" id="nav002-col4">
+          <p class="nav002__col-heading">Contacto</p>
+          <div class="nav002__contact-item">
+            <span class="nav002__contact-label">Email</span>
+            <span>hola@empresa.com</span>
+          </div>
+          <div class="nav002__contact-item">
+            <span class="nav002__contact-label">Teléfono</span>
+            <span>+34 900 000 000</span>
+          </div>
+          <div class="nav002__contact-item">
+            <span class="nav002__contact-label">Dirección</span>
+            <span>Calle Ejemplo 42, 28001 Madrid, España</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="nav002__bottom">
+    <div class="container">
+      <div class="nav002__bottom-inner">
+        <p class="nav002__copyright">© 2026 Empresa S.L. Todos los derechos reservados.</p>
+        <ul class="nav002__bottom-links" id="nav002-bottom-links">
+          <li><a href="#" class="nav002__bottom-link">Política de privacidad</a></li>
+          <li><a href="#" class="nav002__bottom-link">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Redes sociales</span>
+      <label><input type="checkbox" id="toggle-social" checked> Mostrar redes sociales</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Links inferior</span>
+      <label><input type="checkbox" id="toggle-bottom-links" checked> Mostrar links de privacidad</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Columnas</span>
+      <label><input type="radio" name="cols" value="4" checked> 4 columnas</label>
+      <label><input type="radio" name="cols" value="3"> 3 columnas</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-NAV/CAT-NAV-002-footer-completo.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-NAV-002</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'variante 3 columnas': 'Los datos de contacto van a la columna de empresa al eliminar la 4.ª columna.',
+    'copyright':           'El año debe actualizarse dinámicamente con JS o CMS; no hardcodear.',
+    'iconos RRSS':         'En producción usar iconos SVG; los placeholders de texto son solo para wireframe.'
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-social', function (checked) {
+      var el = byId('nav002-social');
+      if (el) el.hidden = !checked;
+    });
+
+    onCheck('toggle-bottom-links', function (checked) {
+      var el = byId('nav002-bottom-links');
+      if (el) el.hidden = !checked;
+    });
+
+    onRadioGroup('cols', function (val) {
+      var grid = byId('nav002-grid');
+      var col4 = byId('nav002-col4');
+      if (!grid) return;
+      if (val === '3') {
+        grid.classList.add('nav002__grid--3col');
+        if (col4) col4.hidden = true;
+      } else {
+        grid.classList.remove('nav002__grid--3col');
+        if (col4) col4.hidden = false;
+      }
+    });
+
+    onRadioGroup('bg', function (val) {
+      var el = byId('nav002');
+      if (el) el.style.background = val;
+    });
+  });
+</script>
+</body>
+</html>

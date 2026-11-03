@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-FRM-003 · Buscador</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* ── frm003__ Buscador v2 ──────────────────────────────────────────
+   Arquitectura: search experience (default → autocomplete)
+                 + results experience (resultados → filtros → vacíos)
+   ─────────────────────────────────────────────────────────────── */
+
+/* ── Icons inline ── */
+.frm003__ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════
+   SEARCH EXPERIENCE — hero centered
+═══════════════════════════════════════ */
+.frm003__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-12) var(--space-4) var(--space-8);
+}
+
+.frm003__hero-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Input — wrapper holds border so clear btn stays inside */
+.frm003__input-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+}
+.frm003__input-wrap--compact {
+  flex: 1;
+  max-width: none;
+}
+.frm003__input {
+  width: 100%;
+  height: var(--control-height-md);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-12) 0 var(--space-12);
+  font-size: 0.9375rem;
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  cursor: text;
+}
+.frm003__input--sm {
+  height: var(--control-height-sm);
+  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-8) 0 var(--space-8);
+}
+.frm003__input.is-focus {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+}
+.frm003__placeholder { color: var(--color-placeholder); }
+.frm003__query { color: var(--color-text); }
+.frm003__cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 0.9em;
+  background: var(--color-text);
+  vertical-align: middle;
+  margin-left: 1px;
+  animation: frm003-blink 0.9s step-end infinite;
+}
+@keyframes frm003-blink { 50% { opacity: 0; } }
+
+.frm003__icon-l,
+.frm003__icon-r {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  color: var(--color-text-muted);
+}
+.frm003__icon-l { left: var(--space-4); }
+.frm003__icon-r { right: var(--space-4); cursor: pointer; }
+
+/* Popular chips row (default state) */
+.frm003__popular {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.frm003__pop-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+.frm003__pop-chip {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  cursor: pointer;
+  font-family: var(--font-base);
+}
+
+/* ═══════════════════════════════════════
+   DROPDOWN — autocomplete / focus
+═══════════════════════════════════════ */
+.frm003__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  z-index: 30;
+  overflow: hidden;
+}
+.frm003__dd-section { padding: var(--space-2) 0 var(--space-1); }
+.frm003__dd-label {
+  padding: 0 var(--space-4) var(--space-2);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.frm003__dd-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+.frm003__dd-item:hover,
+.frm003__dd-item.is-hover {
+  background: var(--color-surface);
+}
+.frm003__dd-text { flex: 1; line-height: 1.2; }
+.frm003__dd-match { font-weight: 600; }
+.frm003__dd-badge {
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+.frm003__dd-sep { height: 1px; background: var(--color-border); margin: var(--space-1) 0; }
+
+/* ═══════════════════════════════════════
+   RESULTS EXPERIENCE — topbar
+═══════════════════════════════════════ */
+.frm003__topbar {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+@media (max-width: 767px) {
+  .frm003__topbar { padding: var(--space-2) var(--space-4); gap: var(--space-2); }
+}
+
+/* Filter bar */
+.frm003__filter-bar {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .frm003__filter-bar {
+    padding: var(--space-2) var(--space-4);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .frm003__filter-bar::-webkit-scrollbar { display: none; }
+}
+.frm003__filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-size: 0.8rem;
+  font-family: var(--font-base);
+  color: var(--color-text);
+  cursor: pointer;
+  white-space: nowrap;
+  height: 32px;
+}
+.frm003__filter-btn.has-active {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+  font-weight: 500;
+}
+.frm003__filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.frm003__bar-sep { width: 1px; height: 18px; background: var(--color-border); flex-shrink: 0; }
+.frm003__results-count { font-size: 0.8rem; color: var(--color-text-muted); white-space: nowrap; }
+.frm003__bar-spacer { flex: 1; }
+.frm003__sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.frm003__sort-label { font-size: 0.8rem; color: var(--color-text-muted); white-space: nowrap; }
+.frm003__sort-select {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .frm003__bar-spacer { display: none; }
+}
+
+/* Applied chips bar */
+.frm003__applied-bar {
+  padding: var(--space-2) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+@media (max-width: 767px) {
+  .frm003__applied-bar { padding: var(--space-2) var(--space-4); }
+}
+.frm003__applied-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 3px var(--space-2) 3px var(--space-3);
+  border: 1px solid var(--color-text);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.frm003__applied-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-border);
+  cursor: pointer;
+  font-size: 0.65rem;
+}
+.frm003__clear-all {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-base);
+}
+
+/* ═══════════════════════════════════════
+   RESULTS LIST
+═══════════════════════════════════════ */
+.frm003__results {
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+@media (max-width: 767px) {
+  .frm003__results { padding: var(--space-4); }
+}
+
+/* Grid variant */
+.frm003__results--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+@media (max-width: 767px) {
+  .frm003__results--grid { grid-template-columns: 1fr; }
+}
+
+.frm003__result {
+  display: flex;
+  gap: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  align-items: flex-start;
+}
+.frm003__results--grid .frm003__result {
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.frm003__result-thumb {
+  width: 48px;
+  height: 48px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+.frm003__results--grid .frm003__result-thumb {
+  width: 100%;
+  height: 120px;
+}
+.frm003__result-body { flex: 1; min-width: 0; }
+.frm003__result-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+.frm003__result-tag {
+  font-size: 0.7rem;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+.frm003__result-date { font-size: 0.7rem; color: var(--color-text-muted); }
+.frm003__result-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.frm003__results--grid .frm003__result-title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+.frm003__result-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   FILTER PANEL — desktop sidebar
+═══════════════════════════════════════ */
+.frm003__split {
+  display: flex;
+  align-items: flex-start;
+}
+.frm003__panel {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--color-bg);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-4) var(--space-6);
+  min-height: 360px;
+}
+@media (max-width: 767px) { .frm003__panel { display: none; } }
+
+.frm003__panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.frm003__panel-title { font-size: 0.875rem; font-weight: 600; }
+.frm003__panel-close {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  font-family: var(--font-base);
+}
+.frm003__panel-group { margin-bottom: var(--space-4); }
+.frm003__panel-group-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+.frm003__panel-opt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+}
+.frm003__radio {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.frm003__radio.on { border-color: var(--color-text); }
+.frm003__radio.on::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--color-text);
+  border-radius: 50%;
+}
+.frm003__check {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 3px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+}
+.frm003__check.on { border-color: var(--color-text); background: var(--color-text); color: var(--color-bg); }
+.frm003__range { padding: var(--space-2) 0; }
+.frm003__range-bar { height: 4px; background: var(--color-border); border-radius: 2px; position: relative; margin-bottom: var(--space-1); }
+.frm003__range-fill { position: absolute; left: 10%; right: 30%; height: 100%; background: var(--color-text); border-radius: 2px; }
+.frm003__range-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--color-text-muted); }
+.frm003__panel-apply {
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-base);
+  margin-top: var(--space-2);
+}
+
+.frm003__split-results { flex: 1; min-width: 0; }
+
+/* Mobile bottom sheet overlay */
+.frm003__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+}
+.frm003__sheet {
+  width: 100%;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-4) var(--space-4) var(--space-12);
+  max-height: 72vh;
+  overflow-y: auto;
+}
+.frm003__sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  margin: 0 auto var(--space-4);
+}
+.frm003__sheet-apply {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-base);
+  margin-top: var(--space-4);
+}
+/* Hide overlay on desktop */
+@media (min-width: 768px) { .frm003__overlay { display: none !important; } }
+
+/* ═══════════════════════════════════════
+   EMPTY STATES
+═══════════════════════════════════════ */
+.frm003__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+.frm003__empty-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+}
+.frm003__empty-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.frm003__empty-body {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  max-width: 300px;
+  line-height: 1.6;
+}
+.frm003__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+.frm003__sug-chip {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  cursor: pointer;
+  font-family: var(--font-base);
+}
+.frm003__empty-cta {
+  padding: var(--space-2) var(--space-6);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-base);
+}
+
+/* ═══════════════════════════════════════
+   SKELETON (loading)
+═══════════════════════════════════════ */
+.frm003__sk {
+  background: linear-gradient(90deg, var(--color-surface) 25%, var(--color-border) 50%, var(--color-surface) 75%);
+  background-size: 300% 100%;
+  animation: frm003-shimmer 1.4s infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes frm003-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.frm003__sk--line { height: 12px; }
+.frm003__sk--title { height: 15px; }
+.frm003__sk--thumb { width: 48px; height: 48px; flex-shrink: 0; border-radius: var(--radius-sm); }
+.frm003__sk--bar { height: 28px; border-radius: var(--radius-sm); }
+
+/* ═══════════════════════════════════════
+   ERROR
+═══════════════════════════════════════ */
+.frm003__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin: var(--space-4) var(--space-6);
+}
+@media (max-width: 767px) {
+  .frm003__error { margin: var(--space-4); flex-wrap: wrap; }
+}
+.frm003__error-icon { color: #DC2626; flex-shrink: 0; }
+.frm003__error-text { font-size: 0.875rem; color: #991B1B; flex: 1; line-height: 1.5; }
+.frm003__error-retry {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid #DC2626;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: #DC2626;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-base);
+}
+@media (max-width: 767px) {
+  .frm003__error-retry { width: 100%; margin-top: var(--space-2); text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="frm003-section" aria-label="Buscador">
+  <div id="frm003-root">
+    <!-- Renderizado por JS según estado activo -->
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Search experience</span>
+      <label><input type="radio" name="frm003-state" value="default" checked> Default</label>
+      <label><input type="radio" name="frm003-state" value="focus"> Focus</label>
+      <label><input type="radio" name="frm003-state" value="autocomplete"> Autocomplete</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Results experience</span>
+      <label><input type="radio" name="frm003-state" value="results"> Resultados</label>
+      <label><input type="radio" name="frm003-state" value="filters"> Filtros abiertos</label>
+      <label><input type="radio" name="frm003-state" value="applied"> Filtros aplicados</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Estados vacíos</span>
+      <label><input type="radio" name="frm003-state" value="no-results"> Sin resultados</label>
+      <label><input type="radio" name="frm003-state" value="no-results-f"> Sin resultados + filtros</label>
+      <label><input type="radio" name="frm003-state" value="loading"> Cargando</label>
+      <label><input type="radio" name="frm003-state" value="error"> Error</label>
+    </div>
+
+    <div class="kit-states__group" id="frm003-layout-group">
+      <span class="kit-states__group-label">Layout de resultados</span>
+      <label><input type="radio" name="frm003-layout" value="list" checked> Lista</label>
+      <label><input type="radio" name="frm003-layout" value="grid"> Cuadrícula</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo de sección</span>
+      <label><input type="radio" name="frm003-bg" value="bg" checked> Blanco</label>
+      <label><input type="radio" name="frm003-bg" value="surface"> Gris</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-FRM/CAT-FRM-003-buscador-con-filtros.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-FRM-003</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+window.UX_NOTES = {
+  'frm003-input': 'Sin botón "Buscar" explícito — Enter o seleccionar del dropdown ejecuta la búsqueda. El icono dentro del campo es affordance, no acción.',
+  'frm003-autocomplete': 'Secciones opcionales: recientes (si hay historial), sugerencias con match resaltado, resultados rápidos (variante avanzada). No añadir más sin justificación.',
+  'frm003-filter-bar': 'La barra de filtros aparece SOLO tras ejecutar la búsqueda. En estado default / focus / autocomplete no existe.',
+  'frm003-sort': 'Ordenación vive en la filter bar, junto al contador. No es un filtro — es preferencia de presentación.',
+  'frm003-panel-desktop': 'Panel lateral en ≥768px. Desplaza el contenido, no lo superpone.',
+  'frm003-panel-mobile': 'Bottom sheet en <768px. El overlay es oscuro al 30% para dar contexto sin bloquear.',
+  'frm003-applied': 'Chips de filtros aplicados aparecen solo si hay ≥1 filtro activo. "Limpiar todo" siempre al final.',
+  'frm003-no-results-f': 'Cuando los filtros causan el 0 resultados, el CTA principal es "Limpiar filtros", no "Buscar de nuevo".',
+  'frm003-layout-grid': 'Cuadrícula como variante; lista es el layout base. En mobile siempre lista (1 columna).',
+};
+
+(function () {
+  var root    = document.getElementById('frm003-root');
+  var section = document.getElementById('frm003-section');
+
+  // ── SVG icons ──────────────────────────────────────────────────
+  var I = {
+    search: '<svg class="frm003__ico" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
+    searchSm: '<svg class="frm003__ico" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
+    clear: '<svg class="frm003__ico" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+    clock: '<svg class="frm003__ico" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    trend: '<svg class="frm003__ico" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+    file: '<svg class="frm003__ico" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    filter: '<svg class="frm003__ico" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>',
+    warn: '<svg class="frm003__ico frm003__error-icon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+    noResult: '<svg class="frm003__ico" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><line x1="8" y1="11" x2="14" y2="11"/></svg>',
+  };
+
+  // ── Content helpers ─────────────────────────────────────────────
+  function input(opts) {
+    // opts: { focus, query, compact, showClear }
+    var cls = 'frm003__input' + (opts.compact ? ' frm003__input--sm' : '') + (opts.focus ? ' is-focus' : '');
+    var wrapCls = 'frm003__input-wrap' + (opts.compact ? ' frm003__input-wrap--compact' : '');
+    var iconSize = opts.compact ? I.searchSm : I.search;
+    var inner = opts.query
+      ? '<span class="frm003__query">' + opts.query + '</span>' + (opts.focus ? '<span class="frm003__cursor" aria-hidden="true"></span>' : '')
+      : '<span class="frm003__placeholder">¿Qué estás buscando?</span>' + (opts.focus ? '<span class="frm003__cursor" aria-hidden="true"></span>' : '');
+    return '<div class="' + wrapCls + '">' +
+      '<span class="frm003__icon-l">' + iconSize + '</span>' +
+      '<div class="' + cls + '" role="searchbox" aria-label="Buscar">' + inner + '</div>' +
+      (opts.showClear ? '<span class="frm003__icon-r" aria-label="Limpiar búsqueda">' + I.clear + '</span>' : '') +
+      '</div>';
+  }
+
+  function topbar(query, withOverlay) {
+    return '<div class="frm003__topbar">' + input({ focus: false, query: query || 'diseño de sistemas', compact: true, showClear: true }) + '</div>';
+  }
+
+  function filterBar(count, hasActive) {
+    return '<div class="frm003__filter-bar">' +
+      '<button class="frm003__filter-btn' + (hasActive ? ' has-active' : '') + '" aria-label="Abrir filtros">' +
+        I.filter + ' Filtros' + (hasActive ? ' <span class="frm003__filter-count" aria-label="2 filtros activos">2</span>' : '') +
+      '</button>' +
+      '<span class="frm003__bar-sep" aria-hidden="true"></span>' +
+      '<span class="frm003__results-count">' + count + ' resultados</span>' +
+      '<span class="frm003__bar-spacer"></span>' +
+      '<div class="frm003__sort-wrap">' +
+        '<label class="frm003__sort-label" for="frm003-sort">Ordenar por:</label>' +
+        '<select class="frm003__sort-select" id="frm003-sort"><option>Relevancia</option><option>Más reciente</option><option>A–Z</option></select>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function appliedBar() {
+    return '<div class="frm003__applied-bar">' +
+      '<span class="frm003__applied-chip">Tipo: Guía <span class="frm003__applied-remove" aria-label="Eliminar filtro Tipo: Guía">✕</span></span>' +
+      '<span class="frm003__applied-chip">Año: 2024 <span class="frm003__applied-remove" aria-label="Eliminar filtro Año: 2024">✕</span></span>' +
+      '<button class="frm003__clear-all" type="button">Limpiar todo</button>' +
+    '</div>';
+  }
+
+  function resultItem(title, type, date, desc) {
+    return '<article class="frm003__result">' +
+      '<div class="frm003__result-thumb" aria-hidden="true"></div>' +
+      '<div class="frm003__result-body">' +
+        '<div class="frm003__result-meta"><span class="frm003__result-tag">' + type + '</span><span class="frm003__result-date">' + date + '</span></div>' +
+        '<p class="frm003__result-title">' + title + '</p>' +
+        '<p class="frm003__result-desc">' + desc + '</p>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function skeleton() {
+    return '<article class="frm003__result">' +
+      '<div class="frm003__sk frm003__sk--thumb" aria-hidden="true"></div>' +
+      '<div class="frm003__result-body">' +
+        '<div class="frm003__sk frm003__sk--line" style="width:28%;margin-bottom:6px"></div>' +
+        '<div class="frm003__sk frm003__sk--title" style="width:60%;margin-bottom:8px"></div>' +
+        '<div class="frm003__sk frm003__sk--line" style="width:90%;margin-bottom:5px"></div>' +
+        '<div class="frm003__sk frm003__sk--line" style="width:72%"></div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  var ITEMS = [
+    ['Guía de sistemas de diseño escalables',      'Guía',       'Ene 2024', 'Principios y decisiones para construir un sistema de diseño que crezca con el producto sin fragmentarse en múltiples fuentes de verdad.'],
+    ['Componentes de accesibilidad en Figma',       'Recurso',    'Nov 2023', 'Biblioteca de componentes con anotaciones de ARIA, estados de foco y contraste certificado WCAG 2.1 AA.'],
+    ['Design tokens: del archivo al código',        'Artículo',   'Mar 2024', 'Cómo estructurar, nombrar y sincronizar tokens entre diseño y desarrollo sin fricción ni desfase.'],
+    ['Checklist de handoff para equipos ágiles',   'Herramienta','Feb 2024', 'Plantilla de verificación para asegurar que la entrega al equipo de desarrollo está completa y sin ambigüedades.'],
+  ];
+
+  function resultsList(n, isGrid) {
+    var cls = 'frm003__results' + (isGrid ? ' frm003__results--grid' : '');
+    var html = '<div class="' + cls + '">';
+    for (var i = 0; i < n && i < ITEMS.length; i++) {
+      html += resultItem.apply(null, ITEMS[i]);
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function filterPanel() {
+    return '<aside class="frm003__panel" aria-label="Filtros">' +
+      '<div class="frm003__panel-header"><span class="frm003__panel-title">Filtros</span>' +
+        '<button class="frm003__panel-close" type="button">Cerrar</button>' +
+      '</div>' +
+      '<div class="frm003__panel-group"><p class="frm003__panel-group-label">Tipo</p>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Todos</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio on"></div>Guía</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Artículo</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Recurso</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Herramienta</label>' +
+      '</div>' +
+      '<div class="frm003__panel-group"><p class="frm003__panel-group-label">Fecha</p>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Cualquiera</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio on"></div>2024</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__radio"></div>2023</label>' +
+      '</div>' +
+      '<div class="frm003__panel-group"><p class="frm003__panel-group-label">Etiquetas</p>' +
+        '<label class="frm003__panel-opt"><div class="frm003__check on">✓</div>UX</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__check"></div>UI</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__check on">✓</div>Figma</label>' +
+        '<label class="frm003__panel-opt"><div class="frm003__check"></div>Tokens</label>' +
+      '</div>' +
+      '<button class="frm003__panel-apply" type="button">Aplicar filtros</button>' +
+    '</aside>';
+  }
+
+  function bottomSheet() {
+    return '<div class="frm003__overlay" role="dialog" aria-modal="true" aria-label="Filtros">' +
+      '<div class="frm003__sheet">' +
+        '<div class="frm003__sheet-handle" aria-hidden="true"></div>' +
+        '<div class="frm003__panel-group"><p class="frm003__panel-group-label">Tipo</p>' +
+          '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Todos</label>' +
+          '<label class="frm003__panel-opt"><div class="frm003__radio on"></div>Guía</label>' +
+          '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Artículo</label>' +
+          '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Recurso</label>' +
+        '</div>' +
+        '<div class="frm003__panel-group"><p class="frm003__panel-group-label">Fecha</p>' +
+          '<label class="frm003__panel-opt"><div class="frm003__radio"></div>Cualquiera</label>' +
+          '<label class="frm003__panel-opt"><div class="frm003__radio on"></div>2024</label>' +
+        '</div>' +
+        '<div class="frm003__panel-group"><p class="frm003__panel-group-label">Etiquetas</p>' +
+          '<label class="frm003__panel-opt"><div class="frm003__check on">✓</div>UX</label>' +
+          '<label class="frm003__panel-opt"><div class="frm003__check on">✓</div>Figma</label>' +
+        '</div>' +
+        '<button class="frm003__sheet-apply" type="button">Aplicar filtros</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // ── State templates ──────────────────────────────────────────────
+  var STATES = {
+
+    'default': function () {
+      return '<div class="frm003__hero">' +
+        '<p class="frm003__hero-kicker">Buscar</p>' +
+        input({ focus: false }) +
+        '<div class="frm003__popular">' +
+          '<span class="frm003__pop-label">Popular:</span>' +
+          '<span class="frm003__pop-chip">Diseño web</span>' +
+          '<span class="frm003__pop-chip">Recursos UX</span>' +
+          '<span class="frm003__pop-chip">Componentes</span>' +
+          '<span class="frm003__pop-chip">Figma plugins</span>' +
+        '</div>' +
+      '</div>';
+    },
+
+    'focus': function () {
+      return '<div class="frm003__hero">' +
+        '<p class="frm003__hero-kicker">Buscar</p>' +
+        '<div style="position:relative;width:100%;max-width:560px">' +
+          '<span class="frm003__icon-l">' + I.search + '</span>' +
+          '<div class="frm003__input is-focus"><span class="frm003__placeholder">¿Qué estás buscando?</span><span class="frm003__cursor" aria-hidden="true"></span></div>' +
+          '<div class="frm003__dropdown" role="listbox" aria-label="Sugerencias">' +
+            '<div class="frm003__dd-section"><p class="frm003__dd-label">Búsquedas recientes</p>' +
+              '<div class="frm003__dd-item" role="option">' + I.clock + '<span class="frm003__dd-text">Sistemas de diseño</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.clock + '<span class="frm003__dd-text">Design tokens Figma</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.clock + '<span class="frm003__dd-text">Accesibilidad WCAG</span></div>' +
+            '</div>' +
+            '<div class="frm003__dd-sep" aria-hidden="true"></div>' +
+            '<div class="frm003__dd-section"><p class="frm003__dd-label">Populares ahora</p>' +
+              '<div class="frm003__dd-item" role="option">' + I.trend + '<span class="frm003__dd-text">Handoff de diseño</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.trend + '<span class="frm003__dd-text">Componentes atómicos</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.trend + '<span class="frm003__dd-text">Guías de estilo</span></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    },
+
+    'autocomplete': function () {
+      return '<div class="frm003__hero">' +
+        '<p class="frm003__hero-kicker">Buscar</p>' +
+        '<div style="position:relative;width:100%;max-width:560px">' +
+          '<span class="frm003__icon-l">' + I.search + '</span>' +
+          '<div class="frm003__input is-focus"><span class="frm003__query">dis</span><span class="frm003__cursor" aria-hidden="true"></span></div>' +
+          '<span class="frm003__icon-r" aria-label="Limpiar">' + I.clear + '</span>' +
+          '<div class="frm003__dropdown" role="listbox" aria-label="Sugerencias">' +
+            '<div class="frm003__dd-section"><p class="frm003__dd-label">Sugerencias</p>' +
+              '<div class="frm003__dd-item is-hover" role="option" aria-selected="true">' + I.search + '<span class="frm003__dd-text"><span class="frm003__dd-match">dis</span>eño de sistemas</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.search + '<span class="frm003__dd-text"><span class="frm003__dd-match">dis</span>play grid</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.search + '<span class="frm003__dd-text"><span class="frm003__dd-match">dis</span>course de UX</span></div>' +
+            '</div>' +
+            '<div class="frm003__dd-sep" aria-hidden="true"></div>' +
+            '<div class="frm003__dd-section"><p class="frm003__dd-label">Resultados rápidos</p>' +
+              '<div class="frm003__dd-item" role="option">' + I.file + '<span class="frm003__dd-text">Sistema de <span class="frm003__dd-match">dis</span>eño escalable</span><span class="frm003__dd-badge">Guía</span></div>' +
+              '<div class="frm003__dd-item" role="option">' + I.file + '<span class="frm003__dd-text"><span class="frm003__dd-match">Dis</span>play: flex — guía completa</span><span class="frm003__dd-badge">Artículo</span></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    },
+
+    'results': function (layout) {
+      return topbar() + filterBar('24', false) + resultsList(4, layout === 'grid');
+    },
+
+    'filters': function (layout) {
+      return topbar() + filterBar('24', false) +
+        '<div class="frm003__split">' + filterPanel() +
+          '<div class="frm003__split-results">' + resultsList(4, layout === 'grid') + '</div>' +
+        '</div>' + bottomSheet();
+    },
+
+    'applied': function (layout) {
+      return topbar() + filterBar('8', true) + appliedBar() + resultsList(2, layout === 'grid');
+    },
+
+    'no-results': function () {
+      return topbar('xyzabc') + filterBar('0', false) +
+        '<div class="frm003__results"><div class="frm003__empty">' +
+          '<div class="frm003__empty-icon" aria-hidden="true">' + I.noResult + '</div>' +
+          '<p class="frm003__empty-title">Sin resultados para "xyzabc"</p>' +
+          '<p class="frm003__empty-body">No encontramos nada con ese término. Prueba con palabras distintas o más genéricas.</p>' +
+          '<div class="frm003__suggestions" aria-label="Búsquedas relacionadas">' +
+            '<button class="frm003__sug-chip" type="button">diseño web</button>' +
+            '<button class="frm003__sug-chip" type="button">componentes UI</button>' +
+            '<button class="frm003__sug-chip" type="button">recursos Figma</button>' +
+          '</div>' +
+        '</div></div>';
+    },
+
+    'no-results-f': function () {
+      return topbar() + filterBar('0', true) + appliedBar() +
+        '<div class="frm003__results"><div class="frm003__empty">' +
+          '<div class="frm003__empty-icon" aria-hidden="true">' + I.filter + '</div>' +
+          '<p class="frm003__empty-title">Los filtros activos no muestran resultados</p>' +
+          '<p class="frm003__empty-body">Hay 24 resultados sin filtros. Amplía o elimina los filtros que tienes aplicados.</p>' +
+          '<button class="frm003__empty-cta" type="button">Limpiar filtros</button>' +
+        '</div></div>';
+    },
+
+    'loading': function () {
+      return topbar() +
+        '<div class="frm003__filter-bar" aria-busy="true"><div class="frm003__sk frm003__sk--bar" style="width:88px"></div><div class="frm003__bar-spacer"></div><div class="frm003__sk frm003__sk--bar" style="width:130px"></div></div>' +
+        '<div class="frm003__results">' + skeleton() + skeleton() + skeleton() + '</div>';
+    },
+
+    'error': function () {
+      return topbar() +
+        '<div class="frm003__error" role="alert">' + I.warn +
+          '<p class="frm003__error-text">No hemos podido conectar con el buscador. Comprueba tu conexión o inténtalo de nuevo.</p>' +
+          '<button class="frm003__error-retry" type="button">Reintentar</button>' +
+        '</div>';
+    },
+  };
+
+  // ── Render ───────────────────────────────────────────────────────
+  var currentState  = 'default';
+  var currentLayout = 'list';
+  var layoutGroup   = document.getElementById('frm003-layout-group');
+  var RESULTS_STATES = ['results', 'filters', 'applied', 'no-results-f'];
+
+  function render() {
+    var fn = STATES[currentState];
+    root.innerHTML = fn ? fn(currentLayout) : '';
+    // Show/hide layout option only when relevant
+    if (layoutGroup) {
+      layoutGroup.hidden = RESULTS_STATES.indexOf(currentState) === -1;
+    }
+  }
+
+  // State radios
+  document.querySelectorAll('input[name="frm003-state"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      if (r.checked) { currentState = r.value; render(); }
+    });
+  });
+
+  // Layout radios
+  document.querySelectorAll('input[name="frm003-layout"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      if (r.checked) { currentLayout = r.value; render(); }
+    });
+  });
+
+  // Background radios
+  document.querySelectorAll('input[name="frm003-bg"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      if (r.checked) {
+        section.style.background = r.value === 'surface' ? 'var(--color-surface)' : '';
+      }
+    });
+  });
+
+  render();
+}());
+</script>
+</body>
+</html>

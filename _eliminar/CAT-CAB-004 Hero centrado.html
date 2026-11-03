@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CAB-004 · Hero centrado</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+.cab004__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+.cab004__inner--left {
+  text-align: left;
+  align-items: flex-start;
+}
+.cab004__overtitle {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.3em 0.9em;
+}
+.cab004__title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.cab004__sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--color-text-muted);
+  max-width: 520px;
+  margin: 0;
+  line-height: 1.6;
+}
+.cab004__ctas {
+  display: flex; flex-wrap: wrap; gap: var(--space-3);
+  justify-content: center;
+}
+.cab004__social-proof {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: center; gap: var(--space-3);
+  font-size: 0.85rem; color: var(--color-text-muted);
+}
+.cab004__avatars {
+  display: flex;
+}
+.cab004__avatars span {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-bg);
+  font-size: 0.65rem; font-weight: 700;
+  color: var(--color-text-muted);
+  margin-left: -8px;
+}
+.cab004__avatars span:first-child { margin-left: 0; }
+.cab004__stars { color: var(--color-accent); letter-spacing: 0.05em; }
+/* Background variants */
+.cab004--surface { background: var(--color-surface); }
+.cab004--gradient {
+  background: linear-gradient(160deg, var(--color-surface) 0%, var(--color-bg) 60%);
+}
+/* Height variants */
+#cab004-section { display: flex; align-items: center; }
+#cab004-section.cab004--full { min-height: 80vh; }
+#cab004-section.cab004--screen { min-height: 100vh; }
+</style>
+</head>
+<body>
+<section class="section" id="cab004-section" aria-labelledby="cab004-title">
+  <div class="container">
+    <div class="cab004__inner" id="cab004-inner">
+      <span class="cab004__overtitle" id="cab004-overtitle" data-max="Novedad — texto de eyebrow más extenso">Novedad — Versión 2.0 disponible</span>
+
+      <h1 class="cab004__title" id="cab004-title"
+          data-max="Un título hero largo que ocupa tres líneas para validar el espaciado en todos los tamaños">
+        El título principal más impactante de tu producto
+      </h1>
+
+      <p class="cab004__sub" id="cab004-sub"
+         data-max="Subtítulo extenso que amplía el mensaje principal con más contexto y detalle, hasta unas dos o tres líneas visibles en desktop.">
+        Subtítulo que amplía el mensaje principal. Máximo 2 líneas en desktop.
+      </p>
+
+      <div class="cab004__ctas">
+        <a href="#" class="btn btn--lg" id="cab004-cta1" data-slot="cta-prim" data-max="Llamada a la acción larga">Empieza gratis</a>
+        <a href="#" class="btn btn--outline btn--lg" id="cab004-cta2" data-slot="cta-sec" data-max="Ver demostración del producto completo">Ver demo</a>
+      </div>
+
+      <div class="cab004__social-proof" id="cab004-proof">
+        <div class="cab004__avatars">
+          <span>AB</span><span>CL</span><span>MR</span><span>+</span>
+        </div>
+        <span class="cab004__stars">★★★★★</span>
+        <span data-max="+2.000 equipos ya confían en nosotros cada semana">+500 equipos confían en nosotros</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Elementos</p>
+      <label><input type="checkbox" id="toggle-overtitle" checked> Eyebrow / overtitle</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta1" checked> CTA principal</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-prim']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta2"> CTA secundario</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-sec']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--outline">Outline</option>
+          <option value="">Primario</option>
+          <option value="btn--ghost">Ghost</option>
+          <option value="btn--link">Enlace</option>
+        </select>
+      </div>
+      <label><input type="checkbox" id="toggle-proof"> Social proof</label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Alineación</p>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Centro</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="align" value="center" checked>
+        </span>
+      </label>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Izquierda</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="align" value="left">
+        </span>
+      </label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Fondo</p>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Blanco</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="bg" value="white" checked>
+        </span>
+      </label>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Superficie</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="bg" value="surface">
+        </span>
+      </label>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Gradiente</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="bg" value="gradient">
+        </span>
+      </label>
+    </div>
+
+    <div class="kit-states__group">
+      <p class="kit-states__group-label">Alto del hero</p>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Compacto</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="height" value="compact" checked>
+        </span>
+      </label>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Completo</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="height" value="full">
+        </span>
+      </label>
+
+      <label class="kit-states__prop">
+        <span class="kit-states__prop-label">Pantalla</span>
+        <span class="kit-states__prop-inline">
+          <input type="radio" name="height" value="screen">
+        </span>
+      </label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CAB/CAT-CAB-004 Hero centrado.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CAB-004</summary>
+  <div class="kit-notes__body"><p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onRadioGroup(name, cb) { document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) { r.addEventListener('change', function () { if (r.checked) cb(r.value); }); }); }
+
+  // Elementos — toggle visibility
+  onCheck('toggle-overtitle', function (checked) {
+    var el = byId('cab004-overtitle');
+    if (el) el.hidden = !checked;
+  });
+
+  onCheck('toggle-cta1', function (checked) {
+    var el = byId('cab004-cta1');
+    if (el) el.hidden = !checked;
+  });
+
+  onCheck('toggle-cta2', function (checked) {
+    var el = byId('cab004-cta2');
+    if (el) el.hidden = !checked;
+  });
+
+  onCheck('toggle-proof', function (checked) {
+    var el = byId('cab004-proof');
+    if (el) el.hidden = !checked;
+  });
+
+  // Initial state: cta2 and proof hidden (unchecked by default)
+  (function () {
+    var cta2 = byId('cab004-cta2');
+    var proof = byId('cab004-proof');
+    if (cta2) cta2.hidden = true;
+    if (proof) proof.hidden = true;
+  })();
+
+  // Alineación
+  onRadioGroup('align', function (v) {
+    var inner = byId('cab004-inner');
+    if (inner) inner.classList.toggle('cab004__inner--left', v === 'left');
+  });
+
+  // Fondo
+  onRadioGroup('bg', function (v) {
+    var section = byId('cab004-section');
+    if (!section) return;
+    section.classList.remove('cab004--surface', 'cab004--gradient');
+    if (v === 'surface') section.classList.add('cab004--surface');
+    if (v === 'gradient') section.classList.add('cab004--gradient');
+  });
+
+  // Alto del hero
+  onRadioGroup('height', function (v) {
+    var section = byId('cab004-section');
+    if (!section) return;
+    section.classList.remove('cab004--full', 'cab004--screen');
+    if (v === 'full') section.classList.add('cab004--full');
+    if (v === 'screen') section.classList.add('cab004--screen');
+  });
+});
+</script>
+</body>
+</html>

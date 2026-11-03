@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CAB-001 · Hero principal</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+
+/* ─────────────────────────────────────────
+   VARIANTE 1 — Imagen de fondo
+   ───────────────────────────────────────── */
+.cab001__bg-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  overflow: hidden;
+}
+@media (min-width: 768px)  { .cab001__bg-hero { min-height: 70vh; } }
+@media (min-width: 1200px) { .cab001__bg-hero { min-height: 85vh; align-items: center; } }
+
+.cab001__bg-img {
+  position: absolute; inset: 0;
+  background: var(--color-placeholder);
+}
+.cab001__bg-img::after {
+  content: "imagen de fondo";
+  position: absolute; top: var(--space-4); right: var(--space-4);
+  color: var(--color-text-muted); font-family: monospace; font-size: 0.7rem;
+  background: rgba(255,255,255,0.7); padding: 0.2em 0.6em;
+  border-radius: var(--radius-sm);
+}
+.cab001__bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0) 100%);
+  transition: background 0.2s;
+}
+@media (min-width: 1200px) {
+  .cab001__bg-overlay {
+    background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.18) 55%, rgba(0,0,0,0) 100%);
+  }
+}
+.cab001--overlay-light .cab001__bg-overlay { background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 60%) !important; }
+.cab001--overlay-heavy .cab001__bg-overlay { background: rgba(0,0,0,0.75) !important; }
+
+.cab001__bg-content {
+  position: relative; z-index: 1;
+  padding: var(--space-8) 0 var(--space-12);
+  width: 100%; max-width: var(--grid-max); margin: 0 auto; padding-left: 1rem; padding-right: 1rem;
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4);
+}
+@media (min-width: 768px)  { .cab001__bg-content { padding-left: 1.5rem; padding-right: 1.5rem; } }
+@media (min-width: 1200px) { .cab001__bg-content { padding-left: 2rem; padding-right: 2rem; padding-top: var(--space-16); padding-bottom: var(--space-16); max-width: calc(55% + 2rem); } }
+
+.cab001--bg-centered .cab001__bg-content {
+  max-width: var(--grid-max);
+  align-items: center; text-align: center;
+}
+
+.cab001__bg-overtitle {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.85);
+}
+.cab001__bg-title  { color: #fff; margin: 0; }
+.cab001__bg-text   { color: rgba(255,255,255,0.85); margin: 0; max-width: 50ch; }
+.cab001__bg-ctas   { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+
+/* height modifiers — applied on #cab001-section */
+#cab001-section.cab001--full   { min-height: 80vh; }
+#cab001-section.cab001--screen { min-height: 100vh; }
+
+
+/* ─────────────────────────────────────────
+   VARIANTE 2 — Split texto + imagen
+   ───────────────────────────────────────── */
+.cab001__split-grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 768px)  { .cab001__split-grid { grid-template-columns: 1fr 1fr;      gap: var(--space-12); } }
+@media (min-width: 1200px) { .cab001__split-grid { grid-template-columns: 55fr 45fr;    gap: var(--space-16); } }
+
+@media (min-width: 768px) {
+  .cab001__split-grid--inverted .cab001__split-media { order: -1; }
+}
+@media (max-width: 767px) {
+  .cab001__split-media { order: 1; }
+  .cab001__split-grid--img-first .cab001__split-media { order: -1; }
+}
+
+.cab001__split-body {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4);
+}
+.cab001__split-title { margin: 0; }
+.cab001__split-text  { color: var(--color-text-muted); margin: 0; }
+.cab001__split-ctas  { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.cab001__split-media { width: 100%; }
+
+.cab001__split-img {
+  width: 100%; aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+}
+@media (max-width: 767px) { .cab001__split-img { aspect-ratio: 16/9; } }
+
+.cab001__split-video {
+  width: 100%; aspect-ratio: 16/9;
+  background: #2a2a2a; border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.cab001__split-video-play {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.cab001__split-video-play::after {
+  content: ''; display: block; margin-left: 4px;
+  border-style: solid; border-width: 9px 0 9px 16px;
+  border-color: transparent transparent transparent rgba(255,255,255,0.9);
+}
+.cab001__split-video-label {
+  position: absolute; bottom: var(--space-4); left: var(--space-4);
+  font-size: 0.7rem; font-family: monospace; color: rgba(255,255,255,0.5);
+}
+
+
+/* ─────────────────────────────────────────
+   VARIANTE 3 — Centrado
+   ───────────────────────────────────────── */
+.cab001__centrado-inner {
+  max-width: 720px; margin: 0 auto; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-6);
+}
+.cab001__centrado-inner--left {
+  text-align: left; align-items: flex-start;
+}
+.cab001__centrado-overtitle {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--color-accent);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: 999px; padding: 0.3em 0.9em;
+}
+.cab001__centrado-title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1; letter-spacing: -0.02em;
+}
+.cab001__centrado-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--color-text-muted); max-width: 520px; margin: 0; line-height: 1.6;
+}
+.cab001__centrado-ctas {
+  display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center;
+}
+.cab001__centrado-proof {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: center; gap: var(--space-3);
+  font-size: 0.85rem; color: var(--color-text-muted);
+}
+.cab001__centrado-avatars { display: flex; }
+.cab001__centrado-avatars span {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--color-surface); border: 2px solid var(--color-bg);
+  font-size: 0.65rem; font-weight: 700; color: var(--color-text-muted);
+  margin-left: -8px;
+}
+.cab001__centrado-avatars span:first-child { margin-left: 0; }
+.cab001__centrado-stars { color: var(--color-accent); letter-spacing: 0.05em; }
+
+/* Fondo para split y centrado */
+.cab001--surface  { background: var(--color-surface); }
+.cab001--gradient { background: linear-gradient(160deg, var(--color-surface) 0%, var(--color-bg) 60%); }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="cab001-section" aria-labelledby="cab001-title">
+
+  <!-- ── VARIANTE 1: Imagen de fondo ── -->
+  <div id="cab001-var-bg">
+    <div class="cab001__bg-hero" id="cab001-bg-hero">
+      <div class="cab001__bg-img" aria-hidden="true"></div>
+      <div class="cab001__bg-overlay" aria-hidden="true"></div>
+      <div class="cab001__bg-content">
+        <span class="cab001__bg-overtitle" id="cab001-bg-overtitle"
+              data-max="Categoría o sección — texto largo del eyebrow">Categoría o sección</span>
+        <h1 class="cab001__bg-title" id="cab001-title"
+            data-max="Título principal del hero más extenso que ocupa hasta dos líneas completas en desktop">
+          Título principal del hero, hasta dos líneas en desktop
+        </h1>
+        <p class="cab001__bg-text" id="cab001-bg-text"
+           data-max="Texto de apoyo algo más extenso que refuerza el mensaje del título y puede extenderse hasta dos líneas completas.">
+          Texto de apoyo breve que refuerza el mensaje del título.
+        </p>
+        <div class="cab001__bg-ctas" id="cab001-bg-ctas">
+          <a href="#" class="btn" id="cab001-bg-cta1" data-max="Llamada a la acción principal">Acción principal</a>
+          <a href="#" class="btn--link" id="cab001-bg-cta2"
+             data-max="Enlace secundario con texto más largo →"
+             style="color:rgba(255,255,255,0.9)">Saber más →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VARIANTE 2: Split texto + imagen ── -->
+  <div id="cab001-var-split" hidden>
+    <div class="container" style="padding-top: var(--section-padding-mobile); padding-bottom: var(--section-padding-mobile);">
+      <div class="cab001__split-grid" id="cab001-split-grid">
+        <div class="cab001__split-body">
+          <span class="overtitle" id="cab001-split-overtitle"
+                data-max="Categoría — eyebrow de la sección, largo">Categoría o sección</span>
+          <h1 class="cab001__split-title" id="cab001-split-title"
+              data-max="Título del hero largo que desarrolla el mensaje principal en dos o tres líneas visibles">
+            Título principal con espacio para dos o tres líneas
+          </h1>
+          <p class="cab001__split-text" id="cab001-split-text"
+             data-max="Párrafo de apoyo extenso con contexto adicional — hasta tres líneas en desktop.">
+            Párrafo de apoyo con más margen — hasta tres líneas que explican la propuesta de valor.
+          </p>
+          <div class="cab001__split-ctas" id="cab001-split-ctas">
+            <a href="#" class="btn" id="cab001-split-cta1" data-max="Llamada a la acción principal">Acción principal</a>
+            <a href="#" class="btn--outline" id="cab001-split-cta2" data-max="Segunda acción secundaria">Acción secundaria</a>
+          </div>
+        </div>
+        <div class="cab001__split-media" id="cab001-split-media" aria-hidden="true">
+          <div class="img-placeholder cab001__split-img" id="cab001-split-img"></div>
+          <div class="cab001__split-video" id="cab001-split-video" hidden>
+            <div class="cab001__split-video-play" role="img" aria-label="Reproducir vídeo"></div>
+            <span class="cab001__split-video-label">vídeo embed — 16:9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VARIANTE 3: Centrado ── -->
+  <div id="cab001-var-centrado" hidden>
+    <div class="container" style="padding-top: var(--section-padding-mobile); padding-bottom: var(--section-padding-mobile);">
+      <div class="cab001__centrado-inner" id="cab001-centrado-inner">
+        <span class="cab001__centrado-overtitle" id="cab001-centrado-overtitle"
+              data-max="Novedad — texto de eyebrow más extenso">Novedad — Versión 2.0 disponible</span>
+        <h1 class="cab001__centrado-title" id="cab001-centrado-title"
+            data-max="Un título hero largo que ocupa tres líneas para validar el espaciado en todos los tamaños">
+          El título principal más impactante de tu producto
+        </h1>
+        <p class="cab001__centrado-sub" id="cab001-centrado-sub"
+           data-max="Subtítulo extenso que amplía el mensaje principal con más contexto y detalle, hasta dos o tres líneas visibles en desktop.">
+          Subtítulo que amplía el mensaje principal. Máximo 2 líneas en desktop.
+        </p>
+        <div class="cab001__centrado-ctas">
+          <a href="#" class="btn btn--lg" id="cab001-centrado-cta1" data-max="Llamada a la acción larga">Empieza gratis</a>
+          <a href="#" class="btn btn--outline btn--lg" id="cab001-centrado-cta2" data-max="Ver demostración del producto completo">Ver demo</a>
+        </div>
+        <div class="cab001__centrado-proof" id="cab001-centrado-proof">
+          <div class="cab001__centrado-avatars">
+            <span>AB</span><span>CL</span><span>MR</span><span>+</span>
+          </div>
+          <span class="cab001__centrado-stars">★★★★★</span>
+          <span data-max="+2.000 equipos ya confían en nosotros cada semana">+500 equipos confían en nosotros</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <!-- Variante principal — select porque hay 3 opciones -->
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Variante</span>
+      <select id="sel-variante" class="kit-swap">
+        <option value="bg">Imagen de fondo</option>
+        <option value="split">Split + imagen</option>
+        <option value="centrado">Centrado</option>
+      </select>
+    </div>
+
+    <!-- Elementos compartidos (aplican a las 3 variantes) -->
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-overtitle" checked> Overtitle</label>
+      <label><input type="checkbox" id="toggle-text" checked> Párrafo de apoyo</label>
+      <label>
+        <input type="checkbox" id="toggle-cta1" checked> CTA principal
+        <select id="sel-cta1-style">
+          <option value="primario">Primario</option>
+          <option value="outline">Outline</option>
+          <option value="link">Link</option>
+        </select>
+      </label>
+      <label>
+        <input type="checkbox" id="toggle-cta2" checked> CTA secundario
+        <select id="sel-cta2-style">
+          <option value="link">Link</option>
+          <option value="outline">Outline</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- ── Solo visible cuando Variante = Imagen de fondo ── -->
+    <div class="kit-states__group" id="ctrl-bg-only">
+      <span class="kit-states__group-label">Overlay</span>
+      <label><input type="radio" name="overlay" value="light"> Suave</label>
+      <label><input type="radio" name="overlay" value="medium" checked> Media</label>
+      <label><input type="radio" name="overlay" value="heavy"> Intensa</label>
+    </div>
+
+    <div class="kit-states__group" id="ctrl-bg-align">
+      <span class="kit-states__group-label">Alineación</span>
+      <label><input type="radio" name="bg-align" value="left" checked> Izquierda</label>
+      <label><input type="radio" name="bg-align" value="center"> Centrado</label>
+    </div>
+
+    <div class="kit-states__group" id="ctrl-bg-height">
+      <span class="kit-states__group-label">Alto del hero</span>
+      <label><input type="radio" name="height" value="compact" checked> Compacto</label>
+      <label><input type="radio" name="height" value="full"> 80vh</label>
+      <label><input type="radio" name="height" value="screen"> Pantalla</label>
+    </div>
+
+    <!-- ── Solo visible cuando Variante = Split ── -->
+    <div class="kit-states__group" id="ctrl-split-media" hidden>
+      <span class="kit-states__group-label">Media</span>
+      <label><input type="checkbox" id="toggle-media" checked> Visible</label>
+      <label><input type="radio" name="media-type" value="img" checked> Imagen (4:3)</label>
+      <label><input type="radio" name="media-type" value="video"> Vídeo (16:9)</label>
+    </div>
+
+    <div class="kit-states__group" id="ctrl-split-layout" hidden>
+      <span class="kit-states__group-label">Orden</span>
+      <label><input type="radio" name="split-layout" value="right" checked> Texto · Imagen</label>
+      <label><input type="radio" name="split-layout" value="left"> Imagen · Texto</label>
+    </div>
+
+    <!-- ── Solo visible cuando Variante = Centrado ── -->
+    <div class="kit-states__group" id="ctrl-centrado-align" hidden>
+      <span class="kit-states__group-label">Alineación</span>
+      <label><input type="radio" name="c-align" value="center" checked> Centrado</label>
+      <label><input type="radio" name="c-align" value="left"> Izquierda</label>
+    </div>
+
+    <div class="kit-states__group" id="ctrl-centrado-proof" hidden>
+      <span class="kit-states__group-label">Social proof</span>
+      <label><input type="checkbox" id="toggle-proof"> Visible</label>
+    </div>
+
+    <!-- ── Fondo — visible para Split y Centrado ── -->
+    <div class="kit-states__group" id="ctrl-fondo" hidden>
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="fondo" value="white" checked> Blanco</label>
+      <label><input type="radio" name="fondo" value="surface"> Gris (alt)</label>
+      <label><input type="radio" name="fondo" value="gradient"> Gradiente</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CAB/CAT-CAB-001-hero-principal.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CAB-001</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function byId(id) { return document.getElementById(id); }
+  function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+  function onSel(id, cb)   { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.value); }); }
+  function onRadioGroup(name, cb) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+    });
+  }
+
+  // ── Variante switch ──
+  onSel('sel-variante', function (v) {
+    byId('cab001-var-bg').hidden        = (v !== 'bg');
+    byId('cab001-var-split').hidden     = (v !== 'split');
+    byId('cab001-var-centrado').hidden  = (v !== 'centrado');
+    // controles bg
+    byId('ctrl-bg-only').hidden         = (v !== 'bg');
+    byId('ctrl-bg-align').hidden        = (v !== 'bg');
+    byId('ctrl-bg-height').hidden       = (v !== 'bg');
+    // controles split
+    byId('ctrl-split-media').hidden     = (v !== 'split');
+    byId('ctrl-split-layout').hidden    = (v !== 'split');
+    // controles centrado
+    byId('ctrl-centrado-align').hidden  = (v !== 'centrado');
+    byId('ctrl-centrado-proof').hidden  = (v !== 'centrado');
+    // fondo (split y centrado)
+    byId('ctrl-fondo').hidden           = (v === 'bg');
+    if (v === 'bg') {
+      var sec = byId('cab001-section');
+      sec.classList.remove('cab001--surface', 'cab001--gradient');
+      sec.style.background = '';
+    }
+  });
+
+  // ── Elementos ──
+  onCheck('toggle-overtitle', function (v) {
+    ['cab001-bg-overtitle','cab001-split-overtitle','cab001-centrado-overtitle'].forEach(function (id) {
+      var el = byId(id); if (el) el.hidden = !v;
+    });
+  });
+  onCheck('toggle-text', function (v) {
+    ['cab001-bg-text','cab001-split-text','cab001-centrado-sub'].forEach(function (id) {
+      var el = byId(id); if (el) el.hidden = !v;
+    });
+  });
+  onCheck('toggle-cta1', function (v) {
+    ['cab001-bg-cta1','cab001-split-cta1','cab001-centrado-cta1'].forEach(function (id) {
+      var el = byId(id); if (el) el.hidden = !v;
+    });
+  });
+  onCheck('toggle-cta2', function (v) {
+    ['cab001-bg-cta2','cab001-split-cta2','cab001-centrado-cta2'].forEach(function (id) {
+      var el = byId(id); if (el) el.hidden = !v;
+    });
+  });
+  onCheck('toggle-proof', function (v) { var el = byId('cab001-centrado-proof'); if (el) el.hidden = !v; });
+  onCheck('toggle-media', function (v) { var el = byId('cab001-split-media'); if (el) el.hidden = !v; });
+
+  // ── Estilo CTA principal ──
+  onSel('sel-cta1-style', function (v) {
+    var defs = [
+      { id: 'cab001-bg-cta1',       lg: false },
+      { id: 'cab001-split-cta1',    lg: false },
+      { id: 'cab001-centrado-cta1', lg: true  }
+    ];
+    defs.forEach(function (d) {
+      var el = byId(d.id); if (!el) return;
+      var lg = d.lg ? ' btn--lg' : '';
+      if (v === 'primario') el.className = 'btn' + lg;
+      else if (v === 'outline') el.className = 'btn btn--outline' + lg;
+      else if (v === 'link') el.className = 'btn--link';
+    });
+  });
+
+  // ── Estilo CTA secundario ──
+  onSel('sel-cta2-style', function (v) {
+    var defs = [
+      { id: 'cab001-bg-cta2',       lg: false },
+      { id: 'cab001-split-cta2',    lg: false },
+      { id: 'cab001-centrado-cta2', lg: true  }
+    ];
+    defs.forEach(function (d) {
+      var el = byId(d.id); if (!el) return;
+      var lg = d.lg ? ' btn--lg' : '';
+      if (v === 'outline') el.className = 'btn btn--outline' + lg;
+      else if (v === 'link') el.className = 'btn--link';
+    });
+  });
+
+  // ── Overlay (solo bg) ──
+  onRadioGroup('overlay', function (v) {
+    var hero = byId('cab001-bg-hero');
+    hero.classList.remove('cab001--overlay-light', 'cab001--overlay-heavy');
+    if (v === 'light') hero.classList.add('cab001--overlay-light');
+    if (v === 'heavy') hero.classList.add('cab001--overlay-heavy');
+  });
+
+  // ── Alineación bg ──
+  onRadioGroup('bg-align', function (v) {
+    byId('cab001-bg-hero').classList.toggle('cab001--bg-centered', v === 'center');
+  });
+
+  // ── Tipo de media (split) ──
+  onRadioGroup('media-type', function (v) {
+    byId('cab001-split-img').hidden   = (v !== 'img');
+    byId('cab001-split-video').hidden = (v !== 'video');
+  });
+
+  // ── Orden (split) ──
+  onRadioGroup('split-layout', function (v) {
+    byId('cab001-split-grid').classList.toggle('cab001__split-grid--inverted', v === 'left');
+  });
+
+  // ── Alineación centrado ──
+  onRadioGroup('c-align', function (v) {
+    byId('cab001-centrado-inner').classList.toggle('cab001__centrado-inner--left', v === 'left');
+  });
+
+  // ── Fondo (split y centrado) ──
+  onRadioGroup('fondo', function (v) {
+    var sec = byId('cab001-section');
+    sec.classList.remove('cab001--surface', 'cab001--gradient');
+    if (v === 'surface')  sec.classList.add('cab001--surface');
+    if (v === 'gradient') sec.classList.add('cab001--gradient');
+  });
+
+  // ── Alto ──
+  onRadioGroup('height', function (v) {
+    var sec = byId('cab001-section');
+    sec.classList.remove('cab001--full', 'cab001--screen');
+    if (v === 'full')   sec.classList.add('cab001--full');
+    if (v === 'screen') sec.classList.add('cab001--screen');
+  });
+
+  // Estado inicial: proof oculto (el grupo ya está hidden; el elemento también)
+  byId('cab001-centrado-proof').hidden = true;
+});
+</script>
+
+</body>
+</html>

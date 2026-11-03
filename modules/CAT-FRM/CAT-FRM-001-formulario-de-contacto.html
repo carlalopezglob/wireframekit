@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-FRM-001 · Formulario de contacto</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+/* frm001__ */
+.frm001 {}
+.frm001__header {
+  margin-bottom: var(--space-8);
+}
+.frm001__form {}
+.frm001__field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.frm001__grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.frm001__grid-row .frm001__field-wrap {
+  margin-bottom: 0;
+}
+.frm001__privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+.frm001__privacy input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.frm001__privacy a {
+  color: var(--color-text);
+}
+.frm001__submit {
+  display: block;
+}
+@media (max-width: 767px) {
+  .frm001__grid-row {
+    grid-template-columns: 1fr;
+  }
+  .frm001__submit {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" aria-labelledby="frm001-heading" id="frm001-section">
+  <div class="container">
+
+    <!-- Header (optional) -->
+    <div class="frm001__header" id="frm001-header">
+      <p class="overtitle">Contáctanos</p>
+      <h2 id="frm001-heading">Envíanos un mensaje</h2>
+      <p>Rellena el formulario y te responderemos en menos de 24 horas.</p>
+    </div>
+
+    <form class="frm001__form" novalidate aria-labelledby="frm001-heading">
+
+      <!-- Nombre + Email (2 col) -->
+      <div class="frm001__grid-row">
+        <div class="frm001__field-wrap">
+          <label class="field-label" for="frm001-nombre">Nombre <span aria-hidden="true">*</span></label>
+          <input class="field" type="text" id="frm001-nombre" name="nombre" required autocomplete="name" placeholder="Tu nombre completo">
+        </div>
+        <div class="frm001__field-wrap" id="frm001-email-wrap">
+          <label class="field-label" for="frm001-email">Email <span aria-hidden="true">*</span></label>
+          <input class="field field--error" type="email" id="frm001-email" name="email" required autocomplete="email" placeholder="tu@email.com" aria-describedby="frm001-email-error" aria-invalid="true">
+          <span class="field-error" id="frm001-email-error">Introduce un email válido</span>
+        </div>
+      </div>
+
+      <!-- Optional fields: Teléfono + Empresa -->
+      <div id="frm001-optional-fields" hidden>
+        <div class="frm001__grid-row">
+          <div class="frm001__field-wrap">
+            <label class="field-label" for="frm001-telefono">Teléfono</label>
+            <input class="field" type="tel" id="frm001-telefono" name="telefono" autocomplete="tel" placeholder="+34 600 000 000">
+          </div>
+          <div class="frm001__field-wrap">
+            <label class="field-label" for="frm001-empresa">Empresa</label>
+            <input class="field" type="text" id="frm001-empresa" name="empresa" autocomplete="organization" placeholder="Nombre de tu empresa">
+          </div>
+        </div>
+      </div>
+
+      <!-- Asunto -->
+      <div class="frm001__field-wrap">
+        <label class="field-label" for="frm001-asunto">Asunto <span aria-hidden="true">*</span></label>
+        <input class="field" type="text" id="frm001-asunto" name="asunto" required placeholder="¿En qué podemos ayudarte?">
+      </div>
+
+      <!-- Mensaje -->
+      <div class="frm001__field-wrap">
+        <label class="field-label" for="frm001-mensaje">Mensaje <span aria-hidden="true">*</span></label>
+        <textarea class="field" id="frm001-mensaje" name="mensaje" rows="6" required placeholder="Escribe tu mensaje aquí…"></textarea>
+      </div>
+
+      <!-- Privacy -->
+      <label class="frm001__privacy">
+        <input type="checkbox" name="privacidad" required>
+        <span>Acepto la <a href="#">política de privacidad</a> y el tratamiento de mis datos para gestionar esta consulta.</span>
+      </label>
+
+      <!-- Submit -->
+      <button type="submit" class="btn frm001__submit">Enviar mensaje</button>
+
+    </form>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cabecera</span>
+      <label><input type="checkbox" id="toggle-header" checked> Mostrar cabecera</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Campos</span>
+      <label><input type="checkbox" id="toggle-optional"> Mostrar teléfono + empresa</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Estado error</span>
+      <label><input type="checkbox" id="toggle-error" checked> Mostrar error en email</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-FRM/CAT-FRM-001-formulario-de-contacto.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-FRM-001</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {};
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-header', function (checked) {
+      var el = byId('frm001-header');
+      if (el) el.hidden = !checked;
+    });
+
+    onCheck('toggle-optional', function (checked) {
+      var el = byId('frm001-optional-fields');
+      if (el) el.hidden = !checked;
+    });
+
+    onCheck('toggle-error', function (checked) {
+      var input = byId('frm001-email');
+      var err = byId('frm001-email-error');
+      if (input) {
+        input.classList.toggle('field--error', checked);
+        input.setAttribute('aria-invalid', String(checked));
+      }
+      if (err) err.hidden = !checked;
+    });
+
+    onRadioGroup('bg', function (val) {
+      var sec = byId('frm001-section');
+      if (sec) sec.style.background = val;
+    });
+  });
+</script>
+</body>
+</html>

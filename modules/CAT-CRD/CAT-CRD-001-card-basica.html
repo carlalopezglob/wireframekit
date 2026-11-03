@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CRD-001 · Card básica</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* COM-012 — Card básica */
+  .crd001__preview {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-8) 0;
+  }
+
+  .crd001__card {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .crd001__img {
+    aspect-ratio: 16 / 9;
+    min-height: unset;
+  }
+
+  .crd001__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .crd001__meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-placeholder);
+    flex-shrink: 0;
+  }
+
+  .crd001__excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+  }
+
+  .crd001__tag-wrap {
+    margin-bottom: var(--space-3);
+  }
+
+  .crd001__title {
+    margin: 0;
+  }
+
+  .crd001__cta {
+    margin-top: var(--space-4);
+    display: inline-flex;
+  }
+</style>
+</head>
+<body>
+
+<section class="section" id="crd001-section" aria-labelledby="crd001-title">
+  <div class="container">
+    <div class="crd001__preview">
+      <article class="card card--clickable crd001__card">
+        <div class="img-placeholder card__img crd001__img" role="img" aria-label="Imagen del artículo">
+          16:9
+        </div>
+        <div class="card__body">
+          <div class="crd001__tag-wrap" id="crd001-tag-wrap">
+            <span class="tag">Diseño</span>
+          </div>
+          <h3 class="crd001__title" id="crd001-title">Principios de diseño visual para productos digitales</h3>
+          <p class="crd001__excerpt" id="crd001-excerpt">
+            Explorar los fundamentos que guían las decisiones de diseño en productos digitales modernos: jerarquía, contraste, alineación y proximidad como herramientas de comunicación visual.
+          </p>
+          <div class="crd001__meta" id="crd001-meta">
+            <time>12 ago 2025</time>
+            <span class="crd001__meta-dot" aria-hidden="true"></span>
+            <span>5 min de lectura</span>
+          </div>
+          <a href="#" class="btn btn--link crd001__cta" id="crd001-cta" data-slot="cta-prim"
+             data-max="Leer artículo — texto alternativo más largo →">Leer artículo →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-tag" checked> Etiqueta (tag)</label>
+      <label><input type="checkbox" id="toggle-excerpt" checked> Extracto</label>
+      <label><input type="checkbox" id="toggle-date" checked> Fecha y lectura</label>
+      <div class="kit-states__prop-inline">
+        <label><input type="checkbox" id="toggle-cta" checked> CTA</label>
+        <select class="kit-swap"
+                data-swap-target="[data-slot='cta-prim']"
+                data-swap-from="btn--outline btn--ghost btn--link">
+          <option value="btn--link">Enlace</option>
+          <option value="">Primario</option>
+          <option value="btn--outline">Outline</option>
+          <option value="btn--ghost">Ghost</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Interacción</span>
+      <label><input type="checkbox" id="toggle-clickable" checked> Efecto hover clickable</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CRD/CAT-CRD-001-card-basica.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CRD-001</summary>
+  <div class="kit-notes__body">
+    <p>Cargando…</p>
+  </div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Tag':                  'Categoría editable en CMS. Si no hay categoría asignada, ocultar el contenedor completo para evitar espacio en blanco.',
+    'Extracto':             'Máximo 3 líneas con line-clamp. El CMS debe advertir si el texto supera ~200 caracteres.',
+    'Meta (fecha + lectura)': 'La fecha se formatea automáticamente. El tiempo de lectura se calcula por el backend (palabras / 200).',
+    'CTA':                  'El enlace apunta al slug del artículo. Tipo de botón configurable con el selector. Texto máx. 30 car.',
+    'Efecto hover':         'card--clickable añade transform y shadow al hover. Toda la card puede ser clickable con un enlace absoluto dentro si se necesita área completa.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    var card = document.querySelector('.crd001__card');
+
+    onCheck('toggle-tag',       function (v) { byId('crd001-tag-wrap').hidden = !v; });
+    onCheck('toggle-excerpt',   function (v) { byId('crd001-excerpt').hidden   = !v; });
+    onCheck('toggle-date',      function (v) { byId('crd001-meta').hidden      = !v; });
+    onCheck('toggle-cta',       function (v) { byId('crd001-cta').hidden       = !v; });
+    onCheck('toggle-clickable', function (v) {
+      card.classList.toggle('card--clickable', v);
+    });
+
+    onRadioGroup('bg', function (v) { byId('crd001-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

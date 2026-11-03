@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-004 · Badge / Tag</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Showcase layout ── */
+  .com-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    padding: var(--space-8) 0;
+  }
+  .com-row__label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-2); margin-bottom: var(--space-4);
+  }
+  .com-row__items {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4);
+  }
+  .com-item {
+    display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2);
+  }
+  .com-item__name {
+    font-size: 0.65rem; font-family: monospace; color: var(--color-text-muted);
+    background: var(--color-surface-alt, #f5f5f5);
+    padding: 0.15em 0.5em; border-radius: var(--radius-sm);
+  }
+
+  /* ── Tag extras (dot, dismiss) ── */
+  .tag--dot::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-right: 0.4em;
+    vertical-align: middle;
+    margin-top: -0.1em;
+  }
+  .tag__dismiss {
+    display: inline-flex; align-items: center;
+    margin-left: 0.4em;
+    font-size: 0.9em; font-weight: 400;
+    opacity: 0.6; cursor: pointer;
+    text-decoration: none; color: inherit;
+  }
+  .tag__dismiss:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COMPONENTE — referencia de variantes
+     ══════════════════════════════════════════════ -->
+<section class="section" id="com004-section" aria-labelledby="com004-title">
+  <div class="container">
+
+    <div class="section-head">
+      <p class="overtitle">CAT-COM-004</p>
+      <h2 id="com004-title">Badge / Tag</h2>
+      <p style="color:var(--color-text-muted)">Etiqueta inline para categorizar, indicar estado o señalar atributos de contenido.</p>
+    </div>
+
+    <div class="com-showcase">
+
+      <!-- Variantes semánticas -->
+      <div class="com-row">
+        <p class="com-row__label">Variantes semánticas</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <span class="tag" data-max="Etiqueta neutral">Neutral</span>
+            <span class="com-item__name">.tag</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--success" data-max="Publicado">Éxito</span>
+            <span class="com-item__name">.tag--success</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--warning" data-max="En revisión">Aviso</span>
+            <span class="com-item__name">.tag--warning</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--error" data-max="Error crítico">Error</span>
+            <span class="com-item__name">.tag--error</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--info" data-max="Información">Info</span>
+            <span class="com-item__name">.tag--info</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--accent" data-max="Destacado">Acento</span>
+            <span class="com-item__name">.tag--accent</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--solid" data-max="Nuevo">Sólido</span>
+            <span class="com-item__name">.tag--solid</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Con dot indicador -->
+      <div class="com-row" id="com004-dot-row" hidden>
+        <p class="com-row__label">Con punto indicador (.tag--dot)</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <span class="tag tag--dot" data-max="Neutral">Neutral</span>
+            <span class="com-item__name">.tag--dot</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--success tag--dot" data-max="Activo">Activo</span>
+            <span class="com-item__name">.tag--success.tag--dot</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--warning tag--dot" data-max="Pendiente">Pendiente</span>
+            <span class="com-item__name">.tag--warning.tag--dot</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--error tag--dot" data-max="Inactivo">Inactivo</span>
+            <span class="com-item__name">.tag--error.tag--dot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eliminable -->
+      <div class="com-row" id="com004-dismiss-row" hidden>
+        <p class="com-row__label">Eliminable (decorativo en wireframe)</p>
+        <div class="com-row__items">
+          <div class="com-item">
+            <span class="tag" data-max="Etiqueta eliminable">Neutral <span class="tag__dismiss" aria-hidden="true">✕</span></span>
+            <span class="com-item__name">.tag + .tag__dismiss</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--success" data-max="Publicado">Publicado <span class="tag__dismiss" aria-hidden="true">✕</span></span>
+            <span class="com-item__name">.tag--success + dismiss</span>
+          </div>
+          <div class="com-item">
+            <span class="tag tag--accent" data-max="Destacado">Destacado <span class="tag__dismiss" aria-hidden="true">✕</span></span>
+            <span class="com-item__name">.tag--accent + dismiss</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- En contexto (en texto) -->
+      <div class="com-row">
+        <p class="com-row__label">En contexto — dentro de párrafo o encabezado</p>
+        <div class="com-row__items" style="flex-direction:column;align-items:flex-start">
+          <p style="margin:0;font-size:1.1rem;font-weight:600">
+            Título de artículo o entrada
+            <span class="tag tag--success" style="vertical-align:middle;margin-left:0.5em">Nuevo</span>
+          </p>
+          <p style="margin:0;color:var(--color-text-muted)">
+            Elemento de lista con estado
+            <span class="tag tag--warning" style="vertical-align:middle;margin-left:0.5em">Pendiente</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin componente -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Variantes extra</span>
+      <label><input type="checkbox" id="toggle-dot" data-max-state> Con punto indicador</label>
+      <label><input type="checkbox" id="toggle-dismiss" data-max-state> Eliminable (×)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg-com4" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg-com4" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-004-badge.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-004</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Texto del tag':     'Máx. 20 car. Siempre mayúsculas (text-transform: uppercase en la clase base).',
+    'Variante neutral':  'Para categorías o atributos sin carga semántica (etiqueta de tipo, categoría).',
+    'Variante success':  'Estado positivo, completado, activo, publicado.',
+    'Variante warning':  'Estado de atención, pendiente, en revisión.',
+    'Variante error':    'Estado de fallo, error, inactivo, bloqueado.',
+    'Variante info':     'Información contextual, sin urgencia.',
+    'Variante accent':   'Sin semántica — para destacar o usar como marca de categoría principal.',
+    'Variante solid':    'Relleno de acento. Para los contadores o valores numéricos que necesitan máximo contraste.',
+    'Dot indicador':     'Usa ::before con currentColor. El color del dot hereda del color del texto del tag.',
+    'Eliminable (×)':    'El × es decorativo en wireframe. En UI real: button con aria-label="Quitar [etiqueta]".',
+    'Máx. por elemento': '3 tags por fila de contenido. Más de 3 indica que el modelo de datos necesita revisión.',
+    'En listas':         'Alinear verticalmente con vertical-align: middle. No superar 1 tag por fila de lista.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-dot',     function (v) { byId('com004-dot-row').hidden     = !v; });
+    onCheck('toggle-dismiss', function (v) { byId('com004-dismiss-row').hidden = !v; });
+    onRadioGroup('bg-com4',   function (v) { byId('com004-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

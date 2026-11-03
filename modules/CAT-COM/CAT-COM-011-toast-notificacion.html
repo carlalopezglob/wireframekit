@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-011 · Toast / Notificación</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+
+/* ── Section-title label ── */
+.com011__section-title {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ══════════════════════════════════════════════
+   A. INLINE BANNERS
+   ══════════════════════════════════════════════ */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.banner--info    { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+.banner--success { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+.banner--warning { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+.banner--error   { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+
+.banner__icon {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.05em;
+}
+.banner__icon svg {
+  display: block;
+  width: 100%; height: 100%;
+}
+
+.banner__body {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+.banner__title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+.banner__msg {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.banner__close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem; height: 1.5rem;
+  margin-top: -0.15rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.55;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s;
+}
+.banner__close:hover { opacity: 1; }
+
+.com011__banners {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ══════════════════════════════════════════════
+   B. TOAST STACK (fixed overlay)
+   ══════════════════════════════════════════════ */
+.toast-stack {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 900;
+  pointer-events: none;
+  max-width: 340px;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .toast-stack {
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+}
+
+/* Position variants (controlled by kit-states) */
+.toast-stack--bottom-left  { right: auto; left: 1.5rem; }
+.toast-stack--bottom-center {
+  right: auto; left: 50%;
+  transform: translateX(-50%);
+  max-width: 400px;
+}
+@media (max-width: 767px) {
+  .toast-stack--bottom-left  { right: 1rem; left: 1rem; }
+  .toast-stack--bottom-center { left: 1rem; right: 1rem; transform: none; }
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: all;
+  animation: toast-in 0.25s ease;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Coloured left-accent stripe per type */
+.toast--success { border-left: 3px solid #4ade80; }
+.toast--error   { border-left: 3px solid #f87171; }
+.toast--warning { border-left: 3px solid #fbbf24; }
+.toast--info    { border-left: 3px solid #60a5fa; }
+
+.toast__icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+.toast__body {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+.toast__title {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+.toast__msg {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  line-height: 1.45;
+}
+
+.toast__close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem; height: 1.35rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.5;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s;
+  margin-top: -0.05rem;
+}
+.toast__close:hover { opacity: 1; }
+
+/* ══════════════════════════════════════════════
+   C. DEMO BUTTONS
+   ══════════════════════════════════════════════ */
+.com011__demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.com011__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background 0.15s, border-color 0.15s;
+}
+.com011__trigger:hover { background: var(--color-bg); border-color: var(--color-accent); }
+
+.com011__trigger--info    { border-left: 3px solid #60a5fa; }
+.com011__trigger--success { border-left: 3px solid #4ade80; }
+.com011__trigger--warning { border-left: 3px solid #fbbf24; }
+.com011__trigger--error   { border-left: 3px solid #f87171; }
+
+/* ── Showcase spacing ── */
+.com011__showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-8) 0;
+}
+.com011__block { display: flex; flex-direction: column; }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COMPONENTE — Toast / Notificación
+     ══════════════════════════════════════════════ -->
+<section class="section" id="com011-section" aria-labelledby="com011-title">
+  <div class="container">
+
+    <div class="section-head">
+      <p class="overtitle">CAT-COM-011</p>
+      <h2 id="com011-title">Toast / Notificación</h2>
+      <p style="color:var(--color-text-muted)">
+        Mensajes contextuales para informar al usuario sobre resultados de acciones. Se presentan como banners inline (estáticos) o toasts flotantes (dinámicos, aparecen y desaparecen).
+      </p>
+    </div>
+
+    <div class="com011__showcase">
+
+      <!-- ─── A. Banners inline ─── -->
+      <div class="com011__block">
+        <p class="com011__section-title">A — Banners inline (estáticos)</p>
+        <div class="com011__banners" id="com011-banners">
+
+          <!-- Info -->
+          <div class="banner banner--info" id="com011-banner-info">
+            <span class="banner__icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M10 9v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="10" cy="6.5" r="0.85" fill="currentColor"/>
+              </svg>
+            </span>
+            <div class="banner__body">
+              <strong class="banner__title">Información</strong>
+              <p class="banner__msg">Tu sesión se cerrará en 10 minutos. Guarda tu progreso para no perder cambios.</p>
+            </div>
+            <button class="banner__close" aria-label="Cerrar aviso de información">×</button>
+          </div>
+
+          <!-- Success -->
+          <div class="banner banner--success" id="com011-banner-success">
+            <span class="banner__icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="banner__body">
+              <strong class="banner__title">¡Éxito!</strong>
+              <p class="banner__msg">Cambios guardados correctamente. El documento está disponible en tu biblioteca.</p>
+            </div>
+            <button class="banner__close" aria-label="Cerrar aviso de éxito">×</button>
+          </div>
+
+          <!-- Warning -->
+          <div class="banner banner--warning" id="com011-banner-warning">
+            <span class="banner__icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2.5L18 17H2L10 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M10 8.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="10" cy="14.5" r="0.85" fill="currentColor"/>
+              </svg>
+            </span>
+            <div class="banner__body">
+              <strong class="banner__title">Atención</strong>
+              <p class="banner__msg">Revisa los campos antes de continuar. Algunos datos obligatorios están incompletos.</p>
+            </div>
+            <button class="banner__close" aria-label="Cerrar aviso de atención">×</button>
+          </div>
+
+          <!-- Error -->
+          <div class="banner banner--error" id="com011-banner-error">
+            <span class="banner__icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M7 7l6 6M13 7l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div class="banner__body">
+              <strong class="banner__title">Error</strong>
+              <p class="banner__msg">No se pudo procesar la solicitud. Inténtalo de nuevo o contacta con soporte.</p>
+            </div>
+            <button class="banner__close" aria-label="Cerrar aviso de error">×</button>
+          </div>
+
+        </div><!-- /banners -->
+      </div><!-- /block A -->
+
+
+      <!-- ─── B. Toasts (pre-built wireframe stack) ─── -->
+      <div class="com011__block">
+        <p class="com011__section-title">B — Toast overlay (posición fija · visible en wireframe)</p>
+        <p style="font-size:0.85rem;color:var(--color-text-muted);margin:0 0 var(--space-4)">
+          Los toasts aparecen fijos en la esquina inferior derecha (o centro en móvil). En producción se auto-eliminan tras 4 s. En el wireframe permanecen visibles para inspección.
+        </p>
+        <!-- Placeholder visual in-flow (for reference) -->
+        <div class="com011__toast-preview" style="
+          display:flex; flex-direction:column; gap:var(--space-3);
+          max-width: 340px;
+        ">
+          <div class="toast toast--success" style="position:relative">
+            <span class="toast__icon" aria-hidden="true">✓</span>
+            <div class="toast__body">
+              <strong class="toast__title">Archivo subido</strong>
+              <p class="toast__msg">El documento se guardó en la nube.</p>
+            </div>
+            <button class="toast__close" aria-label="Cerrar">×</button>
+          </div>
+          <div class="toast toast--error" style="position:relative">
+            <span class="toast__icon" aria-hidden="true">✕</span>
+            <div class="toast__body">
+              <strong class="toast__title">Error al guardar</strong>
+              <p class="toast__msg">Inténtalo de nuevo más tarde.</p>
+            </div>
+            <button class="toast__close" aria-label="Cerrar">×</button>
+          </div>
+          <div class="toast toast--info" style="position:relative">
+            <span class="toast__icon" aria-hidden="true">ⓘ</span>
+            <div class="toast__body">
+              <strong class="toast__title">Nueva actualización disponible</strong>
+            </div>
+            <button class="toast__close" aria-label="Cerrar">×</button>
+          </div>
+        </div>
+      </div><!-- /block B -->
+
+
+      <!-- ─── C. Demo interactivo ─── -->
+      <div class="com011__block">
+        <p class="com011__section-title">C — Demo interactivo · disparar toasts</p>
+        <p style="font-size:0.85rem;color:var(--color-text-muted);margin:0 0 var(--space-4)">
+          Haz clic para añadir un toast al stack fijo (esquina inferior derecha). Se eliminan automáticamente tras 4 s o al cerrar manualmente.
+        </p>
+        <div class="com011__demo">
+          <button class="com011__trigger com011__trigger--info"
+                  id="com011-btn-info">
+            ⓘ &nbsp;Mostrar Info
+          </button>
+          <button class="com011__trigger com011__trigger--success"
+                  id="com011-btn-success">
+            ✓ &nbsp;Mostrar Éxito
+          </button>
+          <button class="com011__trigger com011__trigger--warning"
+                  id="com011-btn-warning">
+            ⚠ &nbsp;Mostrar Advertencia
+          </button>
+          <button class="com011__trigger com011__trigger--error"
+                  id="com011-btn-error">
+            ✕ &nbsp;Mostrar Error
+          </button>
+        </div>
+      </div><!-- /block C -->
+
+    </div><!-- /showcase -->
+  </div><!-- /container -->
+</section>
+<!-- fin componente -->
+
+
+<!-- ── Toast stack (fixed overlay for interactive demo) ── -->
+<div class="toast-stack" id="com011-toast-stack" aria-live="polite" aria-atomic="false"></div>
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Posición de toast</span>
+      <label><input type="radio" name="toast-pos" value="bottom-right" checked> Abajo derecha</label>
+      <label><input type="radio" name="toast-pos" value="bottom-left"> Abajo izquierda</label>
+      <label><input type="radio" name="toast-pos" value="bottom-center"> Abajo centro</label>
+    </div>
+
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg-com11" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg-com11" value="#f5f5f5"> Gris</label>
+    </div>
+
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-011-toast-notificacion.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-011</summary>
+  <div class="kit-notes__body">
+    <p>Cargando…</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Banner inline':        'Se inserta en el flujo del documento, junto al contenido afectado. No aparece sobre la UI.',
+    'Toast flotante':       'Posición fija, no bloquea contenido. Aparece ante acciones del usuario (guardar, subir, error).',
+    'Auto-dismiss':         'Los toasts deben desaparecer solos a los 3–5 s. Mínimo de 4 s para lectura cómoda.',
+    'Icono obligatorio':    'El icono refuerza el tipo semántico sin depender solo del color (accesibilidad).',
+    'Máximo en stack':      'No más de 3 toasts simultáneos. El cuarto desplaza el primero.',
+    'Duración mensaje':     'Texto breve: máx. 2 líneas en toast. Banners inline admiten más detalle.',
+    'Acción opcional':      'Un toast puede incluir un enlace o botón de acción (p.ej. "Deshacer"). Alineado a la derecha.',
+    'aria-live':            'El contenedor .toast-stack debe tener aria-live="polite" para lectores de pantalla.',
+    'Banner — cierre (×)': 'El botón × es funcional. En UI real: aria-label="Cerrar aviso de [tipo]".',
+    'Toast en móvil':       'En pantallas < 768 px el stack ocupa todo el ancho con margen de 1 rem a cada lado.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── helpers ── */
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    /* ── A. Banner close buttons ── */
+    document.querySelectorAll('.banner__close').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var banner = btn.closest('.banner');
+        if (banner) {
+          banner.style.transition = 'opacity 0.2s';
+          banner.style.opacity = '0';
+          setTimeout(function () { banner.hidden = true; }, 220);
+        }
+      });
+    });
+
+    /* ── B. Preview-block toast close buttons ── */
+    document.querySelectorAll('.com011__toast-preview .toast__close').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var toast = btn.closest('.toast');
+        if (toast) {
+          toast.style.transition = 'opacity 0.2s';
+          toast.style.opacity = '0';
+          setTimeout(function () { toast.hidden = true; }, 220);
+        }
+      });
+    });
+
+    /* ── C. showToast — append to fixed stack ── */
+    function showToast(type, title, message) {
+      var icons = { info: 'ⓘ', success: '✓', warning: '⚠', error: '✕' };
+      var toast = document.createElement('div');
+      toast.className = 'toast toast--' + type;
+      toast.setAttribute('role', 'alert');
+      toast.innerHTML =
+        '<span class="toast__icon" aria-hidden="true">' + icons[type] + '</span>' +
+        '<div class="toast__body">' +
+          '<strong class="toast__title">' + title + '</strong>' +
+          (message ? '<p class="toast__msg">' + message + '</p>' : '') +
+        '</div>' +
+        '<button class="toast__close" aria-label="Cerrar">×</button>';
+
+      toast.querySelector('.toast__close').addEventListener('click', function () {
+        removeToast(toast);
+      });
+
+      var stack = byId('com011-toast-stack');
+      stack.appendChild(toast);
+
+      /* cap the stack at 3 */
+      var toasts = stack.querySelectorAll('.toast');
+      if (toasts.length > 3) {
+        removeToast(toasts[0]);
+      }
+
+      /* auto-remove after 4 s */
+      var timer = setTimeout(function () {
+        if (toast.parentNode) removeToast(toast);
+      }, 4000);
+      toast._timer = timer;
+    }
+
+    function removeToast(toast) {
+      if (toast._timer) clearTimeout(toast._timer);
+      toast.style.transition = 'opacity 0.25s, transform 0.25s';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(8px)';
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 260);
+    }
+
+    /* ── C. Trigger buttons ── */
+    var btnInfo    = byId('com011-btn-info');
+    var btnSuccess = byId('com011-btn-success');
+    var btnWarning = byId('com011-btn-warning');
+    var btnError   = byId('com011-btn-error');
+
+    if (btnInfo)    btnInfo.addEventListener('click',    function () { showToast('info',    'Información',             'Esta acción se completará en breve.'); });
+    if (btnSuccess) btnSuccess.addEventListener('click', function () { showToast('success', '¡Operación exitosa!',     'Los cambios se guardaron correctamente.'); });
+    if (btnWarning) btnWarning.addEventListener('click', function () { showToast('warning', 'Atención',               'Revisa los datos antes de continuar.'); });
+    if (btnError)   btnError.addEventListener('click',   function () { showToast('error',   'Error al procesar',      'No se pudo completar la acción. Inténtalo de nuevo.'); });
+
+    /* ── Kit-states: toast position ── */
+    var stack = byId('com011-toast-stack');
+    onRadioGroup('toast-pos', function (val) {
+      stack.classList.remove(
+        'toast-stack--bottom-left',
+        'toast-stack--bottom-center'
+      );
+      if (val === 'bottom-left')   stack.classList.add('toast-stack--bottom-left');
+      if (val === 'bottom-center') stack.classList.add('toast-stack--bottom-center');
+    });
+
+    /* ── Kit-states: background ── */
+    onRadioGroup('bg-com11', function (val) {
+      byId('com011-section').style.background = val;
+    });
+
+  });
+</script>
+</body>
+</html>

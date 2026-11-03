@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-COM-013 · Bloque social (iconos)</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+.com013__section-title {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+.com013__showcase { display: flex; flex-direction: column; gap: var(--space-10); padding: var(--space-8) 0; }
+.com013__block { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.com013__desc { color: var(--color-text-muted); font-size: 0.85rem; margin: 0; }
+
+/* ── Fila de iconos ─────────────────────────────────────────── */
+.com013__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.com013__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: var(--control-height-sm);
+  min-height: var(--control-height-sm);
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.com013__item:hover { background: var(--color-surface); border-color: var(--color-accent); }
+.com013__item svg { width: 18px; height: 18px; display: block; }
+
+.com013__item--sm { width: 32px; height: 32px; min-width: 32px; min-height: 32px; }
+.com013__item--sm svg { width: 15px; height: 15px; }
+.com013__item--lg { width: 48px; height: 48px; }
+.com013__item--lg svg { width: 21px; height: 21px; }
+
+/* ── Confirmación de compartir ──────────────────────────────── */
+.com013__confirm {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  min-height: 1.2em;
+}
+</style>
+</head>
+<body>
+
+<section class="section" id="com013-section" aria-labelledby="com013-title">
+  <div class="container">
+
+    <div class="section-head">
+      <p class="overtitle">CAT-COM-013</p>
+      <h2 id="com013-title">Bloque social (iconos)</h2>
+      <p style="color:var(--color-text-muted)">
+        Fila de icono + link. Mismo patrón visual para dos intenciones distintas: enlazar a las cuentas sociales de la marca (seguir) o compartir la página actual (compartir).
+      </p>
+    </div>
+
+    <div class="com013__showcase">
+
+      <!-- ─── A. Seguir — destinos fijos ─── -->
+      <div class="com013__block">
+        <p class="com013__section-title">A — Seguir (destinos fijos)</p>
+        <p class="com013__desc">Cada icono enlaza a una cuenta de red social fija de la marca. El destino no cambia entre páginas.</p>
+        <ul class="com013__list" aria-label="Síguenos en redes sociales">
+          <li>
+            <a class="com013__item" href="#" aria-label="Síguenos en Red social 1" title="Red social 1">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 11.5a8.5 8.5 0 1 1-4.5-7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M21 4.5v5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="com013__item" href="#" aria-label="Síguenos en Red social 2" title="Red social 2">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="com013__item" href="#" aria-label="Síguenos en Red social 3" title="Red social 3">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M9.5 8.5v7l6-3.5-6-3.5Z" fill="currentColor"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="com013__item" href="#" aria-label="Síguenos en Red social 4" title="Red social 4">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 18c0-4 3.5-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="12" cy="7.5" r="3" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /block A -->
+
+
+      <!-- ─── B. Compartir — destino dinámico ─── -->
+      <div class="com013__block">
+        <p class="com013__section-title">B — Compartir (destino dinámico)</p>
+        <p class="com013__desc">Cada icono comparte la URL de la página actual — mismo patrón visual, pero el destino no es una cuenta fija: es una acción de compartir en el momento del clic.</p>
+        <ul class="com013__list" aria-label="Compartir esta página" id="com013-share-list">
+          <li>
+            <button class="com013__item" type="button" aria-label="Compartir en Red social 1" title="Red social 1" data-share-label="Red social 1">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 11.5a8.5 8.5 0 1 1-4.5-7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M21 4.5v5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </li>
+          <li>
+            <button class="com013__item" type="button" aria-label="Compartir en Red social 2" title="Red social 2" data-share-label="Red social 2">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </button>
+          </li>
+          <li>
+            <button class="com013__item" type="button" aria-label="Compartir por email" title="Email" data-share-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4.5 7l7.5 5.5L19.5 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </li>
+          <li>
+            <button class="com013__item" type="button" aria-label="Copiar enlace" title="Copiar enlace" data-share-label="Copiar enlace">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.5 14.5l5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M11 8l1-1a3 3 0 0 1 4.2 4.2l-1 1M13 16l-1 1a3 3 0 0 1-4.2-4.2l1-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </li>
+        </ul>
+        <p class="com013__confirm" id="com013-confirm" aria-live="polite"></p>
+      </div><!-- /block B -->
+
+    </div><!-- /showcase -->
+  </div><!-- /container -->
+</section>
+
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tamaño (fila A — Seguir)</span>
+      <label><input type="radio" name="com013-size" value="sm"> Pequeño (32px)</label>
+      <label><input type="radio" name="com013-size" value="md" checked> Normal (40px)</label>
+      <label><input type="radio" name="com013-size" value="lg"> Grande (48px)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg-com013" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg-com013" value="#f5f5f5"> Gris</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-COM/CAT-COM-013-bloque-social-iconos.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-COM-013</summary>
+  <div class="kit-notes__body"><p>Cargando…</p></div>
+</details>
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Seguir vs. compartir': 'Mismo esquema de campos (icono + link). Seguir: href fijo a la cuenta de la marca. Compartir: acción de share-intent sobre la URL actual, no un href fijo — distinción de comportamiento, no de diseño.',
+    'Compartir — implementación real': 'Usar la Web Share API nativa (navigator.share) cuando esté disponible, o la URL de intent de cada red (p. ej. ".../intent/tweet?url=...") con location.href como parámetro. Este wireframe hace un fallback a "copiar enlace" cuando no hay Web Share API, solo para demostrar la interacción.',
+    'Iconos': 'Glifos genéricos de un solo color — no representan ninguna red concreta. En el proyecto real se sustituyen por los iconos de marca de cada red elegida.',
+    'Accesibilidad': 'Cada icono lleva aria-label describiendo la acción ("Síguenos en..." / "Compartir en..."), nunca solo el icono sin alternativa textual.'
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    /* ── B. Compartir — demo de interacción ── */
+    var confirmEl = byId('com013-confirm');
+    var confirmTimer = null;
+
+    function showConfirm(text) {
+      confirmEl.textContent = text;
+      if (confirmTimer) clearTimeout(confirmTimer);
+      confirmTimer = setTimeout(function () { confirmEl.textContent = ''; }, 2500);
+    }
+
+    document.querySelectorAll('#com013-share-list .com013__item').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var label = btn.getAttribute('data-share-label');
+        if (navigator.share) {
+          navigator.share({ url: location.href, title: document.title }).catch(function () {});
+          return;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(location.href).catch(function () {});
+        }
+        showConfirm(label === 'Copiar enlace' ? 'Enlace copiado' : 'Enlace copiado para compartir en ' + label);
+      });
+    });
+
+    /* ── kit-states ── */
+    var listA = document.querySelector('.com013__list[aria-label="Síguenos en redes sociales"]');
+    onRadioGroup('com013-size', function (v) {
+      listA.querySelectorAll('.com013__item').forEach(function (el) {
+        el.classList.remove('com013__item--sm', 'com013__item--lg');
+        if (v === 'sm') el.classList.add('com013__item--sm');
+        if (v === 'lg') el.classList.add('com013__item--lg');
+      });
+    });
+
+    onRadioGroup('bg-com013', function (v) { byId('com013-section').style.background = v; });
+  });
+</script>
+</body>
+</html>

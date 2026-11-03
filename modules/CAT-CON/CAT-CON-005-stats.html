@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-005 · Stats / Métricas</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Stats row ── */
+  .con005__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    align-items: flex-start;
+  }
+  .con005__stat {
+    flex: 1 1 160px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    position: relative;
+  }
+
+  /* Divisor vertical entre stats (solo desktop) */
+  @media (min-width: 768px) {
+    .con005__stat--divider:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: calc(-1 * var(--space-4));
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--color-border);
+    }
+  }
+
+  .con005__number {
+    font-size: clamp(2rem, 7vw, 4rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1;
+  }
+  .con005__label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+  .con005__description {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Mobile: single column stack */
+  @media (max-width: 479px) {
+    .con005__stats {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    .con005__stat {
+      flex: none;
+      width: 100%;
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .con005__stat:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  /* Tablet: 2-col grid */
+  @media (min-width: 480px) and (max-width: 767px) {
+    .con005__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6) var(--space-6);
+    }
+    .con005__stat {
+      flex: none;
+    }
+    /* 3 stats: 3rd spans full width, centered */
+    .con005__stats--3 .con005__stat:last-child {
+      grid-column: 1 / -1;
+      max-width: 220px;
+    }
+    .con005__number {
+      font-size: clamp(1.75rem, 9vw, 2.5rem);
+    }
+  }
+
+  /* Dark variant */
+  .con005--oscura {
+    background: var(--color-accent) !important;
+  }
+  .con005--oscura .con005__number { color: #fff; }
+  .con005--oscura .con005__label  { color: rgba(255,255,255,0.75); }
+  .con005--oscura .con005__description { color: rgba(255,255,255,0.6); }
+  .con005--oscura h2,
+  .con005--oscura .overtitle,
+  .con005--oscura .section-head > p { color: #fff; }
+  .con005--oscura .overtitle { color: rgba(255,255,255,0.7); }
+  .con005--oscura .con005__stat { border-bottom-color: rgba(255,255,255,0.15); }
+  @media (min-width: 768px) {
+    .con005--oscura .con005__stat--divider:not(:last-child)::after {
+      background: rgba(255,255,255,0.2);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con005-section" aria-labelledby="con005-title">
+  <div class="container">
+
+    <div class="section-head" id="con005-header">
+      <p class="overtitle" data-max="Métricas — eyebrow largo de la sección">Métricas</p>
+      <h2 id="con005-title" data-max="Números que hablan por sí solos y refuerzan la credibilidad">Números que hablan por sí solos</h2>
+      <p data-max="Una descripción opcional algo más larga que aporta contexto a las métricas presentadas en esta sección.">Una descripción opcional que aporta contexto a las métricas presentadas.</p>
+    </div>
+
+    <div class="con005__stats con005__stats--3" id="con005-stats">
+
+      <div class="con005__stat con005__stat--divider">
+        <span class="con005__number" data-max="99,9%">98%</span>
+        <span class="con005__label" data-max="Satisfacción de clientes encuestados">Satisfacción de clientes</span>
+        <span class="con005__description con005__desc-el" data-max="Basado en encuestas anuales de satisfacción">Basado en encuestas anuales</span>
+      </div>
+
+      <div class="con005__stat con005__stat--divider">
+        <span class="con005__number" data-max="+9.999">+500</span>
+        <span class="con005__label" data-max="Proyectos completados con éxito">Proyectos completados</span>
+        <span class="con005__description con005__desc-el" data-max="Desde nuestra fundación en el año 2015">Desde nuestra fundación en 2015</span>
+      </div>
+
+      <div class="con005__stat con005__stat--divider">
+        <span class="con005__number" data-max="+50K">12</span>
+        <span class="con005__label" data-max="Años de experiencia acumulada">Años de experiencia</span>
+        <span class="con005__description con005__desc-el" data-max="En el sector tecnológico y digital">En el sector tecnológico</span>
+      </div>
+
+      <div class="con005__stat con005__stat--divider" id="con005-stat4" hidden>
+        <span class="con005__number" data-max="140+">40+</span>
+        <span class="con005__label" data-max="Países donde prestamos servicio">Países atendidos</span>
+        <span class="con005__description con005__desc-el" data-max="Con presencia internacional consolidada">Presencia internacional activa</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Elementos</span>
+      <label><input type="checkbox" id="toggle-header5" checked> Encabezado de sección</label>
+      <label><input type="checkbox" id="toggle-descs5" checked> Descripciones</label>
+      <label><input type="checkbox" id="toggle-dividers" checked> Divisores</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cantidad de stats</span>
+      <label><input type="radio" name="count5" value="3" checked> 3 stats</label>
+      <label><input type="radio" name="count5" value="4" data-max-state> 4 stats</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Variante</span>
+      <label><input type="radio" name="variant5" value="clara" checked> Clara</label>
+      <label><input type="radio" name="variant5" value="oscura"> Oscura</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg5" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg5" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-005-stats.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-005</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Número':             'Máx. 6 car. (p.ej. "+500K", "99,9%", "12"). Fuente fluida clamp(2rem,7vw,4rem), peso 800.',
+    'Label':              'Máx. 30 car. Texto breve que identifica la métrica.',
+    'Descripción':        'Máx. 60 car. Opcional — solo si la métrica necesita contexto extra.',
+    'Cantidad':           '3 o 4 stats. Con 2 stats el módulo pierde fuerza comparativa; más de 4 sobrecarga.',
+    'Mobile (<480px)':    'Columna única con border-bottom entre stats.',
+    'Tablet (480–767px)': 'Grid 2 columnas. Con 3 stats, el tercero ocupa ancho completo centrado.',
+    'Desktop (≥768px)':   'Fila única con gap y divisores verticales opcionales.',
+    'Variante oscura':    'Usa --color-accent de fondo. Texto blanco — verificar contraste WCAG AA sobre el color real.',
+    'Divisores':          'Verticales solo en ≥768px. En mobile se usan border-bottom horizontales.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) {
+      var el = byId(id);
+      if (el) el.addEventListener('change', function () { cb(el.checked); });
+    }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    onCheck('toggle-header5', function (v) { byId('con005-header').hidden = !v; });
+
+    onCheck('toggle-descs5', function (v) {
+      document.querySelectorAll('.con005__desc-el').forEach(function (el) { el.hidden = !v; });
+    });
+
+    onCheck('toggle-dividers', function (v) {
+      document.querySelectorAll('.con005__stat').forEach(function (el) {
+        el.classList.toggle('con005__stat--divider', v);
+      });
+    });
+
+    onRadioGroup('count5', function (v) {
+      var stats = byId('con005-stats');
+      var stat4 = byId('con005-stat4');
+      if (v === '4') {
+        stat4.hidden = false;
+        stats.classList.remove('con005__stats--3');
+        stats.classList.add('con005__stats--4');
+      } else {
+        stat4.hidden = true;
+        stats.classList.remove('con005__stats--4');
+        stats.classList.add('con005__stats--3');
+      }
+    });
+
+    onRadioGroup('variant5', function (v) {
+      byId('con005-section').classList.toggle('con005--oscura', v === 'oscura');
+    });
+
+    onRadioGroup('bg5', function (v) {
+      var sec = byId('con005-section');
+      if (!sec.classList.contains('con005--oscura')) sec.style.background = v;
+    });
+  });
+</script>
+</body>
+</html>

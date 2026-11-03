@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT-CON-016 · Contenedor de pestañas heterogéneo</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+<style>
+  /* ── Barra de tabs — estilo propio (ver Historial: no reutiliza .tabs/.tab-btn
+       de wireframe.js porque su switching no aísla correctamente la anidación) ── */
+  .con016__tabs {
+    display: flex; gap: 0; border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-6);
+  }
+  .con016__scroller {
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .con016__scroller::-webkit-scrollbar { display: none; }
+
+  .con016-tab-btn {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    margin-bottom: -2px; padding: var(--space-3) var(--space-6);
+    cursor: pointer; font-size: 1rem; color: var(--color-text-muted);
+    font-family: var(--font-base); font-weight: 500;
+    flex-shrink: 0; white-space: nowrap;
+  }
+  .con016-tab-btn.is-active { border-bottom-color: var(--color-accent); font-weight: 700; color: var(--color-text); }
+  .con016-tab-panel[hidden] { display: none; }
+
+  .con016__panels { margin-top: var(--space-5); }
+
+  /* ── Zona de contenido libre ── */
+  .con016__freezone {
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    min-height: 160px;
+    display: flex; flex-direction: column; justify-content: center; gap: var(--space-3);
+    color: var(--color-text-muted); font-size: 0.875rem;
+  }
+  .con016__freezone-label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+
+  /* Freezone con "forma" de texto + imagen — ilustra un tipo de contenido posible */
+  .con016__freezone--text-media {
+    display: grid; gap: var(--space-4); align-items: center;
+  }
+  @media (min-width: 768px) { .con016__freezone--text-media { grid-template-columns: 1fr 1fr; } }
+  .con016__freezone--text-media > * { min-width: 0; }
+  .con016__freezone--text-media p { margin: 0; }
+  .con016__freezone--text-media .img-placeholder { min-height: 0; aspect-ratio: 4/3; width: 100%; }
+
+  /* Freezone con "forma" de grid de cards — ilustra un tipo de contenido distinto */
+  .con016__freezone--grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3);
+  }
+  .con016__freezone--grid > div { min-width: 0; }
+  .con016__freezone--grid .img-placeholder { min-height: 0; aspect-ratio: 1; width: 100%; font-size: 0.7rem; }
+
+  /* ── Instancia anidada ── */
+  .con016__instance--nested {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+  .con016__instance--nested .con016__tabs { margin-bottom: var(--space-4); }
+  .con016__instance--nested .con016-tab-btn { padding: var(--space-2) var(--space-4); font-size: 0.9rem; }
+  .con016__instance--nested .con016__freezone { border-style: dashed; background: var(--color-bg); min-height: 100px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     MÓDULO — copiar al proyecto de cliente
+     ══════════════════════════════════════════════ -->
+<section class="section" id="con016-section" aria-labelledby="con016-title">
+  <div class="container">
+
+    <div class="section-head" id="con016-header">
+      <p class="overtitle">Secciones</p>
+      <h2 id="con016-title">Explora cada apartado</h2>
+    </div>
+
+    <!-- Instancia de nivel superior — data-tabs-scope delimita su switching -->
+    <div class="con016__instance" id="con016-top" data-tabs-scope>
+
+      <div class="con016__scroller">
+        <div class="con016__tabs" role="tablist" aria-label="Secciones de contenido">
+          <button class="con016-tab-btn is-active" role="tab" id="con016-tabbtn-a" data-con016-tab="top-a"
+                  aria-selected="true" aria-controls="con016-panel-a" tabindex="0"
+                  data-max="Nombre de pestaña largo">Pestaña A</button>
+          <button class="con016-tab-btn" role="tab" id="con016-tabbtn-b" data-con016-tab="top-b"
+                  aria-selected="false" aria-controls="con016-panel-b" tabindex="-1"
+                  data-max="Segunda pestaña larga">Pestaña B</button>
+          <button class="con016-tab-btn" role="tab" id="con016-tabbtn-c" data-con016-tab="top-c"
+                  aria-selected="false" aria-controls="con016-panel-c" tabindex="-1"
+                  data-max="Tercera pestaña larga">Pestaña C (anidada)</button>
+          <button class="con016-tab-btn con016__tab-d" role="tab" id="con016-tabbtn-d" data-con016-tab="top-d"
+                  aria-selected="false" aria-controls="con016-panel-d" tabindex="-1" hidden
+                  data-max="Cuarta pestaña larga">Pestaña D</button>
+          <button class="con016-tab-btn con016__tab-e" role="tab" id="con016-tabbtn-e" data-con016-tab="top-e"
+                  aria-selected="false" aria-controls="con016-panel-e" tabindex="-1" hidden
+                  data-max="Quinta pestaña larga">Pestaña E</button>
+        </div>
+      </div>
+
+      <div class="con016__panels" id="con016-panels">
+
+        <!-- Panel A — ejemplo de forma "texto + imagen" -->
+        <div class="con016-tab-panel" data-con016-tab="top-a" role="tabpanel" id="con016-panel-a" aria-labelledby="con016-tabbtn-a">
+          <div class="con016__freezone con016__freezone--text-media">
+            <div>
+              <p class="con016__freezone-label">Contenido libre</p>
+              <p data-max="Párrafo de ejemplo más largo para ver cómo se comporta esta zona con texto extenso dentro de una pestaña.">Esta zona puede alojar cualquier módulo del catálogo — aquí, a modo de ejemplo, un bloque de texto con imagen.</p>
+            </div>
+            <div class="img-placeholder" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- Panel B — ejemplo de forma "grid de cards", deliberadamente distinta a la de A -->
+        <div class="con016-tab-panel" data-con016-tab="top-b" role="tabpanel" id="con016-panel-b" aria-labelledby="con016-tabbtn-b" hidden>
+          <div class="con016__freezone con016__freezone--grid">
+            <div><div class="img-placeholder" aria-hidden="true"></div></div>
+            <div><div class="img-placeholder" aria-hidden="true"></div></div>
+            <div><div class="img-placeholder" aria-hidden="true"></div></div>
+          </div>
+          <p class="con016__freezone-label" style="margin-top: var(--space-2)">Contenido libre — aquí, un grid de cards en vez de texto + imagen</p>
+        </div>
+
+        <!-- Panel C — demuestra anidación: otra instancia completa del componente -->
+        <div class="con016-tab-panel" data-con016-tab="top-c" role="tabpanel" id="con016-panel-c" aria-labelledby="con016-tabbtn-c" hidden>
+
+          <div class="con016__instance con016__instance--nested" id="con016-nested" data-tabs-scope>
+            <div class="con016__tabs" role="tablist" aria-label="Sub-secciones">
+              <button class="con016-tab-btn is-active" role="tab" id="con016-n-tabbtn-1" data-con016-tab="nested-1"
+                      aria-selected="true" aria-controls="con016-n-panel-1" tabindex="0">Sub-pestaña 1</button>
+              <button class="con016-tab-btn" role="tab" id="con016-n-tabbtn-2" data-con016-tab="nested-2"
+                      aria-selected="false" aria-controls="con016-n-panel-2" tabindex="-1">Sub-pestaña 2</button>
+            </div>
+            <div class="con016-tab-panel" data-con016-tab="nested-1" role="tabpanel" id="con016-n-panel-1" aria-labelledby="con016-n-tabbtn-1">
+              <div class="con016__freezone">
+                <p class="con016__freezone-label">Contenido libre (nivel anidado)</p>
+                <p>Una pestaña puede contener otra instancia completa de este mismo componente — hasta 1 nivel de anidación recomendado.</p>
+              </div>
+            </div>
+            <div class="con016-tab-panel" data-con016-tab="nested-2" role="tabpanel" id="con016-n-panel-2" aria-labelledby="con016-n-tabbtn-2" hidden>
+              <div class="con016__freezone">
+                <p class="con016__freezone-label">Contenido libre (nivel anidado)</p>
+                <p>Segunda sub-pestaña — su propio scope de switching no afecta a las pestañas del nivel superior.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Panel D — 4ª tab (oculta por defecto) -->
+        <div class="con016-tab-panel con016__panel-d" data-con016-tab="top-d" role="tabpanel" id="con016-panel-d" aria-labelledby="con016-tabbtn-d" hidden>
+          <div class="con016__freezone">
+            <p class="con016__freezone-label">Contenido libre</p>
+            <p>Cuarta pestaña — contenido independiente, de cualquier forma.</p>
+          </div>
+        </div>
+
+        <!-- Panel E — 5ª tab (oculta por defecto) -->
+        <div class="con016-tab-panel con016__panel-e" data-con016-tab="top-e" role="tabpanel" id="con016-panel-e" aria-labelledby="con016-tabbtn-e" hidden>
+          <div class="con016__freezone">
+            <p class="con016__freezone-label">Contenido libre</p>
+            <p>Quinta pestaña — contenido independiente, de cualquier forma.</p>
+          </div>
+        </div>
+
+      </div><!-- /panels -->
+    </div><!-- /instancia nivel superior -->
+
+  </div>
+</section>
+<!-- fin módulo -->
+
+
+<!-- ══════════════════════════════════════════════
+     PANEL DE ESTADOS — herramienta del kit, no copiar
+     ══════════════════════════════════════════════ -->
+<details class="kit-states">
+  <summary>Estados del módulo</summary>
+  <div class="kit-states__body">
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Encabezado de sección</span>
+      <label><input type="checkbox" id="toggle-header16" checked> Visible</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Cantidad de tabs</span>
+      <label><input type="radio" name="tabcount16" value="3" checked> 3 tabs</label>
+      <label><input type="radio" name="tabcount16" value="5" data-max-state> 5 tabs</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Tab activa por defecto</span>
+      <label><input type="radio" name="default-active16" value="top-a" checked> Pestaña A</label>
+      <label><input type="radio" name="default-active16" value="top-b"> Pestaña B</label>
+      <label><input type="radio" name="default-active16" value="top-c"> Pestaña C (anidada)</label>
+    </div>
+    <div class="kit-states__group">
+      <span class="kit-states__group-label">Fondo</span>
+      <label><input type="radio" name="bg16" value="#ffffff" checked> Blanco</label>
+      <label><input type="radio" name="bg16" value="#f5f5f5"> Gris (alt)</label>
+    </div>
+  </div>
+</details>
+
+<details class="kit-notes" data-spec-src="../../registry/CAT-CON/CAT-CON-016-contenedor-de-pestanas-heterogeneo.md">
+  <summary class="kit-notes__toggle">Notas para UI — CAT-CON-016</summary>
+  <div class="kit-notes__body">
+    <p>Cargando… (requiere <code>npx serve .</code> desde la raíz del kit)</p>
+  </div>
+</details>
+
+
+<script src="../../shared/wireframe.js" defer></script>
+<script src="../../shared/kit-notes.js" defer></script>
+<script>
+  window.UX_NOTES = {
+    'Diferencia con CAT-CON-007': 'Ahí todas las pestañas comparten el mismo esquema fijo (título + párrafo + imagen). Aquí cada panel es una zona de contenido libre — puede ser cualquier módulo o combinación de módulos, distinta en cada pestaña.',
+    'Pestaña (label)':   'Máx. 30 car. Nombres cortos.',
+    'Cantidad de tabs':  '2 a 5. Por debajo de 2 no tiene sentido el componente.',
+    'Panel de contenido':'Sin esquema fijo — en el wireframe, un marcador neutro "Contenido libre". En producción, el HTML real del módulo o módulos elegidos.',
+    'Anidación':          'Soporta 1 nivel: una pestaña puede contener otra instancia completa del componente. Cada instancia tiene su propio data-tabs-scope y el switching solo afecta a los botones/paneles cuyo scope más cercano coincide exactamente — así una instancia anidada no interfiere con la de nivel superior.',
+    'Switching':          'Implementación propia (clases .con016-tab-btn / .con016-tab-panel), NO la función de tabs de wireframe.js. Ver Historial de la spec: la función compartida no aísla correctamente la anidación (querySelectorAll sobre el scope recoge también los botones/paneles de una instancia anidada), así que reusarla tal cual rompía el caso de anidación que este módulo necesita.',
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function byId(id) { return document.getElementById(id); }
+    function onCheck(id, cb) { var el = byId(id); if (el) el.addEventListener('change', function () { cb(el.checked); }); }
+    function onRadioGroup(name, cb) {
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        r.addEventListener('change', function () { if (r.checked) cb(r.value); });
+      });
+    }
+
+    // ── Switching de pestañas — con aislamiento correcto de instancias anidadas ──
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.con016-tab-btn');
+      if (!btn) return;
+      var tabId = btn.getAttribute('data-con016-tab');
+      var scope = btn.closest('[data-tabs-scope]');
+      if (!scope) return;
+
+      scope.querySelectorAll('.con016-tab-btn').forEach(function (b) {
+        if (b.closest('[data-tabs-scope]') !== scope) return; // pertenece a una instancia anidada
+        var isActive = b === btn;
+        b.classList.toggle('is-active', isActive);
+        b.setAttribute('aria-selected', String(isActive));
+        b.tabIndex = isActive ? 0 : -1;
+      });
+
+      scope.querySelectorAll('.con016-tab-panel').forEach(function (p) {
+        if (p.closest('[data-tabs-scope]') !== scope) return; // pertenece a una instancia anidada
+        var isActive = p.getAttribute('data-con016-tab') === tabId;
+        p.hidden = !isActive;
+        if (isActive) {
+          // Re-estampar placeholders de imagen que estaban ocultos (paridad con wireframe.js)
+          p.querySelectorAll('.img-placeholder').forEach(function (el) {
+            var w = el.offsetWidth, h = el.offsetHeight;
+            if (w > 0 && h > 0) el.textContent = w + ' × ' + h + ' px';
+          });
+        }
+      });
+    });
+
+    onCheck('toggle-header16', function (v) { byId('con016-header').hidden = !v; });
+
+    onRadioGroup('tabcount16', function (v) {
+      var show5 = v === '5';
+      var tabD = byId('con016-tabbtn-d'), tabE = byId('con016-tabbtn-e');
+      tabD.hidden = !show5; tabE.hidden = !show5;
+      // Si una de las ocultadas estaba activa, volver a la A
+      if (!show5 && (tabD.classList.contains('is-active') || tabE.classList.contains('is-active'))) {
+        byId('con016-tabbtn-a').click();
+      }
+    });
+
+    onRadioGroup('default-active16', function (v) {
+      var btn = document.querySelector('#con016-top .con016-tab-btn[data-con016-tab="' + v + '"]');
+      if (btn && !btn.hidden) btn.click();
+    });
+
+    onRadioGroup('bg16', function (v) { byId('con016-section').style.background = v; });
+  });
+</script>
+</body>
+</html>
