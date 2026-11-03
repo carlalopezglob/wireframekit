@@ -9,7 +9,20 @@
   .con018__wrap { max-width: 640px; }
 
   .con018__header { margin: 0 0 var(--space-6); }
+  .con018__header-top { display: flex; align-items: center; gap: var(--space-3); }
   .con018__header h2 { margin: 0; }
+  .con018__icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-placeholder);
+    color: var(--color-text-muted);
+  }
+  .con018__icon svg { width: 18px; height: 18px; }
+  .con018__intro {
+    margin: var(--space-2) 0 0; color: var(--color-text-muted);
+    font-size: 0.9rem; max-width: 48ch;
+  }
 
   .con018__list {
     list-style: none; margin: 0; padding: 0;
@@ -59,17 +72,30 @@
     <div class="con018__wrap">
 
       <div class="con018__header" id="con018-header">
-        <h2 id="con018-title" data-max="Título largo para el contenedor de la lista de texto">Qué incluye</h2>
+        <div class="con018__header-top">
+          <span class="con018__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="9" y1="6" x2="20" y2="6"/>
+              <line x1="9" y1="12" x2="20" y2="12"/>
+              <line x1="9" y1="18" x2="20" y2="18"/>
+              <circle cx="4.5" cy="6" r="1.2"/>
+              <circle cx="4.5" cy="12" r="1.2"/>
+              <circle cx="4.5" cy="18" r="1.2"/>
+            </svg>
+          </span>
+          <h2 id="con018-title" data-max="Título largo para el contenedor de la lista de texto">Qué incluye</h2>
+        </div>
+        <p class="con018__intro" data-max="Un texto de apoyo considerablemente más largo que el resto, para comprobar el salto de línea en dos o más renglones por debajo del título">Breve introducción opcional antes de la lista.</p>
       </div>
 
       <ul class="con018__list" id="con018-list">
-        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Primer ítem de la lista</span></li>
-        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Segundo ítem de la lista</span></li>
-        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Tercer ítem de la lista</span></li>
-        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Cuarto ítem de la lista</span></li>
-        <li class="con018__item-5" hidden><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Quinto ítem de la lista</span></li>
-        <li class="con018__item-6" hidden><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Sexto ítem de la lista</span></li>
-        <li class="con018__item-7" hidden><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Séptimo ítem de la lista</span></li>
+        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Piscina cubierta climatizada</span></li>
+        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Gimnasio y pista polideportiva</span></li>
+        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Biblioteca y sala de estudio</span></li>
+        <li><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Laboratorio de ciencias</span></li>
+        <li class="con018__item-5" hidden><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Aula de música</span></li>
+        <li class="con018__item-6" hidden><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Cafetería y zona de descanso</span></li>
+        <li class="con018__item-7" hidden><span class="con018__marker" aria-hidden="true"></span><span data-max="Ítem de texto de ejemplo con una longitud considerablemente mayor que el resto, para comprobar el salto de línea">Aparcamiento gratuito</span></li>
       </ul>
 
     </div>

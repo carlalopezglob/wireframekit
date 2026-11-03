@@ -14,7 +14,9 @@
 
 | Elemento | Presencia | Editable CMS | Notas |
 | --- | --- | --- | --- |
+| Icono del título | Opcional | No (placeholder) | Icono pequeño junto al título, marcador neutro en el wireframe — distinto del "sin icono por ítem" de más abajo, que sigue aplicando |
 | Título del contenedor | Opcional | Sí | H2 o H3 sobre la lista. Si se omite, la lista sube sin hueco vacío |
+| Texto de apoyo | Opcional | Sí | Una línea breve bajo el título, antes de la lista |
 | Numeración | Opcional (config. del contenedor) | No | Ninguna / bullets / numerada — se aplica a todos los ítems por igual, no se mezcla dentro de una misma lista |
 | Ítem | Obligatorio (mín. 3) | Sí | **Solo texto.** Nunca imagen, icono ni enlace individual por ítem |
 
@@ -57,6 +59,10 @@
 ## Historial
 
 - v1.0 · Creación
+- v1.1 · Se añade icono opcional junto al título y texto de apoyo opcional bajo el título —
+  sin tocar el cuerpo de la lista (sigue sin marco de tarjeta, a propósito, para distinguirse de
+  CAT-CON-017 "Lista de datos clave", que sí lo lleva). Motivo: revisión visual — el módulo se
+  sentía incompleto/genérico sin un mínimo de presencia en la cabecera.
 
 ---
 

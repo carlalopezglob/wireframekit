@@ -7,9 +7,22 @@
 <link rel="stylesheet" href="../../shared/styles.css">
 <style>
   /* ── Barra de tabs — estilo propio (ver Historial: no reutiliza .tabs/.tab-btn
-       de wireframe.js porque su switching no aísla correctamente la anidación) ── */
+       de wireframe.js porque su switching no aísla correctamente la anidación) ──
+       Forma deliberadamente distinta de CAT-CON-007 (barra horizontal clásica):
+       a partir de tablet, esta instancia de nivel superior pasa a un listado
+       lateral vertical — lee visualmente como "menú de secciones", no como
+       "otra barra de tabs" — reforzando que cada pestaña es un contenedor de
+       contenido libre, no una variante del mismo panel repetido. La instancia
+       anidada (Panel C) se queda compacta/horizontal a propósito, ver más abajo. */
+  .con016__layout {
+    display: flex; flex-direction: column; gap: var(--space-5);
+  }
+  @media (min-width: 768px) {
+    .con016__layout { flex-direction: row; align-items: flex-start; gap: var(--space-10); }
+  }
+
   .con016__tabs {
-    display: flex; gap: 0; border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-6);
+    display: flex; gap: 0; border-bottom: 2px solid var(--color-border);
   }
   .con016__scroller {
     overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -26,7 +39,30 @@
   .con016-tab-btn.is-active { border-bottom-color: var(--color-accent); font-weight: 700; color: var(--color-text); }
   .con016-tab-panel[hidden] { display: none; }
 
-  .con016__panels { margin-top: var(--space-5); }
+  .con016__panels { margin-top: var(--space-5); min-width: 0; }
+
+  /* Listado lateral vertical — solo la instancia de nivel superior, desde tablet */
+  @media (min-width: 768px) {
+    #con016-top > .con016__layout > .con016__scroller {
+      overflow: visible; flex-shrink: 0; width: 220px;
+    }
+    #con016-top > .con016__layout > .con016__scroller > .con016__tabs {
+      flex-direction: column; gap: var(--space-1);
+      border-bottom: none; border-right: 2px solid var(--color-border);
+      padding-right: var(--space-5);
+    }
+    #con016-top > .con016__layout > .con016__scroller .con016-tab-btn {
+      text-align: left; white-space: normal;
+      border-bottom: none; margin-bottom: 0;
+      border-right: 2px solid transparent; margin-right: -2px;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+    #con016-top > .con016__layout > .con016__scroller .con016-tab-btn.is-active {
+      border-right-color: var(--color-accent); background: var(--color-surface);
+    }
+    #con016-top > .con016__layout > .con016__panels { flex: 1; margin-top: 0; }
+  }
 
   /* ── Zona de contenido libre ── */
   .con016__freezone {
@@ -84,6 +120,7 @@
 
     <!-- Instancia de nivel superior — data-tabs-scope delimita su switching -->
     <div class="con016__instance" id="con016-top" data-tabs-scope>
+     <div class="con016__layout">
 
       <div class="con016__scroller">
         <div class="con016__tabs" role="tablist" aria-label="Secciones de contenido">
@@ -171,6 +208,8 @@
         </div>
 
       </div><!-- /panels -->
+
+     </div><!-- /layout -->
     </div><!-- /instancia nivel superior -->
 
   </div>

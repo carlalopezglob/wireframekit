@@ -16,6 +16,9 @@ Elementos de interfaz de un solo propósito, reutilizados dentro de los módulos
 | CAT-COM-010 | Chip / Filtro | Etiqueta clicable para filtrar, seleccionar categoría o resumir filtros activos. |
 | CAT-COM-011 | Toast / Notificación | Informar sobre el resultado de una acción: banner inline o toast flotante. |
 | CAT-COM-012 | Widget flotante | Punto de contacto persistente (chat, ayuda, mensajería) visible en toda la navegación del sitio, fijo en una esquina del viewport. |
-| CAT-COM-013 | Bloque social (iconos) | Fila de icono + link para enlazar a las redes sociales de la marca (seguir) o para compartir la página actual (compartir). |
 
+> El número 013 queda retirado: "Bloque social (iconos)" se descartó del kit por ser demasiado
+> simple para justificar un módulo propio — se compone a mano con CAT-COM-001 (Botón) cuando un
+> proyecto lo necesite.
+>
 > CAT-CRD-001 "Card básica" no vive aquí: aunque es un componente de un solo ítem, se agrupa en CAT-CRD (cards de contenido) porque su propósito es mostrar un ítem editorial, no una primitiva de interfaz.

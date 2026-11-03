@@ -8,8 +8,29 @@
 <style>
   .con017__wrap { max-width: 640px; }
 
-  .con017__header { margin: 0 0 var(--space-6); }
-  .con017__header h2 { margin: 0; }
+  /* ── Marco de ficha — distingue el módulo de una lista de texto suelta (CAT-CON-018) ── */
+  .con017__card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-6);
+  }
+
+  .con017__header { margin: 0 0 var(--space-5); }
+  .con017__header-top { display: flex; align-items: center; gap: var(--space-3); }
+  .con017__header h2 { margin: 0; font-size: 1.05rem; }
+  .con017__icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-placeholder);
+    color: var(--color-text-muted);
+  }
+  .con017__icon svg { width: 18px; height: 18px; }
+  .con017__intro {
+    margin: var(--space-2) 0 0; color: var(--color-text-muted);
+    font-size: 0.9rem; max-width: 48ch;
+  }
 
   .con017__list { margin: 0; }
   .con017__list--2col { max-width: none; }
@@ -35,14 +56,17 @@
     .con017__item { flex-direction: row; align-items: baseline; justify-content: space-between; gap: var(--space-4); }
   }
 
+  /* Etiqueta en mayúsculas + tracking, como una etiqueta de ficha técnica —
+     a propósito muy distinta de un ítem de CAT-CON-018, que no lleva etiqueta. */
   .con017__label {
     margin: 0;
-    font-size: 0.875rem; color: var(--color-text-muted); font-weight: 600;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--color-text-muted); font-weight: 700;
     min-width: 0;
   }
   .con017__value {
     margin: 0;
-    font-size: 0.95rem; color: var(--color-text); font-weight: 500;
+    font-size: 1rem; color: var(--color-text); font-weight: 600;
     min-width: 0; text-align: left;
   }
   @media (min-width: 768px) {
@@ -58,48 +82,61 @@
 <section class="section" id="con017-section" aria-labelledby="con017-title">
   <div class="container">
     <div class="con017__wrap">
+     <div class="con017__card">
 
       <div class="con017__header" id="con017-header">
-        <h2 id="con017-title" data-max="Título largo para el contenedor de la ficha de datos">Ficha técnica</h2>
+        <div class="con017__header-top">
+          <span class="con017__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="16" height="18" rx="2"/>
+              <line x1="8" y1="8" x2="12" y2="8"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+              <line x1="8" y1="16" x2="14" y2="16"/>
+            </svg>
+          </span>
+          <h2 id="con017-title" data-max="Título largo para el contenedor de la ficha de datos">Ficha técnica</h2>
+        </div>
+        <p class="con017__intro" data-max="Un texto de apoyo considerablemente más largo que el resto, para comprobar el salto de línea en dos o más renglones por debajo del título">Resumen de las condiciones principales, de un vistazo.</p>
       </div>
 
       <dl class="con017__list" id="con017-list">
 
         <div class="con017__item">
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta uno</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor uno</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Modalidad</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Presencial</dd>
         </div>
         <div class="con017__item">
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta dos</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor dos</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Duración</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">12 semanas</dd>
         </div>
         <div class="con017__item">
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta tres</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor tres</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Idioma</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Español e inglés</dd>
         </div>
         <div class="con017__item">
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta cuatro</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor cuatro</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Precio desde</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">450 €</dd>
         </div>
         <div class="con017__item con017__item-5" hidden>
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta cinco</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor cinco</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Plazas</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">20 por grupo</dd>
         </div>
         <div class="con017__item con017__item-6" hidden>
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta seis</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor seis</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Horario</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Mañanas</dd>
         </div>
         <div class="con017__item con017__item-7" hidden>
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta siete</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor siete</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Certificación</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Oficial</dd>
         </div>
         <div class="con017__item con017__item-8" hidden>
-          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Etiqueta ocho</dt>
-          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">Valor ocho</dd>
+          <dt class="con017__label" data-max="Etiqueta más larga de ejemplo">Próxima convocatoria</dt>
+          <dd class="con017__value" data-max="Un valor de ejemplo considerablemente más largo que el resto">15 de marzo</dd>
         </div>
 
       </dl>
 
+     </div>
     </div>
   </div>
 </section>

@@ -14,9 +14,12 @@
 
 | Elemento | Presencia | Editable CMS | Notas |
 | --- | --- | --- | --- |
+| Marco de ficha | Automático | No | El módulo va enmarcado en una tarjeta con borde/fondo (`--color-surface`) — distingue visualmente la ficha de datos de una lista de texto suelta (CAT-CON-018) |
+| Icono del título | Opcional | No (placeholder) | Icono pequeño junto al título, marcador neutro en el wireframe |
 | Título del contenedor | Opcional | Sí | H2 o H3 sobre la lista. Si se omite, la lista sube sin hueco vacío |
+| Texto de apoyo | Opcional | Sí | Una línea breve bajo el título, antes de la lista — p. ej. "Resumen de las condiciones principales" |
 | Ítem (par etiqueta/valor) | Obligatorio (mín. 3) | Sí | Marcado como `<dt>`/`<dd>` dentro de un `<dl>` — semántica de lista de definiciones |
-| Etiqueta | Obligatorio por ítem | Sí | Texto corto, color muted |
+| Etiqueta | Obligatorio por ítem | Sí | Texto corto, en mayúsculas con tracking — se lee como etiqueta de ficha técnica, no como viñeta |
 | Valor | Obligatorio por ítem | Sí | Texto corto **libre** — nunca una cifra con tipografía grande (eso es CAT-CON-005) |
 | Separador entre ítems | Automático | No | `border-bottom` entre ítems, sin borde en el último |
 
@@ -55,6 +58,11 @@
 ## Historial
 
 - v1.0 · Creación
+- v1.1 · Se añade marco de ficha (borde + fondo), icono junto al título y texto de apoyo
+  opcional bajo el título; etiqueta pasa a mayúsculas con tracking. Motivo: revisión visual —
+  el módulo se leía casi igual que CAT-CON-018 (Lista simple de texto) pese a tener un esquema
+  de campos distinto (par etiqueta/valor vs. ítem de texto suelto); este tratamiento lo distingue
+  a simple vista sin cambiar su estructura de datos.
 
 ---
 
@@ -69,7 +77,7 @@
 **Diferencia con otros módulos (para no mezclar):**
 - CAT-CON-005 Stats: cifra grande + etiqueta, pensado para 3-4 métricas de impacto.
 - CAT-CON-009 Bloque de características: grid con marcador (icono/imagen) y contenido flexible por columna — pensado para destacar un conjunto de características, no para una ficha de datos compacta.
-- Este módulo: lista ligera, sin iconos, sin cards, pensada para que el usuario escanee rápido una ficha de datos.
+- Este módulo: lista ligera dentro de un marco de ficha, sin cards por ítem, pensada para que el usuario escanee rápido una ficha de datos. El único icono es el del título del bloque, no hay icono por ítem (si hace falta un icono por ítem, ver CAT-CON-009).
 
 **Comportamiento interactivo:** ninguno — bloque estático.
 

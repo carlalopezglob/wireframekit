@@ -57,6 +57,14 @@
 
 - v1.0 · Creación como módulo nuevo — esquema de campos distinto a CAT-CON-007 (panel de forma fija vs. panel de contenido libre), por lo que corresponde número nuevo y no una variante con letra, según la propia regla de numeración del kit.
 - Decisión de implementación — **no** reutiliza la función `tabs` de `shared/wireframe.js`: al revisar su código antes de usarla, el switching delega con `scope.querySelectorAll('.tab-btn')` / `scope.querySelectorAll('.tab-panel')` sobre el `[data-tabs-scope]` más cercano, pero esa búsqueda recoge **todos** los descendientes que coincidan, incluidos los de una instancia anidada más profunda — no se detiene en el siguiente `[data-tabs-scope]`. Con anidación real esto rompe el caso de uso: al activar una pestaña de nivel superior, sus paneles anidados quedan todos ocultos (ninguno coincide con el `data-tab` del nivel superior) y la pestaña anidada activa por defecto pierde su `is-active`. Por eso este módulo usa clases propias (`.con016-tab-btn` / `.con016-tab-panel`, atributo `data-con016-tab`) con una implementación propia que sí filtra correctamente: solo actúa sobre los elementos cuyo `[data-tabs-scope]` más cercano es exactamente el mismo que el del botón pulsado, excluyendo así los de cualquier instancia anidada. No se modificó `wireframe.js` — si en el futuro se detecta que la función `tabs` compartida necesita soportar anidación real, revisarla ahí (afectaría a CAT-CON-007 y a cualquier otro módulo que la use, así que es un cambio que requiere aviso previo, no uno de este módulo).
+- v1.1 · La instancia de nivel superior pasa a listado lateral vertical a partir de tablet
+  (antes: barra horizontal igual que CAT-CON-007). Motivo: revisión visual — a pesar de que el
+  esquema de campos ya era distinto de CAT-CON-007, la forma horizontal se leía como "otra barra
+  de tabs" en vez de como un contenedor de secciones heterogéneas. La instancia anidada (Panel C)
+  se queda horizontal/compacta a propósito, sin cambios — anidar dos listados verticales uno
+  dentro de otro no aportaba claridad. Cambio puramente visual (nuevo wrapper `.con016__layout` +
+  CSS con media query, acotada a `#con016-top` para no afectar a la instancia anidada); el
+  switching JS no se tocó.
 
 ---
 
