@@ -48,7 +48,10 @@ librería.
 
 1. Comprobar que no existe ya algo similar (leer el índice de la categoría en `registry/[CAT].md`)
 2. Decidir categoría (existente o nueva, 3 letras mayúsculas)
-3. Asignar el siguiente número disponible
+3. **Antes de asignar número:** `git fetch origin` y mirar ramas/PRs abiertos — si alguien ya está
+   creando un módulo de la misma categoría en otra rama, puede haberse reservado ya el siguiente
+   número y choca al fusionar. Nombrar la rama con el módulo que toca (`modulo/CAT-NNN-slug`) para
+   que se vea a simple vista. Asignar el siguiente número disponible
 4. Escribir la spec completa (`registry/[CAT]/[CAT-NNN]-[nombre-kebab-case].md`) — Anatomía, Variantes, Comportamiento responsive, Notas para UI
 5. Construir el HTML standalone (`modules/[CAT]/[CAT-NNN]-[nombre-kebab-case].html`), importando `shared/styles.css` y `shared/wireframe.js`, usando los tokens de tamaño (ver arriba)
 6. Añadir el panel `<details class="kit-notes" data-spec-src="../../registry/[CAT]/[CAT-NNN]-[nombre-kebab-case].md">` al final del HTML (antes de los scripts) e importar `shared/kit-notes.js` — carga la spec en directo, no duplicar su contenido a mano
